@@ -1,4 +1,4 @@
-Create .env file with the next lines:
+Create .env file in the project's root directory with the next lines:
 
 DB_NAME="your DB name"
 DB_USER="your user name"
