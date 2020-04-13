@@ -1,4 +1,3 @@
-require("dotenv").config();
 const Sequelize = require("sequelize");
 
 //See envExample file for the creating local variables that are using in process.env

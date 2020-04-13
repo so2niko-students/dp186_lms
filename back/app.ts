@@ -1,4 +1,6 @@
 import express, { Application, Request, Response } from "express";
+require("dotenv").config();
+require("./db");
 
 const app: Application = express();
 
