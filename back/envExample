@@ -1,0 +1,8 @@
+Create .env file with the next lines:
+
+DB_NAME="your DB name"
+DB_USER="your user name"
+DB_PASSWORD="your password"
+DB_HOST="host, for example 127.0.0.0"
+DB_PORT="your port"
+DB_DIALECT="your dialect"
