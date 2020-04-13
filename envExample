@@ -1,4 +1,6 @@
-Create .env file in the project's root directory with the next lines:
+!!! PAY ATTETION !!!
+Create .env file in the project's ROOT directory with the variables below.
+DO NOT CHANGE this file. It's an example for the rest of the team.
 
 DB_NAME="your DB name"
 DB_USER="your user name"
