@@ -1,3 +1,3 @@
-const applicationLoad = () => ({ type: "APP_LOAD" });
+const calculate = (s, a, b) => ({ type: "CALC", sign: s, a, b });
 
-export default applicationLoad;
+export default calculate;

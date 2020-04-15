@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { applicationLoad } from "../../common/redux/actions/";
+import ExampleForRedux from "../exampleForRedux/ExampleForRedux";
 
 class App extends Component {
     render() {
-        return <div>Hi DP-186</div>;
+        return <ExampleForRedux />;
     }
 }
 
