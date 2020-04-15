@@ -1,30 +1,39 @@
 import React, { Component } from "react";
 import actions from "../../common/redux/actions/";
-import store from "../../common/redux/store";
 import { Heading, Wrapper, Ptag } from "./styledComponentsExample";
+import { connect } from "react-redux";
 
 class ExampleForRedux extends Component {
     constructor(props) {
         super(props);
-        const unsubscribe = store.subscribe(() => {
-            const check = store.getState();
-            if (check.isLoad) {
-                document.title = "React is loaded";
-                unsubscribe();
-            }
-        });
+    }
+    componentDidMount() {
+        const { calculate, applicationLoad } = this.props;
+
+        applicationLoad();
+        calculate("+", 180, 6);
+    }
+    componentDidUpdate() {
+        const { isLoad } = this.props;
+        if (isLoad) {
+            document.title = "Is loaded";
+        }
     }
     render() {
-        store.dispatch(actions.calculate("+", 180, 6));
-        store.dispatch(actions.applicationLoad());
-        const check = store.getState();
+        const { res } = this.props;
+
         return (
             <Wrapper>
                 <Heading>Example of h1 tag</Heading>
-                <Ptag>DP-{check.res}</Ptag>
+                <Ptag>DP-{res}</Ptag>
             </Wrapper>
         );
     }
 }
 
-export default ExampleForRedux;
+const mapStateToPops = (state) => ({
+    isLoad: state.isLoad,
+    res: state.res,
+});
+
+export default connect(mapStateToPops, actions)(ExampleForRedux);

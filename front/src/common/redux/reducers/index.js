@@ -1,3 +1,5 @@
+import { APP_LOAD, CALC } from "../actions/types";
+
 const initialState = {
     isLoad: false,
     res: 0,
@@ -5,12 +7,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case "APP_LOAD":
+        case APP_LOAD:
             return {
                 ...state,
                 isLoad: true,
             };
-        case "CALC":
+        case CALC:
             const st = Object.assign({}, state);
 
             switch (action.sign) {
