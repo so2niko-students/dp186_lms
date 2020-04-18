@@ -1,4 +1,4 @@
-import { CALC } from "./types";
+import { CALC } from './types';
 
 const calculate = (s, a, b) => ({ type: CALC, sign: s, a, b });
 

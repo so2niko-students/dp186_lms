@@ -1,4 +1,4 @@
-import { APP_LOAD } from "./types";
+import { APP_LOAD } from './types';
 
 const applicationLoad = () => ({ type: APP_LOAD });
 

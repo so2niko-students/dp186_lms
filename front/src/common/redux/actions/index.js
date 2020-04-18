@@ -1,7 +1,7 @@
-import calculate from "./exampleAction";
-import applicationLoad from "./example";
+import calculate from './exampleAction';
+import applicationLoad from './example';
 
 export default {
-    applicationLoad,
-    calculate,
+  applicationLoad,
+  calculate,
 };
