@@ -1,4 +1,6 @@
 import { APP_LOAD, CALC } from "../actions/types";
+import { combineReducers } from 'redux';
+import login from './loginReducer';
 
 const initialState = {
     isLoad: false,
@@ -20,6 +22,8 @@ const reducer = (state = initialState, action) => {
                     st.res = action.a + action.b;
                     break;
                 }
+                default:
+                    return st;
             }
 
             return st;
@@ -28,4 +32,6 @@ const reducer = (state = initialState, action) => {
     }
 };
 
-export default reducer;
+const rootReducer = combineReducers({reducer, login});
+
+export default rootReducer;
