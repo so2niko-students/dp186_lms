@@ -8,15 +8,9 @@ export const loginUserService = (request) => {
       },
       body: JSON.stringify(request.user)
     };
-    // console.log('SERVICE: BODY FETCH')
-    // console.log(request.user)
 
     return fetch(LOGIN_API_ENDPOINT, parameters)
       .then(response => {
-
-        // console.log('RESPONSE FROM FETCH')
-        // console.log(response)
-
         return response.json();
       })
       .then(json => {

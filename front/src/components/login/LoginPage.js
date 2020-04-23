@@ -4,31 +4,27 @@ import { loginUserAction } from '../../common/redux/actions/authActions';
 import { Redirect } from 'react-router-dom';
 import { LoginForm } from './LoginForm';
 
+let isSuccess = false, message;
+
 class LoginPage extends Component {
   onHandleLogin = (data) => {
-    // console.log(data)
-    // console.log('LOGIN PAGE DISPATCH DATA');
-    
     this.props.dispatch(loginUserAction(data));
   }
   
   componentDidMount() {
     document.title = 'Login';
+    message = !isSuccess ? 'Wrong email or password' : null;
   }
   
   render() {
-    let isSuccess, message;
-    console.log(this.props.response.login)
-    if (!this.props.response.login.hasOwnProperty('response')) {
-      isSuccess = false;
-      message = 'You have not logged in';
-    } else {
-      isSuccess = true;
+    if( this.props.response.login.response){
+      isSuccess = this.props.response.login.response.token;
     }
+    
     return (
       <div>
-        {!isSuccess ? <div>{message}</div> : <Redirect to='dashboard' />}
-        <LoginForm onHandleLogin={this.onHandleLogin} />
+        {isSuccess ? <Redirect to='dashboard' /> : null }
+        <LoginForm onHandleLogin={this.onHandleLogin} message={message} isSuccess={isSuccess} />
       </div>
     );
   }
