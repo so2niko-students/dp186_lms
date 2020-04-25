@@ -1,5 +1,6 @@
 // import axios from 'axios';
 export const loginUserService = (request) => {
+  console.log(request)
     const LOGIN_API_ENDPOINT = 'http://127.0.0.1:5000/auth/login';
     const parameters = {
       method: 'POST',
@@ -8,14 +9,14 @@ export const loginUserService = (request) => {
       },
       body: JSON.stringify(request.user)
     };
-    // console.log('SERVICE: BODY FETCH')
-    // console.log(request.user)
+    console.log('SERVICE: BODY FETCH')
+    console.log(request.user)
 
     return fetch(LOGIN_API_ENDPOINT, parameters)
       .then(response => {
 
-        // console.log('RESPONSE FROM FETCH')
-        // console.log(response)
+        console.log('RESPONSE FROM FETCH')
+        console.log(response)
 
         return response.json();
       })

@@ -1,6 +1,7 @@
 import { APP_LOAD, CALC } from "../actions/types";
 import { combineReducers } from 'redux';
 import login from './loginReducer';
+import { studentRegister } from './studentRegistrationReduser'; 
 
 const initialState = {
     isLoad: false,
@@ -32,6 +33,6 @@ const reducer = (state = initialState, action) => {
     }
 };
 
-const rootReducer = combineReducers({reducer, login});
+const rootReducer = combineReducers({reducer, login, studentRegister});
 
 export default rootReducer;
