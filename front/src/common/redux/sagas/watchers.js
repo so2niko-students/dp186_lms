@@ -4,9 +4,7 @@ import { studentRegisteredSage } from './studentRegisteredSage';
 
 import * as types from '../actions/types';
 
-
 export function* watchUserklAuthentication() {
-  console.log('watchUserklAuthentication')
   yield takeLatest(types.LOGIN_USER, loginSaga);
 }
 

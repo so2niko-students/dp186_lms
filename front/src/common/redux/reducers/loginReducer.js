@@ -1,6 +1,7 @@
 import * as types from '../actions/types';
 
 export default function(state = [], action) {
+  
   const response = action.response;
 
   switch(action.type) {
