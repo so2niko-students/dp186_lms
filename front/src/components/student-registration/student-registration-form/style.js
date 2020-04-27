@@ -3,10 +3,10 @@ import {Col as col, Input as input, Button as button} from 'antd';
 import 'antd/dist/antd.css';
 
 const Col = style(col)`
+    margin-top: 70px; 
     border: 2px solid #333;
-
 `;
-// padding: 30px 100px;
+
 const Input = style(input)`
     height: 40px;
     border-width: 2px;
@@ -33,10 +33,6 @@ const Button = style(button)`
     background-color: #0056d9;
     border-radius: 5px;
     height: 40px;
-`
-// width: 180px;
+`;
+
 export {Col, Input, Button}
-
-
-
-// padding: 30px 3rem;

@@ -7,7 +7,6 @@ import StudentRegistrationForm from '../student-registration-form';
 class StudentRegistrationPage extends Component {
   constructor(props) {
     super(props);
-    this.match = props.match;
     this.handleHideModal = this.handleHideModal.bind(this);
   }
 
@@ -16,17 +15,15 @@ class StudentRegistrationPage extends Component {
   }
 
   render() {
-    const {
-      errorMessage,
-      isRegistered,
-      error,
-      isModalVisible,
-    } = this.props.student.studentRegister;
+    const { errorMessage, isRegistered, isModalVisible } = this.props;
 
     if (!isRegistered) {
       return (
         <>
-          <StudentRegistrationForm token={this.match.params.token} dispatch={this.props.dispatch} />
+          <StudentRegistrationForm
+            token={this.props.match.params.token}
+            dispatch={this.props.dispatch}
+          />
           <Modal
             title="Sorry but you did not register"
             visible={isModalVisible}
@@ -38,13 +35,19 @@ class StudentRegistrationPage extends Component {
         </>
       );
     } else if (isRegistered) {
-      return(
-        <Row justify="center"><Col align="center"><h1>Successfully registered. Later here will be redirect functionality</h1></Col></Row>
-      ) 
+      return (
+        <Row justify="center">
+          <Col align="center">
+            <h1>Successfully registered. Later here will be redirect functionality</h1>
+          </Col>
+        </Row>
+      );
     }
   }
 }
 
-const mapStateToProps = (student) => ({ student });
+const mapStateToProps = ({
+  studentRegister: { errorMessage, isRegistered, isModalVisible },
+}) => ({ errorMessage, isRegistered, isModalVisible });
 
 export default connect(mapStateToProps)(StudentRegistrationPage);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import obj from '../../../common/redux/actions';
-import { Form, Row, Typography } from 'antd';
+import { Row, Form, Typography } from 'antd';
 import { Col, Input, Button } from '../student-registration-form/style';
 
 const { Title } = Typography;
@@ -12,7 +12,7 @@ const layout = {
 
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
+    offset: 9,
     span: 16,
   },
 };
@@ -185,8 +185,11 @@ class StudentRegistrationPage extends Component {
             >
               <Input.Password placeholder="Confirm password" />
             </Form.Item>
-            <Form.Item align="center" {...tailLayout}>
-              <Button type="primary" htmlType="submit">
+            <Form.Item align="center" {...tailLayout} >
+              <Button
+                type="primary"
+                htmlType="submit"
+              >
                 Create account
               </Button>
             </Form.Item>
