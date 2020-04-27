@@ -1,17 +1,14 @@
-import { REGISTER_STUDENT, VALIDATE_FIRST_NAME_ENG } from './types';
+import { REGISTER_STUDENT, HIDE_STUDENT_REGISTERED_MODAL } from './types';
 
 export const studentRegistered = (student) => {
-  console.log(student);
   return {
     type: REGISTER_STUDENT,
     payload: student,
   };
 };
 
-export const validatefirstNameEng = (student) => {
-  console.log(student);
+export const hideStudentRegisteredModal = () => {
   return {
-    type: VALIDATE_FIRST_NAME_ENG,
-    payload: student,
-  };
-};
+    type: HIDE_STUDENT_REGISTERED_MODAL
+  }
+}

@@ -1,26 +1,29 @@
-import { REGISTRATION_STUDENT_SUCCESS, NOT_UNIQUE_EMAIL, GROUP_NOT_FOUND } from '../actions/types';
+import { REGISTRATION_STUDENT, REGISTRATION_STUDENT_ERROR, HIDE_STUDENT_REGISTERED_MODAL } from '../actions/types';
 
 const initialState = {
   firstNameEngValid: false,
-  isRegistered: 'registration',
+  isFormSended: false,
+  isModalVisible: false,
+  errorMessage: '',
 };
 
 export function studentRegister(state = initialState, action) {
   const { response } = action;
+  const { error } = action;
 
   switch (action.type) {
-    // case REGISTER_STUDENT:
-    //   return { ...state, response };
-    case REGISTRATION_STUDENT_SUCCESS:
-      if (response.ok) {
-        return { ...state, response, isRegistered: true };
+    case REGISTRATION_STUDENT:
+      if (response.ok && !response.isJoi) {
+        return { ...state, isFormSended: true, isRegistered: true,  };
+      } else if (!response.isJoi) {
+        return { ...state, errorMessage: response.json.error, isFormSended: true, isRegistered: false, isModalVisible: true };
       } else {
-        return { ...state, response, isRegistered: false };
+        return { ...state, errorMessage: response.json.name, isFormSended: true, isRegistered: false, isModalVisible: true };
       }
-    case NOT_UNIQUE_EMAIL:
-      return { ...state, response, isRegistered: false, reason: 'email' };
-    case GROUP_NOT_FOUND:
-      return { ...state, response, isRegistered: false, reason: 'group' };
+    case HIDE_STUDENT_REGISTERED_MODAL:
+      return {...state, isModalVisible: false}
+    case REGISTRATION_STUDENT_ERROR:
+      return { ...state, errorMessage: error.message, isRegistered: false, isModalVisible: true };
     default:
       return state;
   }

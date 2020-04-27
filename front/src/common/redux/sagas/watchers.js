@@ -11,6 +11,5 @@ export function* watchUserklAuthentication() {
 }
 
 export  function* watchStudentRegistaration() {
-  console.log('watchStudentRegistration')
   yield takeLatest(types.REGISTER_STUDENT, studentRegisteredSage);
 }
