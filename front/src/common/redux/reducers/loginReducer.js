@@ -1,16 +1,29 @@
 import * as types from '../actions/types';
 
-export default function(state = [], action) {
+const initialState = {
+  isLogin: false,
+  errorMessage: '',
+};
+
+export function login(state = initialState, action) {
   
-  const response = action.response;
+  const { response } = action;
 
   switch(action.type) {
     case types.LOGIN_USER_SUCCESS:
-      return { ...state, response };
+      if(response) {
+        if (response.token) {
+          return { ...state, isLogin: true, errorMessage: '' };
+        } else if (response.error) {
+          return { ...state, isLogin: false, errorMessage: response.error };
+        } else if(response.name) {
+          return { ...state, isLogin: false, errorMessage: response.name };
+        }
+      }
+      break;
     case types.LOGIN_USER_ERROR:
-      return { ...state, response };
+        return { ...state, isLogin: false, errorMessage: 'You have lost connection' };
     default:
-      return state;
+      return {...state};
   }
 };
-

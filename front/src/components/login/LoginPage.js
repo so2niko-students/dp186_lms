@@ -5,38 +5,26 @@ import { Redirect } from 'react-router-dom';
 import { LoginForm } from './LoginForm';
 
 class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSuccess: '',
-    }
-    this.message = ''
-  }
   onHandleLogin = (data) => {
     this.props.dispatch(loginUserAction(data));
   }
   
   componentDidMount() {
     document.title = 'Login';
-    this.message = !this.state.isSuccess ? 'Wrong email or password' : null;
   }
   
   render() {
-    if( this.props.response.login.response){
-      this.setState({
-        isSuccess : this.props.response.login.response.token
-      })
-    }
-    
     return (
       <div>
-        {this.state.isSuccess ? <Redirect to='dashboard' /> : null }
-        <LoginForm onHandleLogin={this.onHandleLogin} message={this.message} isSuccess={this.state.isSuccess} />
+        {this.props.isLogin ? <Redirect to='dashboard' /> : null }
+        <LoginForm onHandleLogin={this.onHandleLogin} message={this.props.errorMessage} isLogin={this.props.isLogin} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (response) => ({response});
+const mapStateToProps = ({
+  login : { errorMessage, isLogin }}
+) => ({ errorMessage, isLogin });
 
 export default connect(mapStateToProps)(LoginPage);

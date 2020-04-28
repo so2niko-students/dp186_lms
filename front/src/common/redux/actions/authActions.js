@@ -1,11 +1,8 @@
-import * as types from './types';
+import { LOGIN_USER } from './types';
 
 export const loginUserAction = (user) => {
-  // console.log('AUTH ACTION');
-  // console.log(user);
-
   return {
-    type: types.LOGIN_USER,
+    type: LOGIN_USER,
     user
   }
 };

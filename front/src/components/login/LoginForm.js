@@ -1,6 +1,6 @@
 import React from 'react';
-import { LoginButton, StyledCol, Container, ForgotPassword, ErrorText} from './styledLoginForm';
-import { Form, Input, Col, Typography } from 'antd';
+import { LoginButton, StyledCol, ForgotPassword, ErrorText} from './styledLoginForm';
+import { Form, Input, Col, Typography, Row } from 'antd';
 import 'antd/dist/antd.css';
 
 const { Title } = Typography;
@@ -8,16 +8,10 @@ const layout = {
     labelCol: { span: 8, },
     wrapperCol: { span: 16, },
 };
-const tailLayout = { 
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
 
 export function LoginForm(props) {
     return (
-        <Container>
+        <Row>
             <StyledCol span={8} offset={8}>
                 <Title level={2} align="center">Login</Title>
 
@@ -30,16 +24,16 @@ export function LoginForm(props) {
                     <Input.Password placeholder="Password" />
                 </Form.Item>
 
-                { props.isSuccess ? null : <ErrorText>{props.message}</ErrorText> }
+                { props.isLogin ? null : <ErrorText>{props.message}</ErrorText> }
 
-                <Form.Item align="center" {...tailLayout}>
+                <Form.Item align="center">
                     <LoginButton type="primary" htmlType="submit"> Login </LoginButton>
                 </Form.Item>
 
                 <Col align="center"><ForgotPassword to="/recoveryPass">Forgot password?</ForgotPassword></Col>
                 </Form>
             </StyledCol>
-        </Container>
+        </Row>
     )
 }
 

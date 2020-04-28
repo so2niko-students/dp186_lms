@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Button, Col, Row } from 'antd';
+import { Button, Col } from 'antd';
 import style from "styled-components";
 import 'antd/dist/antd.css';
 
-const Container = style(Row)`
-    margin-top: 50px; 
-`;
-
 const StyledCol = style(Col)`
+    margin-top: 50px; 
     border: 2px solid #333;
     padding: 30px;
 `;
@@ -15,7 +12,7 @@ const StyledCol = style(Col)`
 const LoginButton = style(Button)`
     width: 60%;
     border-radius: 5px;
-    text-align: center;
+    margin-left: 20%;
 `;
 
 const ForgotPassword = style(Link)`
@@ -29,4 +26,4 @@ const ErrorText = style.p`
     color: tomato;
 `
 
-export { Container, StyledCol, LoginButton, ForgotPassword, ErrorText } ;
+export { StyledCol, LoginButton, ForgotPassword, ErrorText } ;
