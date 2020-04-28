@@ -15,14 +15,14 @@ class StudentRegistrationPage extends Component {
   }
 
   render() {
-    const { errorMessage, isRegistered, isModalVisible } = this.props;
+    const { errorMessage, isRegistered, isModalVisible, match, dispatch } = this.props;
 
     if (!isRegistered) {
       return (
         <>
           <StudentRegistrationForm
-            token={this.props.match.params.token}
-            dispatch={this.props.dispatch}
+            token={match.params.token}
+            dispatch={dispatch}
           />
           <Modal
             title="Sorry but you did not register"

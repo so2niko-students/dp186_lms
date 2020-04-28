@@ -1,7 +1,7 @@
 import { APP_LOAD, CALC } from "../actions/types";
 import { combineReducers } from 'redux';
 import login from './loginReducer';
-import { studentRegister } from './studentRegistrationReduser'; 
+import { studentRegister } from './studentRegistrationReducer'; 
 
 const initialState = {
     isLoad: false,
