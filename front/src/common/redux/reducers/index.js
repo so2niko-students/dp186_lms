@@ -1,4 +1,6 @@
 import { APP_LOAD, CALC } from "../actions/types";
+import { combineReducers } from 'redux';
+import { groupList } from './groupListReducer';
 
 const initialState = {
     isLoad: false,
@@ -28,4 +30,6 @@ const reducer = (state = initialState, action) => {
     }
 };
 
-export default reducer;
+const rootReducer = combineReducers({reducer, groupList});
+
+export default rootReducer;

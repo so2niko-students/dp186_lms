@@ -1,28 +1,36 @@
+// add to app for checking
+// import GroupListPage from '../list-of-group';
+// const groups = [
+//     {id: 1, name: "group 1" },
+//     {id: 2, name: "group 2" },
+// ]
+// <GroupListPage groups={groups} />;
+
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
 import { AddGroupButton, SiderStyle } from './styledListOfGroup';
+import { setCurrentGroup } from '../../common/redux/actions/groupListAction';
+import { connect } from 'react-redux';
 
 const { Content } = Layout;
 
-
 class GroupListPage extends Component {
-    onHandleGroup = () => {
-
+    onHandleGroup = (data) => {
+        this.props.dispatch(setCurrentGroup(data));
     }
 
     render() {
+        console.log(this.props)
         return (
             <Layout>
                 <SiderStyle width={200} className="site-layout-background">
                     <AddGroupButton type="primary"> Add group </AddGroupButton>
                     <Menu mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }} >
-                        <Menu.Item key="1" onClick={this.onHandleGroup}>option1</Menu.Item>
-                        <Menu.Item key="2">option2</Menu.Item>
-                        <Menu.Item key="3">option3</Menu.Item>
+                    {this.props.groups.map(group => <Menu.Item key={group.id} onClick={this.onHandleGroup}>{group.name}</Menu.Item>)}
                     </Menu>
                 </SiderStyle>
-                {/* <Layout style={{ padding: '0 24px 24px' }}>
+                <Layout style={{ padding: '0 24px 24px' }}>
                     <Content
                     className="site-layout-background"
                     style={{
@@ -31,24 +39,14 @@ class GroupListPage extends Component {
                         minHeight: 280,
                     }}
                     >
-                    Content
+                    {this.props.groupList.currentGroup}
                     </Content>
-                </Layout> */}
+                </Layout>
             </Layout>
         )
     }
 }
 
-// const mapStateToProps = state => ({
-//     groups: state.groupsReducer.groups,
-//     selectedGroup: state.groupsReducer.selectedGroup
-//   });
+const mapDispatchToProps = dispatch => dispatch;
 
-//   const mapDispatchToProps = dispatch => ({
-//     actions: bindActionCreators(Object.assign({}, selectGroup), dispatch)
-//   });
-  
-  
-//   export default connect(mapStateToProps, mapDispatchToProps)(GroupListPage);
-export default GroupListPage;
-
+export default connect( mapDispatchToProps)(GroupListPage);
