@@ -4,8 +4,6 @@ import { loginUserAction } from '../../common/redux/actions/authActions';
 import { Redirect } from 'react-router-dom';
 import { LoginForm } from './LoginForm';
 
-let isSuccess = false, message;
-
 class LoginPage extends Component {
   onHandleLogin = (data) => {
     this.props.dispatch(loginUserAction(data));
@@ -13,23 +11,20 @@ class LoginPage extends Component {
   
   componentDidMount() {
     document.title = 'Login';
-    message = !isSuccess ? 'Wrong email or password' : null;
   }
   
   render() {
-    if( this.props.response.login.response){
-      isSuccess = this.props.response.login.response.token;
-    }
-    
     return (
       <div>
-        {isSuccess ? <Redirect to='dashboard' /> : null }
-        <LoginForm onHandleLogin={this.onHandleLogin} message={message} isSuccess={isSuccess} />
+        {this.props.isLogin ? <Redirect to='dashboard' /> : null }
+        <LoginForm onHandleLogin={this.onHandleLogin} message={this.props.errorMessage} isLogin={this.props.isLogin} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (response) => ({response});
+const mapStateToProps = ({
+  login : { errorMessage, isLogin }}
+) => ({ errorMessage, isLogin });
 
 export default connect(mapStateToProps)(LoginPage);

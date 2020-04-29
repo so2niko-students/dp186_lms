@@ -1,8 +1,8 @@
-import * as types from './types';
+import { LOGIN_USER } from './types';
 
 export const loginUserAction = (user) => {
   return {
-    type: types.LOGIN_USER,
+    type: LOGIN_USER,
     user
   }
 };

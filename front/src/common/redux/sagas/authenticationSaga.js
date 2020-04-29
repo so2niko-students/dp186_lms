@@ -6,7 +6,7 @@ import * as types from '../actions/types';
 export function* loginSaga(payload) {
   try {
     const response = yield call(loginUserService, payload);
-    
+
     if(response.hasOwnProperty('token')){
       localStorage.setItem('token', response.token)
     }
