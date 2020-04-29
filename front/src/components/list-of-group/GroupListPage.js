@@ -1,11 +1,3 @@
-// add to app for checking
-// import GroupListPage from '../list-of-group';
-// const groups = [
-//     {id: 1, name: "group 1" },
-//     {id: 2, name: "group 2" },
-// ]
-// <GroupListPage groups={groups} />;
-
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
@@ -21,25 +13,17 @@ class GroupListPage extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <Layout>
-                <SiderStyle width={200} className="site-layout-background">
+                <SiderStyle width={200} className="site-layout-background" >
                     <AddGroupButton type="primary"> Add group </AddGroupButton>
-                    <Menu mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }} >
-                    {this.props.groups.map(group => <Menu.Item key={group.id} onClick={this.onHandleGroup}>{group.name}</Menu.Item>)}
+                    <Menu style={{ overflow: 'auto', position: 'fixed', left: 0, height: '90%', borderRight: 0, width: 200 }} mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} >
+                        {this.props.groups.map(group => <Menu.Item key={group.id} onClick={this.onHandleGroup}>{group.name}</Menu.Item>)}
                     </Menu>
                 </SiderStyle>
                 <Layout style={{ padding: '0 24px 24px' }}>
-                    <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 280,
-                    }}
-                    >
-                    {this.props.groupList.currentGroup}
+                    <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
+                        {this.props.groupList.currentGroup}
                     </Content>
                 </Layout>
             </Layout>
