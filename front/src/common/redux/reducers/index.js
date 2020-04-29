@@ -1,4 +1,4 @@
-import { APP_LOAD, CALC } from "../actions/types";
+import { APP_LOAD, CALC } from '../actions/types';
 import { combineReducers } from 'redux';
 import { login } from './loginReducer';
 
