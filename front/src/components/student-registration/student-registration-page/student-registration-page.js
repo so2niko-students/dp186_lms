@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import obj from '../../../common/redux/actions';
+import { hideStudentRegisteredModal } from '../../../common/redux/actions';
 import { connect } from 'react-redux';
 import { Modal, Row, Col } from 'antd';
 import StudentRegistrationForm from '../student-registration-form';
@@ -11,7 +11,7 @@ class StudentRegistrationPage extends Component {
   }
 
   handleHideModal() {
-    this.props.dispatch(obj.hideStudentRegisteredModal());
+    this.props.dispatch(hideStudentRegisteredModal());
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import obj from '../../../common/redux/actions';
+import { studentRegistered } from '../../../common/redux/actions';
 import { Row, Form, Typography } from 'antd';
 import { Col, Input, Button } from '../student-registration-form/style';
 
@@ -30,7 +30,7 @@ class StudentRegistrationPage extends Component {
   handleSubmit(data) {
     data.groupToken = this.props.token;
 
-    this.props.dispatch(obj.studentRegistered(data));
+    this.props.dispatch(studentRegistered(data));
   }
 
   async validateEng(_, value) {

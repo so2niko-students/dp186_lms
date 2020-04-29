@@ -3,7 +3,7 @@ import applicationLoad from "./example";
 import { loginUserAction } from "./authActions";
 import { studentRegistered, hideStudentRegisteredModal } from './studentRegistrationAction';
 
-export default {
+export {
     applicationLoad,
     calculate,
     loginUserAction,

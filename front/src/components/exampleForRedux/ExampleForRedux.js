@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import actions from "../../common/redux/actions/";
+import * as actions from "../../common/redux/actions/";
 import { Heading, Wrapper, Ptag } from "./styledComponentsExample";
 import { connect } from "react-redux";
 
