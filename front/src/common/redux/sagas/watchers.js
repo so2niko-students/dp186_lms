@@ -1,6 +1,7 @@
 import { takeLatest } from 'redux-saga/effects';
 import { loginSaga } from './authenticationSaga';
-import { studentRegisteredSage } from './studentRegisteredSage';
+import { studentRegisteredSaga } from './studentRegisteredSaga';
+import { teacherRegisteredSaga } from './teacherRegisteredSaga';
 
 import * as types from '../actions/types';
 
@@ -9,5 +10,9 @@ export function* watchUserklAuthentication() {
 }
 
 export  function* watchStudentRegistaration() {
-  yield takeLatest(types.REGISTER_STUDENT, studentRegisteredSage);
+  yield takeLatest(types.REGISTER_STUDENT, studentRegisteredSaga);
+}
+
+export  function* watchTeacherRegistaration() {
+  yield takeLatest(types.REGISTER_TEACHER, teacherRegisteredSaga);
 }

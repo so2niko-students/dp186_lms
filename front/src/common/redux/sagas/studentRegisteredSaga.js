@@ -3,7 +3,7 @@ import { studentRegistrationService } from '../services/sudentRegistrationServic
 
 import {REGISTRATION_STUDENT_ERROR, REGISTRATION_STUDENT } from '../actions/types';
 
-export function* studentRegisteredSage(payload) {
+export function* studentRegisteredSaga(payload) {
   try {
     const response = yield call(studentRegistrationService, payload);
     
