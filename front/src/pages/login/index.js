@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { loginUserAction } from '../../common/redux/auth/actions/auth.action';
+import { loginUserAction } from '../../common/redux/auth/auth.action';
 import { LoginButton, StyledCol, ForgotPassword, ErrorText } from './style';
 import { Form, Input, Col, Typography, Row } from 'antd';
 import 'antd/dist/antd.css';
@@ -17,11 +17,12 @@ const layout = {
 };
 
 class LoginPage extends Component {
-  onHandleLogin = (data) => {
-    this.props.dispatch(loginUserAction(data));
-  };
+  constructor(props) {
+    super(props);
+    this.loginFormTemplate = this.loginFormTemplate.bind(this);
+  }
 
-  loginFormTemplate = (errorMessage, isLoggedIn) => {
+  loginFormTemplate(errorMessage, isLoggedIn) {
     return (
       <Row>
         <StyledCol span={8} offset={8}>
@@ -29,7 +30,7 @@ class LoginPage extends Component {
             Login
             </Title>
 
-          <Form {...layout} name='basic' onFinish={this.onHandleLogin}>
+          <Form {...layout} name='basic' onFinish={this.props.onHandleLogin}>
             <Form.Item
               align='center'
               name='email'
@@ -90,4 +91,10 @@ const mapStateToProps = ({ login: { errorMessage, isLoggedIn } }) => ({
   isLoggedIn
 });
 
-export default connect(mapStateToProps)(LoginPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onHandleLogin: (data) => dispatch(loginUserAction(data))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects';
-import { rootAuthSaga } from './auth/sagas/auth.saga';
+import { rootSaga } from './auth/auth.saga';
 
 export default function* startForman() {
-    yield fork(rootAuthSaga);
+    yield fork(rootSaga);
 }

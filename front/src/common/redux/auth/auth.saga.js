@@ -1,6 +1,6 @@
 import { put, call, all, takeEvery } from "redux-saga/effects";
-import { loginApi } from "../api/auth.api";
-import * as types from "../actions/types";
+import { loginApi } from "./auth.api";
+import * as types from "./types";
 
 function* loginSaga(payload) {
     try {
@@ -17,7 +17,7 @@ function* watchUserklAuthentication() {
     yield takeEvery(types.LOGIN_USER, loginSaga);
 }
 
-export function* rootAuthSaga() {
+export function* rootSaga() {
     yield all([
         watchUserklAuthentication(),
     ])
