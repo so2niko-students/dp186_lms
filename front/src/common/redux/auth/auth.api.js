@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const url = 'http://127.0.0.1:5000/auth/login';
-const headers = { headers: { 'Content-Type': 'application/json' } };
-
 async function loginApi(request) {
-    return axios.post(url, JSON.stringify(request.user), headers)
+    const url = process.env.REACT_APP_LOGIN_ROUTE;
+    const data = JSON.stringify(request.user);
+    const headers = { headers: { 'Content-Type': 'application/json' } };
+
+    return axios.post(url, data, headers)
         .then(response => response)
 };
 export { loginApi };

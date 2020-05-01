@@ -17,7 +17,7 @@ function* watchUserklAuthentication() {
     yield takeEvery(types.LOGIN_USER, loginSaga);
 }
 
-export function* rootSaga() {
+export function* authSaga() {
     yield all([
         watchUserklAuthentication(),
     ])
