@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './components/app/App';
 import store from './common/redux/store';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import StudentRegistrationPage from './pages/student-registration-page';
 
-const app = (
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
+class App extends Component {
+    render() {
+        return (
+          <Provider store={store}>
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/student-registration/:token" component={StudentRegistrationPage} />
+                </Switch>
+            </BrowserRouter>
+          </Provider>
+        )
+    }
+}
 
-render(app, document.getElementById('root'));
+render(<App />, document.getElementById('root'));

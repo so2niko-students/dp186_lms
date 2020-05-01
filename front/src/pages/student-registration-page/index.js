@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { studentRegistered } from '../../../common/redux/actions';
+import { connect } from 'react-redux';
 import { Row, Form, Typography } from 'antd';
-import { Col, Input, Button } from '../student-registration-form/style';
+import { studentRegistered } from '../../common/redux/students/students.actions';
+import { validateEng, validateUkr, validatePhoneNumber } from '../../common/validators/form.validator';
+import { Col, Input, Button } from './styles';
+import { showNotification } from '../../common/notifications/notifications';
 
 const { Title } = Typography;
 
@@ -10,71 +13,29 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-const tailLayout = {
-  wrapperCol: {
-    offset: 9,
-    span: 16,
-  },
-};
-
 class StudentRegistrationPage extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateEng = this.validateEng.bind(this);
-    this.validateUkr = this.validateUkr.bind(this);
-    this.validatePhoneNumber = this.validatePhoneNumber.bind(this);
-    this.confirmPassword = this.confirmPassword.bind(this);
+    this.renderStudentRegistrationForm = this.renderStudentRegistrationForm.bind(this);
+  }
+
+  componentDidUpdate() {
+    const {isRegistered, isFormSended, errorMessage, email } = this.props;
+
+    if (!isRegistered && isFormSended) {
+      showNotification('Sorry but you did not register', errorMessage, 'error');
+    } else {
+      showNotification('Successfully registered', `User with provided email ${email} was registered`, 'success');
+    }
   }
 
   handleSubmit(data) {
-    data.groupToken = this.props.token;
-
+    data.groupToken = this.props.match.params.token;
     this.props.dispatch(studentRegistered(data));
   }
 
-  async validateEng(_, value) {
-    const engRegexp = /^[A-Z]{1}([a-z]{1,})?$/;
-    if (engRegexp.test(value)) {
-      return Promise.resolve();
-    } else {
-      return Promise.reject('Not valid name or surname in English');
-    }
-  }
-
-  async validateUkr(_, value) {
-    const ukrRegexp = /^[А-ЯІЇЄ]{1}([а-яіїє]{1,})?$/;
-    const excludeRuLetters = /^[^ЫЭЪЁ]{1}([^ыэъё]{1,})?$/;
-
-    if (ukrRegexp.test(value) && excludeRuLetters.test(value)) {
-      return Promise.resolve();
-    } else {
-      return Promise.reject('Not valid name or surname in Ukrainian');
-    }
-  }
-
-  async validatePhoneNumber(_, value) {
-    const phoneNumberRegexp = /\+380\d{9}/;
-
-    if (phoneNumberRegexp.test(value)) {
-      return Promise.resolve();
-    } else {
-      return Promise.reject('Not valid phone number');
-    }
-  }
-
-  async confirmPassword({ getFieldValue }) {
-    return {
-      validator(rule, value) {
-        if (!value || getFieldValue('password') === value) {
-          return Promise.resolve();
-        }
-        return Promise.reject('The two passwords that you entered do not match!');
-      },
-    };
-  }
-
-  render() {
+  renderStudentRegistrationForm() {
     return (
       <Row justify="center">
         <Col span={8}>
@@ -84,51 +45,46 @@ class StudentRegistrationPage extends Component {
           <Form {...layout} onFinish={this.handleSubmit}>
             <Form.Item
               name="firstNameEng"
-              onChange={this.handleChange}
               align="center"
               rules={[
                 { required: true, message: 'Please input your name in English!' },
-                { validator: this.validateEng },
+                { validator: validateEng },
               ]}
             >
               <Input placeholder="Name in English" />
             </Form.Item>
             <Form.Item
               name="lastNameEng"
-              onChange={this.handleChange}
               align="center"
               rules={[
                 { required: true, message: 'Please input your surname in English!' },
-                { validator: this.validateEng },
+                { validator: validateEng },
               ]}
             >
               <Input placeholder="Surname in English" />
             </Form.Item>
             <Form.Item
               name="firstNameUkr"
-              onChange={this.handleChange}
               align="center"
               rules={[
                 { required: true, message: 'Please input name in Ukrainian!' },
-                { validator: this.validateUkr },
+                { validator: validateUkr },
               ]}
             >
               <Input placeholder="Name in Ukrainian" />
             </Form.Item>
             <Form.Item
               name="lastNameUkr"
-              onChange={this.handleChange}
               align="center"
               rules={[
                 { required: true, message: 'Please input your surname in Ukrainian!' },
-                { validator: this.validateUkr },
+                { validator: validateUkr },
               ]}
             >
               <Input placeholder="Surname in Ukrainian" />
             </Form.Item>
             <Form.Item
               name="email"
-              onChange={this.handleChange}
               align="center"
               rules={[
                 { required: true, message: 'Please input your email!' },
@@ -139,11 +95,10 @@ class StudentRegistrationPage extends Component {
             </Form.Item>
             <Form.Item
               name="phoneNumber"
-              onChange={this.handleChange}
               align="center"
               rules={[
                 { required: true, message: 'Please input your phone number!' },
-                { validator: this.validatePhoneNumber },
+                { validator: validatePhoneNumber },
               ]}
             >
               <Input placeholder="Phone number" />
@@ -151,7 +106,6 @@ class StudentRegistrationPage extends Component {
             <Form.Item
               name="password"
               dependencies={['password']}
-              onChange={this.handleChange}
               align="center"
               rules={[
                 { required: true, message: 'Please input your password!' },
@@ -168,7 +122,6 @@ class StudentRegistrationPage extends Component {
             </Form.Item>
             <Form.Item
               name="passwordConfirmation"
-              onChange={this.handleChange}
               align="center"
               hasFeedback
               rules={[
@@ -185,7 +138,7 @@ class StudentRegistrationPage extends Component {
             >
               <Input.Password placeholder="Confirm password" />
             </Form.Item>
-            <Form.Item align="center" {...tailLayout} >
+            <Form.Item align="center" >
               <Button
                 type="primary"
                 htmlType="submit"
@@ -198,6 +151,30 @@ class StudentRegistrationPage extends Component {
       </Row>
     );
   }
+
+  render() {
+    const { isRegistered } = this.props;
+
+    if (!isRegistered) {
+      return (
+        <>
+          {this.renderStudentRegistrationForm()}
+        </>
+      );
+    } else if (isRegistered) {
+      return (
+        <Row justify="center">
+          <Col align="center">
+            <h1>Successfully registered. Later here will be redirect functionality</h1>
+          </Col>
+        </Row>
+      );
+    }
+  }
 }
 
-export default StudentRegistrationPage;
+const mapStateToProps = ({
+  studentRegister: { errorMessage, isRegistered, isModalVisible, isFormSended, email },
+}) => ({ errorMessage, isRegistered, isModalVisible, isFormSended, email });
+
+export default connect(mapStateToProps)(StudentRegistrationPage);
