@@ -7,7 +7,6 @@ import {
 const initialState = {
   isRegistered: false,
   isFormSended: false,
-  isModalVisible: false,
   errorMessage: '',
 };
 
