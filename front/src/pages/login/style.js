@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button, Col } from 'antd';
-import style from "styled-components";
+import style from 'styled-components';
 import 'antd/dist/antd.css';
 
 const StyledCol = style(Col)`
