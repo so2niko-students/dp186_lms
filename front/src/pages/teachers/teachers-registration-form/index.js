@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Col, Input, Row, Form, Typography } from 'antd';
 import { Button, SpinnerContainer } from './styles';
 import { validateEng } from '../../../common/validators/form.validator';
-import { Spinner } from '../../../components/spinner';
+import Spinner from '../../../components/spinner';
 
 const { Title } = Typography;
 
