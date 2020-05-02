@@ -5,9 +5,12 @@ import { AddGroupButton, SiderStyle } from './style';
 import { setCurrentGroup } from '../../common/redux/groups/groups.action';
 import { connect } from 'react-redux';
 
-// const { Content } = Layout;
+const { Content } = Layout;
 
-class GroupListPage extends Component {
+class ListOfGroup extends Component {
+    componentDidMount() {
+
+    }
     render() {
         console.log(this.props)
         return (
@@ -18,11 +21,11 @@ class GroupListPage extends Component {
                         {this.props.groups.map(group => <Menu.Item key={group.id} onClick={this.props.onHandleGroup}>{group.name}</Menu.Item>)}
                     </Menu>
                 </SiderStyle>
-                {/* <Layout style={{ padding: '0 24px 24px' }}>
+                <Layout style={{ padding: '0 24px 24px' }}>
                     <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
                         {this.props.currentGroup}
                     </Content>
-                </Layout> */}
+                </Layout>
             </Layout>
         )
     }
@@ -36,4 +39,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupListPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ListOfGroup);

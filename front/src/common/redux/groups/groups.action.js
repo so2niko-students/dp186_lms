@@ -1,8 +1,8 @@
-import { CURRENT_GROUP } from './types';
+import { SET_CURRENT_GROUP } from './types';
 
 export const setCurrentGroup = (data) => {
   return {
-    type: CURRENT_GROUP,
+    type: SET_CURRENT_GROUP,
     data
   }
 };
