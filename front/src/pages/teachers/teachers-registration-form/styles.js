@@ -10,4 +10,8 @@ const Button = style(button)`
     height: 40px;
 `;
 
-export {Button}
+const SpinnerContainer = style.div`
+    padding: 0 50%;
+`
+
+export {Button, SpinnerContainer}

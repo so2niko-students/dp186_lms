@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Modal, Col, Input, Row, Form, Typography } from 'antd';
-import { Button } from './styles';
+import { Button, SpinnerContainer } from './styles';
 import { validateEng } from '../../../common/validators/form.validator';
-import { Spiner } from '../../../components/spinner';
+import { Spinner } from '../../../components/spinner';
 
 const { Title } = Typography;
 
@@ -19,7 +19,8 @@ class TeachersRegistrationForm extends Component {
   }
 
   handleSubmit(data) {
-    const { registerTeacher } = this.props;
+    const { registerTeacher, showLoader } = this.props;
+    showLoader();
     registerTeacher(data);
   }
 
@@ -28,11 +29,24 @@ class TeachersRegistrationForm extends Component {
     hideTeacherRegisteredModal();
   }
 
-  // renderSpinnerOrBtn() {
-  //   if (loading) {
-  //   } else {
-  //   }
-  // }
+  renderSpinnerOrBtn() {
+    const { loading } = this.props;
+    if (loading) {
+      return (
+        <SpinnerContainer>
+          <Spinner load={Spinner.loading()} />;
+        </SpinnerContainer>
+      ) 
+    } else {
+      return (
+        <Form.Item align="center">
+          <Button type="primary" htmlType="submit">
+            Save new mentor
+          </Button>
+        </Form.Item>
+      );
+    }
+  }
 
   render() {
     const { visible } = this.props;
@@ -96,11 +110,7 @@ class TeachersRegistrationForm extends Component {
                 >
                   <Input.Password placeholder="Password" />
                 </Form.Item>
-                <Form.Item align="center">
-                  <Button type="primary" htmlType="submit">
-                    Save new mentor
-                  </Button>
-                </Form.Item>
+                {this.renderSpinnerOrBtn()}
               </Form>
             </Col>
           </Row>

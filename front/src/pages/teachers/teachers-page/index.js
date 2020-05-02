@@ -5,7 +5,8 @@ import TeachersRegistrationForm from '../teachers-registration-form';
 import {
   hideTeacherRegisteredModal,
   registerTeacher,
-  showTeacherRegisteredModal
+  showTeacherRegisteredModal,
+  showLoader
 } from '../../../common/redux/teachers/teachers.actions';
 
 class TeachersPage extends Component {
@@ -20,6 +21,8 @@ class TeachersPage extends Component {
       isRegistrationModalVisible,
       hideTeacherRegisteredModal,
       registerTeacher,
+      loading,
+      showLoader
     } = this.props;
     return (
       <>
@@ -30,6 +33,8 @@ class TeachersPage extends Component {
           visible={isRegistrationModalVisible}
           hideTeacherRegisteredModal={hideTeacherRegisteredModal}
           registerTeacher={registerTeacher}
+          loading={loading}
+          showLoader={showLoader}
         />
         <h1>5.2.1 task content</h1>
       </>
@@ -40,15 +45,18 @@ class TeachersPage extends Component {
 const mapStateToProps = ({
   teachersReducer: {
     isRegistrationModalVisible,
+    loading
   },
 }) => ({
   isRegistrationModalVisible,
+  loading
 });
 
 const mapDispatchToProps = {
   hideTeacherRegisteredModal,
   registerTeacher,
   showTeacherRegisteredModal,
+  showLoader
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeachersPage);
