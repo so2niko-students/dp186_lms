@@ -1,16 +1,37 @@
 import React, {Component} from 'react';
-import { Row, Col, Typography, List } from 'antd';
+import { Col, Typography, List, Avatar } from 'antd';
 import CustomAvatar from '../avatar';
-import {StyledListItem, StyledAvatar, StyledTitle, StyledP, StyledDivBtn, StyledBtn} from './style';
+import {StyledListItem, StyledTitle, StyledP, StyledDivBtn, StyledBtn,
+    StyledRow, GroupTitleP, DeleteStudentBtn, StyledListItemMeta, StyledStudentBlock,
+    StyledTeachersBlock } from './style';
 
 const { Title } = Typography;
 
 class Group extends Component {
     state = {
+      isChangeGroupName: false,
       groupName: 'GroupName',
       students: [
           {
               id: 1,
+              avatar: 'https://res.cloudinary.com/lmsdp186/image/upload/v1588269845/owrnx4airzhhiua2yyqp.jpg',
+              name: 'Lusia Gusivna',
+              email: 'lusia@gmail.com',
+          },
+          {
+              id: 2,
+              avatar: 'https://res.cloudinary.com/lmsdp186/image/upload/v1588269845/owrnx4airzhhiua2yyqp.jpg',
+              name: 'Lusia Gusivna',
+              email: 'lusia@gmail.com',
+          },
+          {
+              id: 3,
+              avatar: 'https://res.cloudinary.com/lmsdp186/image/upload/v1588269845/owrnx4airzhhiua2yyqp.jpg',
+              name: 'Lusia Gusivna',
+              email: 'lusia@gmail.com',
+          },
+          {
+              id: 4,
               avatar: 'https://res.cloudinary.com/lmsdp186/image/upload/v1588269845/owrnx4airzhhiua2yyqp.jpg',
               name: 'Lusia Gusivna',
               email: 'lusia@gmail.com',
@@ -29,50 +50,53 @@ class Group extends Component {
         const { groupName, students, mentor } = this.state;
         return (
             <>
-                <Row justify={'center'}>
+                <StyledRow justify={'center'}>
                     <Col span={8} align={'center'}>
                         <CustomAvatar />
-                        <Title level={2} >{groupName}</Title>
+                        <div>
+                            <GroupTitleP>{groupName}</GroupTitleP>
+                        </div>
                     </Col>
-                </Row>
-                <Row>
-                    <Col span={12} align={'center'}>
+                </StyledRow>
+                <StyledRow justify={'space-around'}>
+                    <StyledStudentBlock span={12} align={'center'}>
                         <Title level={3} >{'Students'}</Title>
                         <List
                             itemLayout={'horizontal'}
                             dataSource={students}
                             renderItem={item => (
-                                <StyledListItem>
-                                    <StyledAvatar size={48} src={item.avatar} />
-                                    <div>
-                                        <StyledTitle level={4}>{item.name}</StyledTitle>
-                                        <StyledP align={'left'}>{item.email}</StyledP>
-                                    </div>
+                                <StyledListItem key={item.id}>
+                                    <StyledListItemMeta
+                                        avatar={<Avatar size={48} src={item.avatar} />}
+                                        title={<StyledTitle>{item.name}</StyledTitle>}
+                                        description={<StyledP align={'left'}>{item.email}</StyledP>}
+                                    />
+                                    <DeleteStudentBtn type={'danger'} key={item.id}>Delete</DeleteStudentBtn>
                                 </StyledListItem>
                             )}
                         />
-                    </Col>
-                    <Col span={12} align={'center'}>
+                    </StyledStudentBlock>
+                    <StyledTeachersBlock span={12} align={'center'}>
                         <Title level={3} >{'Mentor'}</Title>
                         <List
                             itemLayout={'horizontal'}
                             dataSource={mentor}
                             renderItem={item => (
                                 <StyledListItem>
-                                    <StyledAvatar size={48} src={item.avatar} />
-                                    <div>
-                                        <StyledTitle level={4}>{item.name}</StyledTitle>
-                                        <StyledP align={'left'}>{item.email}</StyledP>
-                                    </div>
+                                    <StyledListItemMeta
+                                        avatar={<Avatar size={48} src={item.avatar} />}
+                                        title={<StyledTitle>{item.name}</StyledTitle>}
+                                        description={<StyledP align={'left'}>{item.email}</StyledP>}
+                                    />
                                 </StyledListItem>
                             )}
                         />
-                    </Col>
-                </Row>
-                <StyledDivBtn>
-                    <StyledBtn type={'primary'}>Homework</StyledBtn>
-                    <StyledBtn type={'danger'}>Complete course</StyledBtn>
-                </StyledDivBtn>
+                        <StyledDivBtn>
+                            <StyledBtn type={'primary'}>Homework</StyledBtn>
+                            <StyledBtn type={'danger'}>Complete course</StyledBtn>
+                        </StyledDivBtn>
+                    </StyledTeachersBlock>
+                </StyledRow>
             </>
         );
     }

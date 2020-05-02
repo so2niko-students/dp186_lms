@@ -1,22 +1,63 @@
 import style from 'styled-components';
-import { List, Avatar, Typography, Button } from 'antd';
+import { List, Button, Row, Col } from 'antd';
+
+export const StyledRow = style(Row)`
+    padding: 20px 30px;
+`;
+
+export const GroupTitleP = style.p`
+    margin-top: 10px;
+    font-size: 28px;
+    color: #000;
+    font-weight: bold;
+    color: #40a9ff;
+`;
+
+export const StyledUserBlock = style(Col)`
+    
+`;
+
+export const StyledStudentBlock = style(StyledUserBlock)`
+    background: whitesmoke;
+    padding: 20px 0;
+    border-radius: 10px;
+`;
+
+export const StyledTeachersBlock = style(StyledUserBlock)`
+    
+`;
+
 
 export const StyledListItem = style(List.Item)`
-    justify-content: center;
+    justify-content: flex-start;
+    margin: 0 30px;
+    border-bottom: 1px solid #cccccc!important;
+    &:last-child {
+        border-bottom: 0px!important;
+    }
 `;
 
-export const StyledAvatar = style(Avatar)`
-    margin: 0 10px;
+export const StyledListItemMeta = style(List.Item.Meta)`
+    align-items: center;
+    padding: 15px 55px;
+    flex: none;
 `;
 
-export const StyledTitle = style(Typography.Title)`
+export const StyledTitle = style.span`
     text-align: left;
     margin: 0px!important;
     font-weight: bold;
+    font-size: 18px;
+`;
+
+export const DeleteStudentBtn = style(Button)`
+    font-weight: bolder;
+    font-size: 14px;
+    border-radius: 5px;  
 `;
 
 export const StyledP = style.p`
-    margin: 0!important;
+    margin: -10px 0 0 0!important;
     text-align: left;
     color: #adadad;
     
@@ -24,13 +65,14 @@ export const StyledP = style.p`
 
 export const StyledDivBtn = style.div`
     display: flex;
-    flex-flow: column;
-    width: 150px;
-    position: absolute;
-    top: 15px;
-    right: 20px;
+    justify-content: center;
 `;
 
 export const StyledBtn = style(Button)`
-    margin: 10px 0;
+    margin: 10px;
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 5px;
+    font-weight: bold;
 `;
