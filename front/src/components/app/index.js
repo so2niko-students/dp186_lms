@@ -4,6 +4,7 @@ import StudentRegistrationPage from '../../pages/student-registration-page';
 import TeachersPage from '../../pages/teachers/teachers-page';
 import {showTeacherRegisteredModal} from '../../common/redux/teachers/teachers.actions'
 import { connect } from 'react-redux';
+import LoginPage from '../../pages/login';
 
 class App extends Component {
     render() {
@@ -17,6 +18,7 @@ class App extends Component {
                         this.props.dispatch(showTeacherRegisteredModal())
                          return <TeachersPage />
                        }}/>
+                    <Route path="/login" component={LoginPage} />
                 </Switch>
             </BrowserRouter>
         )
