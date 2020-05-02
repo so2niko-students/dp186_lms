@@ -15,7 +15,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-export class Spinner extends Component {
+class Spinner extends Component {
     static loading = () => {
         return <Spin indicator={antIcon} />;
     };
@@ -37,3 +37,5 @@ export class Spinner extends Component {
         )
     }
 }
+
+export default Spinner;
