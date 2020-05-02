@@ -1,7 +1,7 @@
 import {
-  STUDENT_COMPLETED_REG,
-  STUDENT_REG_LOGICAL_ERROR_HAPPENED,
-  REG_STUDENT_FAILED,
+  STUDENT_COMPLETED_REGISTER,
+  STUDENT_REGISTER_ERROR_HAPPENED,
+  REGISTER_STUDENT_FAILED,
 } from './types';
 
 const initialState = {
@@ -10,11 +10,11 @@ const initialState = {
 
 export function studentsReducer(state = initialState, action) {
   switch (action.type) {
-    case STUDENT_COMPLETED_REG:
+    case STUDENT_COMPLETED_REGISTER:
       return { ...state, isRegistered: true };
-    case REG_STUDENT_FAILED:
+    case REGISTER_STUDENT_FAILED:
       return { ...state, isRegistered: false };
-    case STUDENT_REG_LOGICAL_ERROR_HAPPENED:
+    case STUDENT_REGISTER_ERROR_HAPPENED:
       return { ...state, isRegistered: false };
     default:
       return state;

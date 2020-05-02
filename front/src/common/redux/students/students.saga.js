@@ -3,9 +3,9 @@ import { registerStudentApi } from './students.api';
 import { showNotification } from '../../notifications/notifications';
 
 import {
-  REG_STUDENT_FAILED,
-  STUDENT_COMPLETED_REG,
-  STUDENT_REG_LOGICAL_ERROR_HAPPENED,
+  REGISTER_STUDENT_FAILED,
+  STUDENT_COMPLETED_REGISTER,
+  STUDENT_REGISTER_ERROR_HAPPENED,
   REGISTER_STUDENT
 } from './types';
 
@@ -14,16 +14,16 @@ import {
     const response = yield call(registerStudentApi, payload);
     showNotification('Successfully registered', `User with provided email ${response.data.email} was registered`, 'success');
 
-    yield put({ type: STUDENT_COMPLETED_REG });
+    yield put({ type: STUDENT_COMPLETED_REGISTER });
   } catch (error) {
     if (error.response) {
       showNotification('Sorry but you did not register', error.response.data.error, 'error');
 
-      yield put({ type: STUDENT_REG_LOGICAL_ERROR_HAPPENED });
+      yield put({ type: STUDENT_REGISTER_ERROR_HAPPENED });
     } else {
       showNotification('Sorry but you did not register', error.message, 'error');
 
-      yield put({ type: REG_STUDENT_FAILED });
+      yield put({ type: REGISTER_STUDENT_FAILED });
     }
   }
 }
