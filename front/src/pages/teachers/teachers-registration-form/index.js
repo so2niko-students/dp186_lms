@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Modal, Col, Input, Button, Row, Form, Typography } from 'antd';
 import {
   hideTeacherRegisteredModal,
-  teacherRegistered,
+  registerTeacher,
   hideTeacherResponseModal,
-} from '../../../common/redux/actions/';
+} from '../../../common/redux/teachers/teachers.actions';
 
 const { Title } = Typography;
 
@@ -30,7 +30,7 @@ class TeachersRegistrationForm extends Component {
 
   handleSubmit(data) {
     console.log(data);
-    this.props.dispatch(teacherRegistered(data));
+    this.props.dispatch(registerTeacher(data));
   }
 
   handleCancel() {

@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { hideStudentRegisteredModal } from '../../../common/redux/actions';
-import { showTeacherRegisteredModal } from '../../../common/redux/actions';
+import { showTeacherRegisteredModal } from '../../../common/redux/teachers/teachers.actions';
 import { connect } from 'react-redux';
 import { Modal, Row, Col, Button } from 'antd';
-import StudentRegistrationForm from '../teachers-some-form';
-import TeachersRegistrationForm from '../teachers-registatration-form';
+import TeachersRegistrationForm from '../teachers-registration-form';
 
 class StudentRegistrationPage extends Component {
   constructor(props) {
     super(props);
-    this.handleHideModal = this.handleHideModal.bind(this);
   }
 
   state = { testVisible: false };
@@ -18,13 +15,9 @@ class StudentRegistrationPage extends Component {
     this.props.dispatch(showTeacherRegisteredModal());
   };
 
-  handleHideModal() {
-    this.props.dispatch(hideStudentRegisteredModal());
-  }
 
   render() {
     const {
-      match,
       dispatch,
       isTeacherRegistered,
       isRegistrationModalVisible,
@@ -35,7 +28,7 @@ class StudentRegistrationPage extends Component {
     return (
       <>
         <Button type="primary" onClick={this.showModal}>
-          Open Modal
+          Create mentor
         </Button>
         <TeachersRegistrationForm
           visible={isRegistrationModalVisible}
@@ -44,13 +37,14 @@ class StudentRegistrationPage extends Component {
           errorMessage={teacherErrorMessage}
           isRegistered={isTeacherRegistered}
         />
+        <h1>5.2.1 task content</h1>
       </>
     );
   }
 }
 
 const mapStateToProps = ({
-  teacherRegister: {
+  teachersReducer: {
     isRegistrationModalVisible,
     isResponseModalVisible,
     isRegistered: isTeacherRegistered,

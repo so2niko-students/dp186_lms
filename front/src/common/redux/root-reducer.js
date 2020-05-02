@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import { studentRegister } from './students/students.reducers/studentRegistrationReducer'; 
+import { studentsReducer } from './students/students.reducer';
+import { teachersReducer } from './teachers/teachers.reducer'; 
 
-const rootReducer = combineReducers({studentRegister});
+const rootReducer = combineReducers({studentsReducer, teachersReducer});
 
 export default rootReducer;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Form, Typography } from 'antd';
-import { studentRegistered } from '../../common/redux/students/students.actions';
+import { registerStudent } from '../../common/redux/students/students.action';
 import { validateEng, validateUkr, validatePhoneNumber } from '../../common/validators/form.validator';
 import { Col, Input, Button } from './styles';
 import { showNotification } from '../../common/notifications/notifications';
@@ -32,7 +32,7 @@ class StudentRegistrationPage extends Component {
 
   handleSubmit(data) {
     data.groupToken = this.props.match.params.token;
-    this.props.dispatch(studentRegistered(data));
+    this.props.registerStudent(data);
   }
 
   renderStudentRegistrationForm() {
@@ -174,7 +174,11 @@ class StudentRegistrationPage extends Component {
 }
 
 const mapStateToProps = ({
-  studentRegister: { errorMessage, isRegistered, isModalVisible, isFormSended, email },
+  studentsReducer: { errorMessage, isRegistered, isModalVisible, isFormSended, email },
 }) => ({ errorMessage, isRegistered, isModalVisible, isFormSended, email });
 
-export default connect(mapStateToProps)(StudentRegistrationPage);
+const mapDispatchToProps = {
+  registerStudent
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudentRegistrationPage);
