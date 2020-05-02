@@ -1,30 +1,26 @@
 import React, { Component } from 'react';
-import { showTeacherRegisteredModal } from '../../../common/redux/teachers/teachers.actions';
 import { connect } from 'react-redux';
-import { Modal, Row, Col, Button } from 'antd';
+import { Button } from 'antd';
 import TeachersRegistrationForm from '../teachers-registration-form';
+import {
+  hideTeacherRegisteredModal,
+  registerTeacher,
+  showTeacherRegisteredModal
+} from '../../../common/redux/teachers/teachers.actions';
 
-class StudentRegistrationPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  state = { testVisible: false };
+class TeachersPage extends Component {
 
   showModal = () => {
-    this.props.dispatch(showTeacherRegisteredModal());
+    const { showTeacherRegisteredModal } = this.props
+    showTeacherRegisteredModal();
   };
-
 
   render() {
     const {
-      dispatch,
-      isTeacherRegistered,
       isRegistrationModalVisible,
-      isResponseModalVisible,
-      teacherErrorMessage,
+      hideTeacherRegisteredModal,
+      registerTeacher,
     } = this.props;
-    console.log(this.props);
     return (
       <>
         <Button type="primary" onClick={this.showModal}>
@@ -32,10 +28,8 @@ class StudentRegistrationPage extends Component {
         </Button>
         <TeachersRegistrationForm
           visible={isRegistrationModalVisible}
-          responseVisible={isResponseModalVisible}
-          dispatch={dispatch}
-          errorMessage={teacherErrorMessage}
-          isRegistered={isTeacherRegistered}
+          hideTeacherRegisteredModal={hideTeacherRegisteredModal}
+          registerTeacher={registerTeacher}
         />
         <h1>5.2.1 task content</h1>
       </>
@@ -46,15 +40,15 @@ class StudentRegistrationPage extends Component {
 const mapStateToProps = ({
   teachersReducer: {
     isRegistrationModalVisible,
-    isResponseModalVisible,
-    isRegistered: isTeacherRegistered,
-    errorMessage: teacherErrorMessage,
   },
 }) => ({
   isRegistrationModalVisible,
-  isResponseModalVisible,
-  isTeacherRegistered,
-  teacherErrorMessage,
 });
 
-export default connect(mapStateToProps)(StudentRegistrationPage);
+const mapDispatchToProps = {
+  hideTeacherRegisteredModal,
+  registerTeacher,
+  showTeacherRegisteredModal,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeachersPage);

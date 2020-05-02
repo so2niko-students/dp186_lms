@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Form, Typography } from 'antd';
 import { registerStudent } from '../../common/redux/students/students.action';
-import { validateEng, validateUkr, validatePhoneNumber } from '../../common/validators/form.validator';
+import {
+  validateEng,
+  validateUkr,
+  validatePhoneNumber,
+} from '../../common/validators/form.validator';
 import { Col, Input, Button } from './styles';
-import { showNotification } from '../../common/notifications/notifications';
 
 const { Title } = Typography;
 
@@ -18,16 +21,6 @@ class StudentRegistrationPage extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderStudentRegistrationForm = this.renderStudentRegistrationForm.bind(this);
-  }
-
-  componentDidUpdate() {
-    const {isRegistered, isFormSended, errorMessage, email } = this.props;
-
-    if (!isRegistered && isFormSended) {
-      showNotification('Sorry but you did not register', errorMessage, 'error');
-    } else {
-      showNotification('Successfully registered', `User with provided email ${email} was registered`, 'success');
-    }
   }
 
   handleSubmit(data) {
@@ -138,11 +131,8 @@ class StudentRegistrationPage extends Component {
             >
               <Input.Password placeholder="Confirm password" />
             </Form.Item>
-            <Form.Item align="center" >
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+            <Form.Item align="center">
+              <Button type="primary" htmlType="submit">
                 Create account
               </Button>
             </Form.Item>
@@ -156,11 +146,7 @@ class StudentRegistrationPage extends Component {
     const { isRegistered } = this.props;
 
     if (!isRegistered) {
-      return (
-        <>
-          {this.renderStudentRegistrationForm()}
-        </>
-      );
+      return <>{this.renderStudentRegistrationForm()}</>;
     } else if (isRegistered) {
       return (
         <Row justify="center">
@@ -173,12 +159,10 @@ class StudentRegistrationPage extends Component {
   }
 }
 
-const mapStateToProps = ({
-  studentsReducer: { errorMessage, isRegistered, isModalVisible, isFormSended, email },
-}) => ({ errorMessage, isRegistered, isModalVisible, isFormSended, email });
+const mapStateToProps = ({ studentsReducer: { isRegistered } }) => ({ isRegistered });
 
 const mapDispatchToProps = {
-  registerStudent
+  registerStudent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentRegistrationPage);

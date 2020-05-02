@@ -1,17 +1,15 @@
 import axios from 'axios';
 
 async function registerTeacherApi(teacher) {
-  const url = 'http://127.0.0.1:5000/teachers';
-  const data = JSON.stringify(teacher.payload);
+  const url = process.env.REACT_APP_TEACHERS_REG_ROUT;
   const token = localStorage.getItem('token');
-  console.log(token);
   if (!token) {
     console.log('No token found');
     return;
   }
 
   return axios
-    .post(url, data, {
+    .post(url, JSON.stringify(teacher.payload), {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

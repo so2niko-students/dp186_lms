@@ -1,27 +1,11 @@
-import { SHOW_TEACHER_REGISTERED_MODAL, HIDE_TEACHER_REGISTERED_MODAL, REGISTER_TEACHER, HIDE_TEACHER_RESPONSE_MODAL } from './types';
+import { SHOW_TEACHER_REG_MODAL, HIDE_TEACHER_REG_MODAL, REGISTER_TEACHER, SHOW_LOADER, HIDE_LOADER } from './types';
 
-export const registerTeacher = (teacher) => {
-  return {
-    type: REGISTER_TEACHER,
-    payload: teacher,
-  };
-};
+export const registerTeacher = (teacher) => ({type: REGISTER_TEACHER,payload: teacher});
 
-export const hideTeacherRegisteredModal = () => {
-  return {
-    type: HIDE_TEACHER_REGISTERED_MODAL
-  }
-}
+export const hideTeacherRegisteredModal = () => ({type: HIDE_TEACHER_REG_MODAL})
 
+export const showTeacherRegisteredModal = () => ( {type: SHOW_TEACHER_REG_MODAL})
 
-export const showTeacherRegisteredModal = () => {
-  return {
-    type: SHOW_TEACHER_REGISTERED_MODAL
-  }
-}
+export const showLoader = () => ({type: SHOW_LOADER})
 
-export const hideTeacherResponseModal = () => {
-  return {
-    type: HIDE_TEACHER_RESPONSE_MODAL
-  }
-}
+export const hideLoader = () => ({type: HIDE_LOADER})

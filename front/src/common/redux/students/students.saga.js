@@ -1,5 +1,6 @@
 import { put, call, takeEvery, all  } from 'redux-saga/effects';
 import { registerStudentApi } from './students.api';
+import { showNotification } from '../../notifications/notifications';
 
 import {
   REG_STUDENT_FAILED,
@@ -11,14 +12,18 @@ import {
  function* studentRegisteredSaga(payload) {
   try {
     const response = yield call(registerStudentApi, payload);
+    showNotification('Successfully registered', `User with provided email ${response.data.email} was registered`, 'success');
 
-    yield put({ type: STUDENT_COMPLETED_REG, email: response.data.email });
-
+    yield put({ type: STUDENT_COMPLETED_REG });
   } catch (error) {
     if (error.response) {
-      yield put({ type: STUDENT_REG_LOGICAL_ERROR_HAPPENED, error: error.response.data.error });
+      showNotification('Sorry but you did not register', error.response.data.error, 'error');
+
+      yield put({ type: STUDENT_REG_LOGICAL_ERROR_HAPPENED });
     } else {
-      yield put({ type: REG_STUDENT_FAILED, error: error.message });
+      showNotification('Sorry but you did not register', error.message, 'error');
+
+      yield put({ type: REG_STUDENT_FAILED });
     }
   }
 }
