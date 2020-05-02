@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects';
-import {rootStudentsSaga} from './students/students.sagas/rootStudentsSaga';
+import {studentsSaga} from './students/students.saga';
 
 export default function* startForman() {
-  yield fork(rootStudentsSaga);
+  yield fork(studentsSaga);
 }

@@ -1,8 +1,8 @@
 import {
-  STUDENT_COMPLETED_REGISTRATION,
-  STUDENT_REGISTRATION_LOGICAL_ERROR_OCCURREDD,
-  REGISTRATION_STUDENT_FAILED,
-} from '../students.actions/types';
+  STUDENT_COMPLETED_REG,
+  STUDENT_REG_LOGICAL_ERROR_HAPPENED,
+  REG_STUDENT_FAILED,
+} from './types';
 
 const initialState = {
   isRegistered: false,
@@ -10,16 +10,15 @@ const initialState = {
   errorMessage: '',
 };
 
-export function studentRegister(state = initialState, action) {
+export function studentsReducer(state = initialState, action) {
   const { email } = action;
   const { error } = action;
-  console.log(action);
   switch (action.type) {
-    case STUDENT_COMPLETED_REGISTRATION:
+    case STUDENT_COMPLETED_REG:
       return { ...state, isFormSended: true, isRegistered: true, email };
-    case REGISTRATION_STUDENT_FAILED:
+    case REG_STUDENT_FAILED:
       return { ...state, errorMessage: error, isRegistered: false, isFormSended: true };
-    case STUDENT_REGISTRATION_LOGICAL_ERROR_OCCURREDD:
+    case STUDENT_REG_LOGICAL_ERROR_HAPPENED:
       return {
         ...state,
         errorMessage: error,

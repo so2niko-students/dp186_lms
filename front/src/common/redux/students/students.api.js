@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 async function registerStudentApi(student) {
-  const url = 'http://127.0.0.1:5000/students';
-  const data = JSON.stringify(student.payload);
+  const url = process.env.REACT_APP_STUDENT_REG_ROUT;
 
   return axios
-    .post(url, data, {
+    .post(url, JSON.stringify(student.payload), {
       headers: {
         'Content-Type': 'application/json',
       },
