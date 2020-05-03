@@ -13,6 +13,17 @@ export const GroupTitleP = style.p`
     color: #40a9ff;
 `;
 
+export const StyledColHeader = style(Col)`
+    position: relative;
+    border-bottom: 1px solid #cccccc;
+`;
+
+export const EditGroupBtn = style(Button)`
+    position: absolute;
+    top: 0;
+    right: 0;
+`;
+
 export const StyledUserBlock = style(Col)`
     
 `;
@@ -27,6 +38,10 @@ export const StyledTeachersBlock = style(StyledUserBlock)`
     
 `;
 
+export const StyledList = style(List)`
+    max-height: 550px;
+    overflow-y: scroll;
+`;
 
 export const StyledListItem = style(List.Item)`
     justify-content: flex-start;
@@ -41,6 +56,9 @@ export const StyledListItemMeta = style(List.Item.Meta)`
     align-items: center;
     padding: 15px 55px;
     flex: none;
+    &>div>h4 {
+        text-align: left;
+    }
 `;
 
 export const StyledTitle = style.span`

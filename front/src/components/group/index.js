@@ -1,37 +1,24 @@
 import React, {Component} from 'react';
-import { Col, Typography, List, Avatar } from 'antd';
+import {Typography, List, Avatar} from 'antd';
+import { Link } from 'react-router-dom';
+import {EditOutlined} from '@ant-design/icons';
 import CustomAvatar from '../avatar';
-import {StyledListItem, StyledTitle, StyledP, StyledDivBtn, StyledBtn,
+import {
+    StyledListItem, StyledTitle, StyledP, StyledDivBtn, StyledBtn,
     StyledRow, GroupTitleP, DeleteStudentBtn, StyledListItemMeta, StyledStudentBlock,
-    StyledTeachersBlock } from './style';
+    StyledTeachersBlock, EditGroupBtn, StyledColHeader, StyledList
+} from './style';
+import GroupEditForm from '../groupEditForm';
 
 const { Title } = Typography;
 
 class Group extends Component {
     state = {
-      isChangeGroupName: false,
+      isEdit: false,
       groupName: 'GroupName',
       students: [
           {
               id: 1,
-              avatar: 'https://res.cloudinary.com/lmsdp186/image/upload/v1588269845/owrnx4airzhhiua2yyqp.jpg',
-              name: 'Lusia Gusivna',
-              email: 'lusia@gmail.com',
-          },
-          {
-              id: 2,
-              avatar: 'https://res.cloudinary.com/lmsdp186/image/upload/v1588269845/owrnx4airzhhiua2yyqp.jpg',
-              name: 'Lusia Gusivna',
-              email: 'lusia@gmail.com',
-          },
-          {
-              id: 3,
-              avatar: 'https://res.cloudinary.com/lmsdp186/image/upload/v1588269845/owrnx4airzhhiua2yyqp.jpg',
-              name: 'Lusia Gusivna',
-              email: 'lusia@gmail.com',
-          },
-          {
-              id: 4,
               avatar: 'https://res.cloudinary.com/lmsdp186/image/upload/v1588269845/owrnx4airzhhiua2yyqp.jpg',
               name: 'Lusia Gusivna',
               email: 'lusia@gmail.com',
@@ -46,22 +33,33 @@ class Group extends Component {
           }
       ],
     };
+
+    handleEditGroup = () =>{
+        this.setState({isEdit: true});
+    }
+
     render() {
-        const { groupName, students, mentor } = this.state;
+        const { groupName, students, mentor, isEdit } = this.state;
         return (
             <>
                 <StyledRow justify={'center'}>
-                    <Col span={8} align={'center'}>
-                        <CustomAvatar />
-                        <div>
-                            <GroupTitleP>{groupName}</GroupTitleP>
-                        </div>
-                    </Col>
+                    <StyledColHeader span={8} align={'center'}>
+                        {
+                            !isEdit ?
+                                <div>
+                                    <CustomAvatar />
+                                    <GroupTitleP>{groupName}</GroupTitleP>
+                                    <EditGroupBtn type={'primary'} icon={<EditOutlined />} size={12} shape="circle" onClick={this.handleEditGroup}/>
+                                </div>
+                                :
+                                <GroupEditForm groupName={groupName}></GroupEditForm>
+                        }
+                    </StyledColHeader>
                 </StyledRow>
                 <StyledRow justify={'space-around'}>
                     <StyledStudentBlock span={12} align={'center'}>
                         <Title level={3} >{'Students'}</Title>
-                        <List
+                        <StyledList
                             itemLayout={'horizontal'}
                             dataSource={students}
                             renderItem={item => (
@@ -92,7 +90,7 @@ class Group extends Component {
                             )}
                         />
                         <StyledDivBtn>
-                            <StyledBtn type={'primary'}>Homework</StyledBtn>
+                            <Link to={'/homeworks'}><StyledBtn type={'primary'}>Homework</StyledBtn></Link>
                             <StyledBtn type={'danger'}>Complete course</StyledBtn>
                         </StyledDivBtn>
                     </StyledTeachersBlock>
