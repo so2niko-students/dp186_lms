@@ -72,7 +72,7 @@ export class SetPasswordPage extends Component {
                         </Form.Item>
 
                         <Form.Item {...tailLayout} >
-                            <SetButton type="default" htmlType="submit" to='/login'>
+                            <SetButton type="default" htmlType="button" to='/login'>
                                 Login
                             </SetButton>
                         </Form.Item>
