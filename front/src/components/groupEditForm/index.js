@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
-import {Form, Input, Button} from 'antd';
+import {Form, Input, Button, Upload } from 'antd';
 import { validateGroup } from '../../common/validators/group.validator';
 
 class GroupEditForm extends Component {
     state = {
         groupName: this.props.groupName,
+    }
+
+    handleUpdateGroup = (data) =>{
+        console.log(data)
     }
 
     render() {
@@ -13,9 +17,15 @@ class GroupEditForm extends Component {
             <div>
                 <Form
                     initialValues={{
-                        groupName: [groupName],
+                        groupName,
                     }}
+                    onFinish={this.handleUpdateGroup}
                 >
+                    <Form.Item
+                        name={'groupAvatar'}
+                    >
+
+                    </Form.Item>
                     <Form.Item
                         label={'Group Name'}
                         name={'groupName'}
