@@ -36,8 +36,4 @@ export class Spinner extends Component {
             </div>
         )
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
