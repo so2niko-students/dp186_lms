@@ -8,4 +8,26 @@ async function loginApi(request) {
     return axios.post(url, data, headers)
         .then(response => response)
 };
-export { loginApi };
+
+async function changePasswordApi(request) {
+    const token = localStorage.getItem('token');
+    const teacherURL = process.env.REACT_APP_CHANGE_TEACHER_PASSWORD;
+    const studentURL = process.env.REACT_APP_CHANGE_STUDENT_PASSWORD;
+    const { oldPassword, newPassword } = request.user
+    const headers = {
+        headers: {
+            "Accept": "application/json",
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        }
+    };
+    if (request.user.hasOwnProperty('teacher')) {
+        return axios.put(teacherURL, JSON.stringify({ oldPassword, newPassword }), headers)
+            .then(response => response)
+    } else if (request.user.hasOwnProperty('student')) {
+        return axios.put(studentURL, JSON.stringify({ oldPassword, newPassword }), headers)
+            .then(response => response)
+    }
+};
+
+export { loginApi, changePasswordApi };

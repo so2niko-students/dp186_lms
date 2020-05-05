@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { studentsReducer } from './students/students.reducer'; 
-import { login } from './auth/auth.reducer';
+import { studentsReducer } from './students/students.reducer';
+import { login, changePassword } from './auth/auth.reducer';
 
-const rootReducer = combineReducers({ login, studentsReducer });
+const rootReducer = combineReducers({ login, studentsReducer, changePassword });
 
 export default rootReducer;
