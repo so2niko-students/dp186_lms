@@ -14,7 +14,9 @@
 //   };  
 //
 // <Button type='primary' onClick={this.showModal}>Change password</Button>
-// <ChangePassword visible={this.state.modalVisible} handleCancel={this.handleCancel} user="student" /> //(or user="teacher")
+// <ChangePassword visible={this.state.modalVisible} handleCancel={this.handleCancel} user="student" /> //(or user="teacher" for teacher)
+// or this one for change password for admin
+// <ChangePassword visible={this.state.modalVisible} handleCancel={this.handleCancel} user="admin" mentorName="Alan Cooper" teacherId="2" />
 
 
 import React, { Component } from 'react';
@@ -22,7 +24,7 @@ import { connect } from 'react-redux';
 import { changePasswordAction, changeSuccessPasswordAction } from '../../common/redux/auth/auth.action';
 import { validatePassword } from '../../common/validators/form.validator';
 import Spinner from '../../components/spinner';
-import { ErrorText } from './style';
+import { ErrorText, MentorName } from './style';
 import { Modal, Col, Input, Button, Row, Form, Typography } from 'antd';
 import 'antd/dist/antd.css';
 const { Title } = Typography;
@@ -64,12 +66,13 @@ class ChangePassword extends Component {
                     <Row justify="center">
                         <Col span={24}>
                             <Title level={2} align="center"> Change password </Title>
-                            <Form {...layout} onFinish={onHandleChangePassword}>
-                                <Form.Item name="oldPassword" align="center" rules={[{ required: true, message: 'Please input your old password!' }, { validator: validatePassword }]} >
+                            <Form {...layout} onFinish={onHandleChangePassword} initialValues={{ teacherId: this.props.teacherId }} >
+                                {user === 'admin' ? <MentorName align="center"> {this.props.mentorName} </MentorName> : null}
+                                {user === 'admin' ? null : <Form.Item name="oldPassword" align="center" rules={[{ required: true, message: 'Please input your old password!' }, { validator: validatePassword }]} >
                                     <Input.Password placeholder="Old password" />
-                                </Form.Item>
+                                </Form.Item>}
                                 <Form.Item name="newPassword" align="center" rules={[{ required: true, message: 'Please input your new password!' }, { validator: validatePassword }]} >
-                                    <Input.Password placeholder="New password" />
+                                    <Input.Password placeholder={user === 'admin' ? 'Password' : 'New password'} />
                                 </Form.Item>
                                 <Form.Item name="confirmNewPassword" dependencies={['newPassword']} align="center"
                                     rules={[
@@ -83,14 +86,19 @@ class ChangePassword extends Component {
                                             },
                                         }),
                                         { validator: validatePassword }]} >
-                                    <Input.Password placeholder="Confirm new password" />
+                                    <Input.Password placeholder={user === 'admin' ? 'Confirm password' : 'Confirm new password'} />
                                 </Form.Item>
                                 <Form.Item name={user} style={{ display: 'none' }}>
                                     <Input type="text" />
                                 </Form.Item>
+                                {this.props.teacherId ?
+                                    <Form.Item name={['teacherId', this.props.teacherId]} style={{ display: 'none' }}>
+                                        <Input type="text" />
+                                    </Form.Item>
+                                    : null}
                                 {errorMessage ? <ErrorText>{errorMessage}</ErrorText> : null}
                                 <Form.Item align="center" {...tailLayout}>
-                                    <Button type="primary" htmlType="submit"> Change password </Button>
+                                    <Button type="primary" htmlType="submit"> {user === 'admin' ? 'Update password' : 'Change password'} </Button>
                                 </Form.Item>
                             </Form>
                         </Col>

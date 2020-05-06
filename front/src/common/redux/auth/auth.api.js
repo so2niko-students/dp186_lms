@@ -21,6 +21,15 @@ async function changePasswordApi(request) {
             'Authorization': `Bearer ${token}`,
         }
     };
+
+    if (request.user.hasOwnProperty('teacherId') && request.user.hasOwnProperty('admin')) {
+        const teacherId = +Object.keys(request.user.teacherId)[0];
+        const adminURL = `${process.env.REACT_APP_CHANGE_TEACHER_PASSWORD_BY_ADMIN}${teacherId}`;
+
+        return axios.put(adminURL, JSON.stringify({ oldPassword, newPassword }), headers)
+            .then(response => response)
+    }
+
     if (request.user.hasOwnProperty('teacher')) {
         return axios.put(teacherURL, JSON.stringify({ oldPassword, newPassword }), headers)
             .then(response => response)

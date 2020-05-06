@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { loginUserAction } from '../../common/redux/auth/auth.action';
 import { LoginButton, StyledCol, ForgotPassword, ErrorText } from './style';
-import { Form, Input, Col, Typography, Row } from 'antd';
+import { Form, Input, Col, Typography, Row, Button } from 'antd';
 import 'antd/dist/antd.css';
 import {
   validateEmail,

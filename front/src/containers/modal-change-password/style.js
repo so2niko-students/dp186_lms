@@ -6,5 +6,8 @@ const ErrorText = style.p`
     text-align: center;
     color: tomato;
 `
+const MentorName = style.p`
+    text-align: center;
+`
 
-export { ErrorText };
+export { ErrorText, MentorName };
