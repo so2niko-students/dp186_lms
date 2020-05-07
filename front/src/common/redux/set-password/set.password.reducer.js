@@ -6,6 +6,7 @@ const initialState = {
 }
 
 export function setPassword (state = initialState, action) {
+    console.log(action)
     switch(action.type) {
         case types.SET_PASSWORD_SUCCESS:
             return {...state, isSetPassword: true, errMessage:''};
