@@ -1,6 +1,6 @@
 import { SET_PASSWORD } from './types';
 
-export const setPasswordAction = (user) => ({
+export const setPasswordAction = (data) => ({
     type: SET_PASSWORD,
-    user
+    data
 });

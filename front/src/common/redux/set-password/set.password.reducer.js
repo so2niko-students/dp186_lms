@@ -12,6 +12,6 @@ export function setPassword (state = initialState, action) {
         case types.SET_PASSWORD_ERROR:
             return {...state, isSetPassword: false, errMessage:'Set new password operation is failed'};
         default:
-            return {...state};
+            return state;
     }
 }

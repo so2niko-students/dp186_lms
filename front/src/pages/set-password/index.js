@@ -4,6 +4,7 @@ import { Form, Input, Typography, Row } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setPasswordAction } from '../../common/redux/set-password/set.password.action';
+import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 const layout = {
@@ -14,18 +15,24 @@ const tailLayout = {
 	wrapperCol: { offset: 7, span: 16, },
 };
 
-export class SetPasswordPage extends Component {
+class SetPasswordPage extends Component {
     constructor(props) {
         super(props);
+        this.handleSetPassword = this.handleSetPassword.bind(this);
         this.renderSetPasswordForm = this.renderSetPasswordForm.bind(this);
     }
     
+    handleSetPassword (data) {
+        data.token = this.props.match.params.token;
+        this.props.setPasswordAction(data);
+    }
+
     renderSetPasswordForm(errorMessage, isSetPassword) {
         return (
             <Row>
                 <StyledCol span={8} offset={8}>
                 <Title level={2} align="center">Set new password</Title>
-                    <Form {...layout} name="basic" onFinish={this.props.onHandleSetPassword}>
+                    <Form {...layout} name="basic" onFinish={this.handleSetPassword}>
                         <Form.Item
                             align="center"
                             name="password"
@@ -43,9 +50,8 @@ export class SetPasswordPage extends Component {
     
                         <Form.Item
                             align="center"
-                            name="confirm password"
+                            name="confirmPassword"
                             hasFeedback
-                            dependencies={['password']}
                             rules={[{ required: true, message: 'Please, confirm your new password!' }, 
                             ({ getFieldValue }) => ({
                                 validator(rule, value) {
@@ -72,9 +78,11 @@ export class SetPasswordPage extends Component {
                         </Form.Item>
 
                         <Form.Item {...tailLayout} >
-                            <SetButton type="default" htmlType="button" to='/login'>
+                        <Link to="/login">
+                            <SetButton type="default">
                                 Login
                             </SetButton>
+                        </Link>
                         </Form.Item>
                     </Form>
                 </StyledCol>
@@ -92,12 +100,8 @@ export class SetPasswordPage extends Component {
     }
 }
 
-const mapStateToProps = ({setPassword: {isSetPassword}}) => ({isSetPassword});
+const mapStateToProps = ({setPassword: { errorMessage, isSetPassword }}) => ({ errorMessage, isSetPassword });
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onHandleSetPassword: (data) => dispatch(setPasswordAction(data))
-    }
-}
+const mapDispatchToProps = {setPasswordAction, }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetPasswordPage);
