@@ -23,14 +23,13 @@ class SetPasswordPage extends Component {
     }
     
     handleSetPassword (data) {
-        console.log(data)
         data.token = this.props.match.params.token;
         this.props.setPasswordAction(data);
     }
 
 
     renderSetPasswordForm(errorMessage, isSetPassword) {
-        console.log(errorMessage)
+        
         return (
             <Row>
                 <StyledCol span={8} offset={8}>
@@ -68,7 +67,7 @@ class SetPasswordPage extends Component {
                             <Input.Password placeholder='Confirm new password' />
                         </Form.Item>
 
-                        {!errorMessage ? null : (
+                        {isSetPassword ? null : (
                             <ErrorText>
                                 {errorMessage}
                             </ErrorText>
@@ -94,7 +93,7 @@ class SetPasswordPage extends Component {
 
     render() {
         const { errorMessage, isSetPassword } = this.props;
-        console.log(this.props);
+        
         return (
             
             <div>
