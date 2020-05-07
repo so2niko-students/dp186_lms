@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu } from 'antd';
+import { Menu } from 'antd';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import { AddGroupButton, SiderStyle } from './style';
@@ -34,16 +34,14 @@ class ListOfGroup extends Component {
         const { onHandleGroup } = this.props;
         const { groupList } = this.state;
         return (
-            <Layout>
-                <SiderStyle width={200} className="site-layout-background" >
-                    <AddGroupButton type="primary"> Add group </AddGroupButton>
-                    <Menu style={{ overflow: 'auto', position: 'fixed', left: 0, height: '90%', borderRight: 0, width: 200 }} mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} >
-                        {groupList ?
-                            groupList.map(group => <Menu.Item key={group.id} onClick={onHandleGroup}>{group.groupName}</Menu.Item>)
-                            : null}
-                    </Menu>
-                </SiderStyle>
-            </Layout>
+            <SiderStyle width={200} className="site-layout-background" >
+                <AddGroupButton type="primary"> Add group </AddGroupButton>
+                <Menu style={{ overflow: 'auto', position: 'fixed', left: 0, height: '90%', borderRight: 0, width: 200 }} mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} >
+                    {groupList ?
+                        groupList.map(group => <Menu.Item key={group.id} onClick={onHandleGroup}>{group.groupName}</Menu.Item>)
+                        : null}
+                </Menu>
+            </SiderStyle>
         )
     }
 }

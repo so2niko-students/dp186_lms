@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import { Layout } from 'antd';
 import Group from '../../components/group';
-import {Col, Row} from 'antd';
+import ListOfGroup from '../../containers/list-of-group'
 
 class GroupsPage extends Component {
     state = {
@@ -10,14 +11,10 @@ class GroupsPage extends Component {
     render() {
         return (
             <>
-                <Row>
-                    <Col span={4}>
-
-                    </Col>
-                    <Col span={20} align={'center'}>
-                        <Group />
-                    </Col>
-                </Row>
+                <Layout>
+                    <ListOfGroup />
+                    <Group />
+                </Layout>
             </>
         );
     }

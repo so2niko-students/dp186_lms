@@ -29,7 +29,7 @@ export const StyledUserBlock = style(Col)`
 `;
 
 export const StyledStudentBlock = style(StyledUserBlock)`
-    background: whitesmoke;
+    background: #f1f1f1;
     padding: 20px 0;
     border-radius: 10px;
 `;

@@ -5,9 +5,15 @@ import { StyledAvatar, StyledDiv } from './style';
 class CustomAvatar extends Component{
 
     render() {
+        const { avatar } = this.props;
         return(
             <StyledDiv>
-                <StyledAvatar size={96} icon={<UserOutlined />} />
+                {
+                !avatar ?
+                    <StyledAvatar size={96} icon={<UserOutlined/>}/>
+                    :
+                    <StyledAvatar size={96} src={avatar}/>
+                }
             </StyledDiv>
         )
     }
