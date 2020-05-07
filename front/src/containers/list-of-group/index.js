@@ -14,7 +14,17 @@ class ListOfGroup extends Component {
         this.state = {
             groupList: null
         }
+        this.onHandleGroup = this.onHandleGroup.bind(this);
+        this.onHandleFirstGroup = this.onHandleFirstGroup.bind(this);
     }
+
+    onHandleGroup(data) {
+        this.props.setCurrentGroup(groupList.find((group) => group.id === +data.key))
+    };
+
+    onHandleFirstGroup(data) {
+        this.props.setCurrentGroup(data)
+    };
 
     componentDidMount() {
         const token = localStorage.getItem('token');
@@ -26,20 +36,18 @@ class ListOfGroup extends Component {
             .then(response => {
                 this.setState({ groupList: response.data })
                 groupList = response.data; // for dispatch 
-                this.props.onHandleFirstGroup(groupList[0])
+                this.onHandleFirstGroup(groupList[0])
             })
     }
 
     render() {
-        const { onHandleGroup } = this.props;
-        const { groupList } = this.state;
         return (
             <Layout>
                 <SiderStyle width={200} className="site-layout-background" >
                     <AddGroupButton type="primary"> Add group </AddGroupButton>
                     <Menu style={{ overflow: 'auto', position: 'fixed', left: 0, height: '90%', borderRight: 0, width: 200 }} mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} >
-                        {groupList ?
-                            groupList.map(group => <Menu.Item key={group.id} onClick={onHandleGroup}>{group.groupName}</Menu.Item>)
+                        {this.state.groupList ?
+                            this.state.groupList.map(group => <Menu.Item key={group.id} onClick={this.onHandleGroup}>{group.groupName}</Menu.Item>)
                             : null}
                     </Menu>
                 </SiderStyle>
@@ -50,15 +58,8 @@ class ListOfGroup extends Component {
 
 const mapStateToProps = ({ groupList: { currentGroup }, login: { userId } }) => ({ currentGroup, userId });
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onHandleGroup: (data) => {
-            return dispatch(setCurrentGroup(groupList.find((group) => group.id === +data.key)))
-        },
-        onHandleFirstGroup: (data) => {
-            return dispatch(setCurrentGroup(data))
-        },
-    }
+const mapDispatchToProps = {
+    setCurrentGroup,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListOfGroup);
