@@ -26,7 +26,7 @@ async function changePasswordApi(request) {
         const teacherId = +Object.keys(request.user.teacherId)[0];
         const adminURL = `${process.env.REACT_APP_CHANGE_TEACHER_PASSWORD_BY_ADMIN}${teacherId}`;
 
-        return axios.put(adminURL, JSON.stringify({ oldPassword, newPassword }), headers)
+        return axios.put(adminURL, JSON.stringify({ newPassword }), headers)
             .then(response => response)
     }
 
