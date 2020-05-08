@@ -12,7 +12,8 @@ import {
   LOAD_TEACHERS,
   LOAD_TEACHERS_COMPLETED,
   UPDATE_EMAIL,
-  UPDATE_EMAIL_COMPLETED
+  UPDATE_EMAIL_COMPLETED,
+  LOAD_TEACHERS_FAILED,
 } from './types';
 
 export function* teacherRegisteredSaga(payload) {
@@ -49,15 +50,13 @@ export function* teacherUpdateNameSaga(payload) {
 
     yield put({ type: UPDATE_NAME_COMPLETED, payload: response.data });
   } catch (error) {
-    // if (error.response) {
-    //   showNotification('Sorry but you did not register', error.response.data.error, 'error');
+    if (error.response) {
+      showNotification('Sorry but you did not register', error.response.data.error, 'error');
 
-    //   yield put({ type: TEACHER_REGISTER_ERROR_HAPPENED });
-    // } else {
-    //   showNotification('Sorry but you did not register', error.message, 'error');
+    } else {
+      showNotification('Sorry but you did not register', error.message, 'error');
 
-    //   yield put({ type: REGISTER_TEACHER_FAILED });
-    // }
+    }
   }
 }
 
@@ -72,33 +71,26 @@ export function* teacherUpdateEmailSaga(payload) {
 
     yield put({ type: UPDATE_EMAIL_COMPLETED, payload: response.data });
   } catch (error) {
-    // if (error.response) {
-    //   showNotification('Sorry but you did not register', error.response.data.error, 'error');
+    if (error.response) {
+      showNotification('Sorry but you did not update', error.response.data.error, 'error');
 
-    //   yield put({ type: TEACHER_REGISTER_ERROR_HAPPENED });
-    // } else {
-    //   showNotification('Sorry but you did not register', error.message, 'error');
-
-    //   yield put({ type: REGISTER_TEACHER_FAILED });
-    // }
+    } else {
+      showNotification('Sorry but you did not update', error.message, 'error');
+      
+    }
   }
 }
 
-export function* loadTeachersSaga() {
+export function* loadTeachersSaga(payload) {
   try {
-    const response = yield call(loadTeachersApi);
+    const response = yield call(loadTeachersApi, payload);
 
     yield put({ type: LOAD_TEACHERS_COMPLETED, payload: response.data });
   } catch (error) {
-    // if (error.response) {
-    //   showNotification('Sorry but you did not register', error.response.data.error, 'error');
 
-    //   yield put({ type: TEACHER_REGISTER_ERROR_HAPPENED });
-    // } else {
-    //   showNotification('Sorry but you did not register', error.message, 'error');
+      showNotification('Something went wrong', error.message, 'error');
 
-    //   yield put({ type: REGISTER_TEACHER_FAILED });
-    // }
+      yield put({ type: LOAD_TEACHERS_FAILED });
   }
 }
 

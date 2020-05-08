@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  changeNameSurname,
+  changeName,
   cancelNameChanging,
   updateName,
   changeEmail,
   cancelEmailChanging,
-  updateEmail
+  updateEmail,
+  deleteTeacher,
 } from '../../../common/redux/teachers/teachers.actions';
 import {
   Col,
@@ -24,6 +25,7 @@ import {
 } from './styles';
 import { Row, Input } from 'antd';
 import { DeleteOutlined, EditOutlined, SaveOutlined, RollbackOutlined } from '@ant-design/icons';
+import { validateNameSurname } from '../../../common/validators/form.validator';
 
 const layout = {
   labelCol: { span: 20 },
@@ -33,7 +35,7 @@ const layout = {
 class TeachersInformation extends Component {
   constructor(props) {
     super(props);
-    this.changeNameSurname = this.changeNameSurname.bind(this);
+    this.changeName = this.changeName.bind(this);
     this.cancelNameChanging = this.cancelNameChanging.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.rememberId = this.rememberId.bind(this);
@@ -44,10 +46,10 @@ class TeachersInformation extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
   }
 
-  changeNameSurname(event) {
+  changeName(event) {
     const id = +event.target.dataset.id;
-    const { changeNameSurname } = this.props;
-    changeNameSurname(id);
+    const { changeName } = this.props;
+    changeName(id);
   }
 
   cancelNameChanging(event) {
@@ -64,7 +66,7 @@ class TeachersInformation extends Component {
       lastName,
       id: this.id,
     };
-    console.log(data)
+    console.log(data);
     const { updateName } = this.props;
     updateName(data);
   }
@@ -82,7 +84,10 @@ class TeachersInformation extends Component {
             <Item
               name="nameSurname"
               align="center"
-              rules={[{ required: true, message: 'Please input your name in English!' }]}
+              rules={[
+                { required: true, message: 'Please input new name and surname in English!' },
+                { validator: validateNameSurname },
+              ]}
             >
               <Input placeholder="Name in English" />
             </Item>
@@ -102,7 +107,7 @@ class TeachersInformation extends Component {
       return (
         <>
           <NameSurname>{`${firstName} ${lastName}`}</NameSurname>
-          <EditButton data-id={id} onClick={this.changeNameSurname}>
+          <EditButton data-id={id} onClick={this.changeName}>
             <EditOutlined />
           </EditButton>
         </>
@@ -137,7 +142,7 @@ class TeachersInformation extends Component {
               name="email"
               align="center"
               rules={[
-                { required: true, message: 'Please input your email!' },
+                { required: true, message: 'Please input new email!' },
                 { type: 'email', message: 'The input is not valid E-mail!' },
               ]}
             >
@@ -167,27 +172,48 @@ class TeachersInformation extends Component {
     }
   }
 
+  handleDeleteTeacher() {}
+
+  showModalDelete(event) {
+    this.rememberId(event);
+    this.props.showModalDelete();
+  }
+
   render() {
     const { id, groupsAmount, studentsAmount, changeNameIds, changeEmailIds } = this.props;
     return (
-      <Row>
-        <Col span={24}>
-          <div>
-            {this.renderChangeNameOrActualName(id, changeNameIds)}
-            <DeleteButton>
-              <DeleteOutlined />
-            </DeleteButton>
-          </div>
-          <div>{this.renderChangeEmailOrActualEmail(id, changeEmailIds)}</div>
-          <div>
-            <p>
-              <Groups>{`${groupsAmount} groups`}</Groups>
-              <Students>{`${studentsAmount} students`}</Students>
-            </p>
-            <Button type="primary">Change password</Button>
-          </div>
-        </Col>
-      </Row>
+      <>
+        <Row>
+          <Col span={24}>
+            <div>
+              {this.renderChangeNameOrActualName(id, changeNameIds)}
+              <DeleteButton>
+                <DeleteOutlined />
+              </DeleteButton>
+            </div>
+            <div>{this.renderChangeEmailOrActualEmail(id, changeEmailIds)}</div>
+            <div>
+              <p>
+                <Groups>{`${groupsAmount} groups`}</Groups>
+                <Students>{`${studentsAmount} students`}</Students>
+              </p>
+              <Button type="primary">Change password</Button>
+            </div>
+          </Col>
+        </Row>
+        {/* <Modal
+          title="Modal"
+          visible={isDeleteModalVisible}
+          onOk={this.handleDeleteTeacher}
+          onCancel={this.handleHideModalDelete}
+          okText="DELETE"
+          cancelText="CANCEL"
+        >
+          <p>Bla bla ...</p>
+          <p>Bla bla ...</p>
+          <p>Bla bla ...</p>
+        </Modal> */}
+      </>
     );
   }
 }
@@ -198,12 +224,13 @@ const mapStateToProps = ({ teachersReducer: { changeNameIds, changeEmailIds } })
 });
 
 const mapDispatchToProps = {
-  changeNameSurname,
+  changeName,
   cancelNameChanging,
   updateName,
   changeEmail,
   cancelEmailChanging,
   updateEmail,
+  deleteTeacher,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeachersInformation);

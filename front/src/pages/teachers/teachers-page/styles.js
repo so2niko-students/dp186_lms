@@ -12,8 +12,16 @@ const Col = style(col)`
     margin-top: 70px; 
 `;
 
+const ColPagination = style(col)`
+    margin: 30px;
+`;
+
 const Button = style(button)`
     float: right;
 `;
 
-export {Col, Button, Title}
+const SpinnerContainer = style.div`
+    padding: 0 50%;
+`
+
+export {Col, Button, Title, ColPagination, SpinnerContainer}

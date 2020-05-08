@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row } from 'antd';
-import { Button, Title, Col } from './styles';
+import { Row, Pagination } from 'antd';
+import { Button, Title, Col, ColPagination, SpinnerContainer } from './styles';
 import TeachersRegistrationForm from '../teachers-registration-form';
 import TeachersInformation from '../teachers-information';
 import {
@@ -11,21 +11,71 @@ import {
   showLoader,
   loadTeachers,
 } from '../../../common/redux/teachers/teachers.actions';
+import queryString from 'query-string'
+import Spinner from '../../../components/spinner';
 
 class TeachersPage extends Component {
   constructor(props) {
     super(props);
     this.loadData()
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.renderSpinnerOrContent = this.renderSpinnerOrContent.bind(this);
   }
 
   loadData() {
-    this.props.loadTeachers();
+    this.props.showLoader()
+    let querys = queryString.parse(this.props.location.search);
+    const queryKeys = Object.keys(querys);
+    const condition = queryKeys.length !== 1 || !queryKeys.includes('page');
+
+    if(condition) {
+      this.props.history.push('/teachers?page=1');
+      querys = {
+        page: 1,
+      }
+      this.props.loadTeachers(querys);
+    } else {
+      this.props.loadTeachers(querys);
+    }
   }
 
   showModal = () => {
     const { showTeacherRegisteredModal } = this.props;
     showTeacherRegisteredModal();
   };
+
+  handleChangePage(page, limit) {
+    this.props.showLoader()
+    this.props.history.push(`/teachers?page=${page}`);
+    this.props.loadTeachers({page, limit})
+  }
+
+  renderSpinnerOrContent() {
+    const { loading } = this.props;
+    if (loading) {
+      return (
+        <SpinnerContainer>
+          <Spinner load={Spinner.loading()} />;
+        </SpinnerContainer>
+      ) 
+    } else {
+      return (
+        this.props.teachers.map(({ id, firstName, lastName, email, groupsCount, studentsCount }) => {
+          return (
+            <TeachersInformation
+              key={id}
+              id={id}
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              groupsAmount={groupsCount}
+              studentsAmount={studentsCount}
+            />
+          );
+        })
+      );
+    }
+  }
 
   render() {
     const {
@@ -34,6 +84,8 @@ class TeachersPage extends Component {
       registerTeacher,
       loading,
       showLoader,
+      total,
+      currentPage
     } = this.props;
     return (
       <>
@@ -55,7 +107,8 @@ class TeachersPage extends Component {
         <Row justify="center">
           <Col span={10} align="center">
             <h1>5.4 content</h1>
-            {this.props.teachers.map(({ id, firstName, lastName, email, groupsAmount, studentsAmount }) => {
+            {this.renderSpinnerOrContent()}
+            {/* {this.props.teachers.map(({ id, firstName, lastName, email, groupsCount, studentsCount }) => {
               return (
                 <TeachersInformation
                   key={id}
@@ -63,22 +116,30 @@ class TeachersPage extends Component {
                   firstName={firstName}
                   lastName={lastName}
                   email={email}
-                  groupsAmount={groupsAmount}
-                  studentsAmount={studentsAmount}
+                  groupsAmount={groupsCount}
+                  studentsAmount={studentsCount}
                 />
               );
-            })}
+            })} */}
           </Col>
         </Row>
+        <Row justify="center">
+          <ColPagination align="center">
+            <Pagination justify="center" onChange={this.handleChangePage} defaultCurrent={1} current={currentPage} total={total} />
+          </ColPagination>
+        </Row>
+
       </>
     );
   }
 }
 
-const mapStateToProps = ({ teachersReducer: { isRegistrationModalVisible, loading, teachers } }) => ({
+const mapStateToProps = ({ teachersReducer: { isRegistrationModalVisible, loading, teachers, total, currentPage } }) => ({
   isRegistrationModalVisible,
   loading,
-  teachers
+  teachers,
+  total,
+  currentPage
 });
 
 const mapDispatchToProps = {

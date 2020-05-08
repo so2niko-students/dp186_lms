@@ -39,9 +39,9 @@ async function updateTeacherApi(teacher) {
     .then((response) => response);
 }
 
-async function loadTeachersApi() {
-  const url = process.env.REACT_APP_TEACHERS_LOAD_ROUT;
-
+async function loadTeachersApi(action) {
+  console.log(action)
+  const url = `${process.env.REACT_APP_TEACHERS_LOAD_ROUT}?page=${action.querys.page}&limit=10`;
   const token = localStorage.getItem('token');
   if (!token) {
     console.log('No token found');
