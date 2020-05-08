@@ -21,11 +21,11 @@ export function* teacherRegisteredSaga(payload) {
     yield put({ type: TEACHER_COMPLETED_REGISTER });
   } catch (error) {
     if (error.response) {
-      showNotification('Sorry but you did not register', error.response.data.error, 'error');
+      showNotification('Registration error', error.response.data.error, 'error');
 
       yield put({ type: TEACHER_REGISTER_ERROR_HAPPENED });
     } else {
-      showNotification('Sorry but you did not register', error.message, 'error');
+      showNotification('Registration error', error.message, 'error');
 
       yield put({ type: REGISTER_TEACHER_FAILED });
     }

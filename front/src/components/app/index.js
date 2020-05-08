@@ -15,7 +15,7 @@ class App extends Component {
                     <Route path="/teachers" exact component={TeachersPage} />
                     <Route path="/teachers/create"
                        render={() => {
-                        this.props.dispatch(showTeacherRegisteredModal())
+                        this.props.showTeacherRegisteredModal();
                          return <TeachersPage />
                        }}/>
                     <Route path="/login" component={LoginPage} />
@@ -25,4 +25,10 @@ class App extends Component {
     }
 }
 
-export default connect()(App);
+
+  
+const mapDispatchToProps = {
+    showTeacherRegisteredModal
+};
+
+export default connect(null, mapDispatchToProps)(App);

@@ -36,7 +36,7 @@ class TeachersRegistrationForm extends Component {
         <SpinnerContainer>
           <Spinner load={Spinner.loading()} />;
         </SpinnerContainer>
-      ) 
+      );
     } else {
       return (
         <Form.Item align="center">
@@ -98,17 +98,9 @@ class TeachersRegistrationForm extends Component {
                 <Form.Item
                   name="password"
                   align="center"
-                  rules={[
-                    { required: true, message: 'Please input your password!' },
-                    {
-                      validator: (_, value) =>
-                        value.length >= 6
-                          ? Promise.resolve()
-                          : Promise.reject('Password length should be 6 or more symbols'),
-                    },
-                  ]}
+                  rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                  <Input.Password placeholder="Password" />
+                  <Input.Password minLength={6} placeholder="Password" />
                 </Form.Item>
                 {this.renderSpinnerOrBtn()}
               </Form>
