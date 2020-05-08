@@ -1,0 +1,1 @@
+export const SET_CURRENT_GROUP = 'SET_CURRENT_GROUP';
