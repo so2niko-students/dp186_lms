@@ -8,6 +8,8 @@ import {
   cancelEmailChanging,
   updateEmail,
   deleteTeacher,
+  showModalDelete,
+  hideModalDelete,
 } from '../../../common/redux/teachers/teachers.actions';
 import {
   Col,
@@ -23,7 +25,7 @@ import {
   Form,
   Item,
 } from './styles';
-import { Row, Input } from 'antd';
+import { Row, Input, Modal } from 'antd';
 import { DeleteOutlined, EditOutlined, SaveOutlined, RollbackOutlined } from '@ant-design/icons';
 import { validateNameSurname } from '../../../common/validators/form.validator';
 
@@ -44,6 +46,9 @@ class TeachersInformation extends Component {
     this.changeEmail = this.changeEmail.bind(this);
     this.cancelEmailChanging = this.cancelEmailChanging.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.showModalDelete = this.showModalDelete.bind(this);
+    this.hideModalDelete = this.hideModalDelete.bind(this);
+    this.handleDeleteTeacher = this.handleDeleteTeacher.bind(this);
   }
 
   changeName(event) {
@@ -172,22 +177,37 @@ class TeachersInformation extends Component {
     }
   }
 
-  handleDeleteTeacher() {}
+  handleDeleteTeacher() {
+    const { deleteTeacherId } = this.props;
+    this.props.deleteTeacher(deleteTeacherId)
+  }
 
   showModalDelete(event) {
-    this.rememberId(event);
-    this.props.showModalDelete();
+    const id = +event.target.dataset.id;
+    this.id = id;
+    this.props.showModalDelete(id);
+  }
+
+  hideModalDelete() {
+    this.props.hideModalDelete();
   }
 
   render() {
-    const { id, groupsAmount, studentsAmount, changeNameIds, changeEmailIds } = this.props;
+    const {
+      id,
+      groupsAmount,
+      studentsAmount,
+      changeNameIds,
+      changeEmailIds,
+      isDeleteModalVisible,
+    } = this.props;
     return (
       <>
         <Row>
           <Col span={24}>
             <div>
               {this.renderChangeNameOrActualName(id, changeNameIds)}
-              <DeleteButton>
+              <DeleteButton data-id={id} onClick={this.showModalDelete}>
                 <DeleteOutlined />
               </DeleteButton>
             </div>
@@ -201,26 +221,28 @@ class TeachersInformation extends Component {
             </div>
           </Col>
         </Row>
-        {/* <Modal
-          title="Modal"
+        <Modal
+          title="Delete teacher"
           visible={isDeleteModalVisible}
           onOk={this.handleDeleteTeacher}
-          onCancel={this.handleHideModalDelete}
+          onCancel={this.hideModalDelete}
           okText="DELETE"
           cancelText="CANCEL"
         >
-          <p>Bla bla ...</p>
-          <p>Bla bla ...</p>
-          <p>Bla bla ...</p>
-        </Modal> */}
+          <p>Are you sure, you want to delete this teacher?</p>
+        </Modal>
       </>
     );
   }
 }
 
-const mapStateToProps = ({ teachersReducer: { changeNameIds, changeEmailIds } }) => ({
+const mapStateToProps = ({
+  teachersReducer: { changeNameIds, changeEmailIds, isDeleteModalVisible, deleteTeacherId },
+}) => ({
   changeNameIds,
   changeEmailIds,
+  isDeleteModalVisible,
+  deleteTeacherId
 });
 
 const mapDispatchToProps = {
@@ -231,6 +253,8 @@ const mapDispatchToProps = {
   cancelEmailChanging,
   updateEmail,
   deleteTeacher,
+  showModalDelete,
+  hideModalDelete,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeachersInformation);

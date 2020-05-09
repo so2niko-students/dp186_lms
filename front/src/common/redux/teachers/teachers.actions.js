@@ -11,6 +11,8 @@ import {
   CANCEL_EMAIL_CHANGING,
   UPDATE_EMAIL,
   DELETE_TEACHER,
+  SHOW_MODAL_DELETE,
+  HIDE_MODAL_DELETE
 } from './types';
 
 export const registerTeacher = (teacher) => ({ type: REGISTER_TEACHER, payload: teacher });
@@ -36,3 +38,7 @@ export const cancelEmailChanging = (id) => ({ type: CANCEL_EMAIL_CHANGING, id })
 export const updateEmail = (data) => ({ type: UPDATE_EMAIL, payload: data });
 
 export const deleteTeacher = (id) => ({ type: DELETE_TEACHER, id });
+
+export const showModalDelete = (id) => ({ type: SHOW_MODAL_DELETE, id });
+
+export const hideModalDelete = () => ({ type: HIDE_MODAL_DELETE });

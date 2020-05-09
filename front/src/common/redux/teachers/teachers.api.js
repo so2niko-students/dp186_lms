@@ -19,16 +19,14 @@ async function registerTeacherApi(teacher) {
 }
 
 async function updateTeacherApi(teacher) {
-  console.log(teacher)
   const url = `${process.env.REACT_APP_TEACHERS_UPDATE_ROUT}${teacher.payload.id}`;
   delete teacher.payload.id;
-  console.log(teacher.payload);
   const token = localStorage.getItem('token');
   if (!token) {
     console.log('No token found');
     return;
   }
-
+  console.log(teacher.payload);
   return axios
     .put(url, JSON.stringify(teacher.payload), {
       headers: {
@@ -39,8 +37,26 @@ async function updateTeacherApi(teacher) {
     .then((response) => response);
 }
 
+async function deleteTeacherApi(teacher) {
+  console.log(teacher);
+  const url = `${process.env.REACT_APP_TEACHERS_DELETE_ROUT}${teacher.id}`;
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.log('No token found');
+    return;
+  }
+  console.log(token);
+  return axios
+    .delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response);
+}
+
 async function loadTeachersApi(action) {
-  console.log(action)
   const url = `${process.env.REACT_APP_TEACHERS_LOAD_ROUT}?page=${action.querys.page}&limit=10`;
   const token = localStorage.getItem('token');
   if (!token) {
@@ -58,4 +74,4 @@ async function loadTeachersApi(action) {
     .then((response) => response);
 }
 
-export { registerTeacherApi, updateTeacherApi, loadTeachersApi };
+export { registerTeacherApi, updateTeacherApi, loadTeachersApi, deleteTeacherApi };

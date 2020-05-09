@@ -13,7 +13,9 @@ import {
   CANCEL_EMAIL_CHANGING,
   UPDATE_EMAIL_COMPLETED,
   LOAD_TEACHERS_FAILED,
-  TEACHER_UPDATE_ERROR_HAPPENED
+  SHOW_MODAL_DELETE,
+  HIDE_MODAL_DELETE,
+  DELETE_TEACHER_COMPLETED
 } from './types';
 
 const initialState = {
@@ -24,6 +26,7 @@ const initialState = {
   teachers: [],
   total: 1,
   currentPage: 1,
+  isDeleteModalVisible: false,
 };
 
 export function teachersReducer(state = initialState, action) {
@@ -101,6 +104,18 @@ export function teachersReducer(state = initialState, action) {
 
     case LOAD_TEACHERS_FAILED:
       return { ...state, loading: false };
+
+    case SHOW_MODAL_DELETE:
+      return { ...state, isDeleteModalVisible: true, deleteTeacherId: action.id };
+
+    case HIDE_MODAL_DELETE:
+      return { ...state, isDeleteModalVisible: false };
+
+    case DELETE_TEACHER_COMPLETED:
+      newTeachers = [];
+      state.teachers.forEach((obj) => newTeachers.push({ ...obj }));
+      newTeachers = newTeachers.filter(({id}) => id !== action.payload);
+      return { ...state, teachers: newTeachers, isDeleteModalVisible: false };
 
     default:
       return state;
