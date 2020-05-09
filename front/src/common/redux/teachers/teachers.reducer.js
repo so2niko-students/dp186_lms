@@ -15,7 +15,8 @@ import {
   LOAD_TEACHERS_FAILED,
   SHOW_MODAL_DELETE,
   HIDE_MODAL_DELETE,
-  DELETE_TEACHER_COMPLETED
+  DELETE_TEACHER_COMPLETED,
+  REMEMBER_UPDATING_ID,
 } from './types';
 
 const initialState = {
@@ -58,6 +59,9 @@ export function teachersReducer(state = initialState, action) {
       newChangeNameIds = state.changeNameIds.slice();
       newChangeNameIds.push(action.id);
       return { ...state, changeNameIds: newChangeNameIds };
+
+    case REMEMBER_UPDATING_ID:
+      return { ...state, updatingId: action.id };
 
     case CANCEL_NAME_CHANGING:
       newChangeNameIds = state.changeNameIds.slice();
@@ -114,7 +118,7 @@ export function teachersReducer(state = initialState, action) {
     case DELETE_TEACHER_COMPLETED:
       newTeachers = [];
       state.teachers.forEach((obj) => newTeachers.push({ ...obj }));
-      newTeachers = newTeachers.filter(({id}) => id !== action.payload);
+      newTeachers = newTeachers.filter(({ id }) => id !== action.payload);
       return { ...state, teachers: newTeachers, isDeleteModalVisible: false };
 
     default:

@@ -104,7 +104,7 @@ export function* teacherDeleteSaga(payload) {
       `User with provided id ${response.data} was deleted`,
       'success'
     );
-      console.log(response)
+
     yield put({ type: DELETE_TEACHER_COMPLETED, payload: response.data });
   } catch (error) {
     if (error.response) {

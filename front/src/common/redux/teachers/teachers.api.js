@@ -38,7 +38,6 @@ async function updateTeacherApi(teacher) {
 }
 
 async function deleteTeacherApi(teacher) {
-  console.log(teacher);
   const url = `${process.env.REACT_APP_TEACHERS_DELETE_ROUT}${teacher.id}`;
   const token = localStorage.getItem('token');
   if (!token) {

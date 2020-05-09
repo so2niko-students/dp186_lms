@@ -106,21 +106,7 @@ class TeachersPage extends Component {
         </Row>
         <Row justify="center">
           <Col span={10} align="center">
-            <h1>5.4 content</h1>
             {this.renderSpinnerOrContent()}
-            {/* {this.props.teachers.map(({ id, firstName, lastName, email, groupsCount, studentsCount }) => {
-              return (
-                <TeachersInformation
-                  key={id}
-                  id={id}
-                  firstName={firstName}
-                  lastName={lastName}
-                  email={email}
-                  groupsAmount={groupsCount}
-                  studentsAmount={studentsCount}
-                />
-              );
-            })} */}
           </Col>
         </Row>
         <Row justify="center">

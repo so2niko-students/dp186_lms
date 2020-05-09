@@ -10,6 +10,7 @@ import {
   deleteTeacher,
   showModalDelete,
   hideModalDelete,
+  rememberUpdatingId
 } from '../../../common/redux/teachers/teachers.actions';
 import {
   Col,
@@ -64,21 +65,21 @@ class TeachersInformation extends Component {
   }
 
   handleNameChange(data) {
+    const { updateName, updatingId } = this.props;
     const arr = data.nameSurname.split(' ');
     const [firstName, lastName] = arr;
     data = {
       firstName,
       lastName,
-      id: this.id,
+      id: updatingId
     };
-    console.log(data);
-    const { updateName } = this.props;
+
     updateName(data);
   }
 
   rememberId(event) {
     const id = +event.target.dataset.id;
-    this.id = id;
+    this.props.rememberUpdatingId(id)
   }
 
   renderChangeNameOrActualName(id, changeNameIds) {
@@ -133,8 +134,8 @@ class TeachersInformation extends Component {
   }
 
   handleEmailChange(data) {
-    data.id = this.id;
-    const { updateEmail } = this.props;
+    const { updateEmail, updatingId } = this.props;
+    data.id = updatingId;
     updateEmail(data);
   }
 
@@ -237,12 +238,13 @@ class TeachersInformation extends Component {
 }
 
 const mapStateToProps = ({
-  teachersReducer: { changeNameIds, changeEmailIds, isDeleteModalVisible, deleteTeacherId },
+  teachersReducer: { changeNameIds, changeEmailIds, isDeleteModalVisible, deleteTeacherId, updatingId },
 }) => ({
   changeNameIds,
   changeEmailIds,
   isDeleteModalVisible,
-  deleteTeacherId
+  deleteTeacherId,
+  updatingId
 });
 
 const mapDispatchToProps = {
@@ -255,6 +257,7 @@ const mapDispatchToProps = {
   deleteTeacher,
   showModalDelete,
   hideModalDelete,
+  rememberUpdatingId
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeachersInformation);

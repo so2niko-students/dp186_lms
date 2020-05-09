@@ -99,16 +99,9 @@ class TeachersRegistrationForm extends Component {
                   name="password"
                   align="center"
                   rules={[
-                    { required: true, message: 'Please input your password!' },
-                    {
-                      validator: (_, value) =>
-                        value.length >= 6
-                          ? Promise.resolve()
-                          : Promise.reject('Password length should be 6 or more symbols'),
-                    },
-                  ]}
+                    { required: true, message: 'Please input your password!' }]}
                 >
-                  <Input.Password placeholder="Password" />
+                  <Input.Password minLength={6} placeholder="Password" />
                 </Form.Item>
                 {this.renderSpinnerOrBtn()}
               </Form>
