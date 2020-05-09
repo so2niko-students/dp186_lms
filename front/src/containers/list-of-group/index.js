@@ -8,6 +8,14 @@ import {Spinner} from '../../components/spinner/Spinner';
 
 class ListOfGroup extends Component {
 
+    onHandleGroup(data) {
+        this.props.setCurrentGroup(groupList.find((group) => group.id === +data.key))
+    };
+
+    onHandleFirstGroup(data) {
+        this.props.setCurrentGroup(data)
+    };
+
     componentDidMount() {
         const { onHandleLoadGroupData } = this.props;
         onHandleLoadGroupData();
