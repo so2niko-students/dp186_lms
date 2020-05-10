@@ -4,15 +4,18 @@ import 'antd/dist/antd.css';
 const { Sider } = Layout;
 
 const AddGroupButton = style(Button)`
-    width: 60%;
-    border-radius: 5px;
-    margin-left: 20%;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin: 20px 0;
 `;
 
 const SiderStyle = style(Sider)`
     background-color: white;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    &>div.ant-layout-sider-children {
+        height: auto;
+        position: fixed;
+    }
 `;
 
-export { AddGroupButton, SiderStyle } ;
+export { AddGroupButton, SiderStyle };

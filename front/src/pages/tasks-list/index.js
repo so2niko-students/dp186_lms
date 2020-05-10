@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
-import { TaskTemplate, AddTaskButton, DeleteButton, GroupName, Page, CompletedRow, CheckOutlinedIcon, FormItem } from './style';
-import { Avatar, Row, Col, Typography, message, Pagination, Form, Input, Button } from 'antd';
+import { connect } from 'react-redux';
+import {
+    TaskTemplate,
+    AddTaskButton,
+    DeleteButton,
+    GroupName,
+    Page,
+    CompletedRow,
+    CheckOutlinedIcon,
+    FormItem,
+    TextOfTask,
+    CheckedAndReady,
+    LayoutStyle
+} from './style';
+import { Avatar, Row, Col, Typography, message, Pagination, Form, Input, Button, Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { DeleteTwoTone, EditFilled } from '@ant-design/icons';
+import ListOfGroup from '../../containers/list-of-group';
+import Spinner from '../../components/spinner'
+import axios from 'axios';
 
 const { Title, Text } = Typography;
 const layout = {
@@ -14,99 +30,100 @@ class TasksList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: [
-                {
-                    id: 1,
-                    title: 'TITLE 1',
-                    text: 'text 1',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 2,
-                    title: 'TITLE 2',
-                    text: 'text 2',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 3,
-                    title: 'TITLE 3',
-                    text: 'text 3',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 4,
-                    title: 'TITLE 4',
-                    text: 'text 4',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 5,
-                    title: 'TITLE 5',
-                    text: 'text 5',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 6,
-                    title: 'TITLE 6',
-                    text: 'text 6',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 7,
-                    title: 'TITLE 7',
-                    text: 'text 7',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 8,
-                    title: 'TITLE 8',
-                    text: 'text 8',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 9,
-                    title: 'TITLE 9',
-                    text: 'text 9',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 10,
-                    title: 'TITLE 10',
-                    text: 'text 10',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 11,
-                    title: 'TITLE 11',
-                    text: 'text 11',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 12,
-                    title: 'TITLE 12',
-                    text: 'text 12',
-                    checked: 5,
-                    ready: 12
-                },
-                {
-                    id: 13,
-                    title: 'TITLE 13',
-                    text: 'text 13',
-                    checked: 5,
-                    ready: 12
-                },
-            ],
+            // tasks: [
+            //     {
+            //         id: 1,
+            //         title: 'Title 1',
+            //         text: 'text 1',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 2,
+            //         title: 'TITLE 2',
+            //         text: 'text 2',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 3,
+            //         title: 'TITLE 3',
+            //         text: 'text 3',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 4,
+            //         title: 'TITLE 4',
+            //         text: 'text 4',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 5,
+            //         title: 'TITLE 5',
+            //         text: 'text 5',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 6,
+            //         title: 'TITLE 6',
+            //         text: 'text 6',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 7,
+            //         title: 'TITLE 7',
+            //         text: 'text 7',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 8,
+            //         title: 'TITLE 8',
+            //         text: 'text 8',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 9,
+            //         title: 'TITLE 9',
+            //         text: 'text 9',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 10,
+            //         title: 'TITLE 10',
+            //         text: 'text 10',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 11,
+            //         title: 'TITLE 11',
+            //         text: 'text 11',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 12,
+            //         title: 'TITLE 12',
+            //         text: 'text 12',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            //     {
+            //         id: 13,
+            //         title: 'TITLE 13',
+            //         text: 'text 13',
+            //         checked: 5,
+            //         ready: 12
+            //     },
+            // ],
+            tasks: [],
             minValue: 0,
             maxValue: 10,
             isChangingTitle: false,
@@ -114,8 +131,10 @@ class TasksList extends Component {
             isChangingText: false,
             changingTextId: 0,
         };
+        this.user = JSON.parse(localStorage.getItem('user'));
         this.cancelChangingTitle = this.cancelChangingTitle.bind(this);
         this.cancelChangingText = this.cancelChangingText.bind(this);
+
     }
 
     confirm(id) {
@@ -176,14 +195,19 @@ class TasksList extends Component {
         const { isChangingTitle, changingTitleId, isChangingText, changingTextId } = this.state;
         return (
             <TaskTemplate span={20} offset={2} key={id}>
-                <DeleteButton
-                    title="Are you sure delete this task?"
-                    onConfirm={this.confirm.bind(this, id)}
-                    okText="Yes"
-                    cancelText="No"
-                >
-                    <a href="#"><DeleteTwoTone /></a>
-                </DeleteButton>
+                {this.user.hasOwnProperty('isAdmin') ?
+                    <DeleteButton
+                        title="Are you sure delete this task?"
+                        onConfirm={this.confirm.bind(this, id)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <a href="#"><DeleteTwoTone /></a>
+                    </DeleteButton>
+                    : <CompletedRow>
+                        <CheckOutlinedIcon />
+                        <Text>Completed</Text>
+                    </CompletedRow>}
                 <Col span={24}>
                     {isChangingTitle && changingTitleId === id ?
                         <Form {...layout} name='basic' initialValues={{ title: title }} onFinish={this.onHandleChangeTitle}>
@@ -202,16 +226,9 @@ class TasksList extends Component {
                             </FormItem>
                         </Form>
                         : <Row>
-                            <Text>{title}</Text>
-                            <EditFilled onClick={this.changeTitleState.bind(this, id)} />
+                            <Title level={3}>{title}</Title>
+                            {this.user.hasOwnProperty('isAdmin') ? <EditFilled onClick={this.changeTitleState.bind(this, id)} /> : null}
                         </Row>}
-
-
-                    {/* <CompletedRow>
-                        <CheckOutlinedIcon />
-                        <Text>Completed</Text>
-                    </CompletedRow> */}
-
                 </Col>
                 <Col span={24}>
                     {isChangingText && changingTextId === id ?
@@ -231,46 +248,71 @@ class TasksList extends Component {
                             </FormItem>
                         </Form>
                         : <Row>
-                            <Text>{text}</Text>
-                            <EditFilled onClick={this.changeTextState.bind(this, id)} />
+                            <TextOfTask>{text}</TextOfTask>
+                            {this.user.hasOwnProperty('isAdmin') ? <EditFilled onClick={this.changeTextState.bind(this, id)} /> : null}
                         </Row>}
-                    {/* <Text>{text}</Text>
-                    <EditFilled /> */}
                 </Col>
                 <Col span={24}>
-                    <Text>{checked} is checked</Text>
-                    <Text>{ready} is ready</Text>
+                    <CheckedAndReady>{checked} is checked</CheckedAndReady>
+                    <CheckedAndReady>{ready} is ready</CheckedAndReady>
                 </Col>
             </TaskTemplate >
         )
     }
 
+    componentDidMount() {
+        this.getTasks()
+    }
+
+    getTasks() {
+        const token = localStorage.getItem('token');
+        // const userId = JSON.parse(localStorage.getItem('user')).id;
+        // console.log(this.props.currentGroup)
+        const url = `http://localhost:5000/tasks?page=1&limit=10&groupId=1`;
+        const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, } };
+
+        axios.get(url, headers)
+            .then(response => {
+                console.log(response)
+                this.setState({ tasks: response.data })
+                // groupList = response.data; // for dispatch 
+                // this.onHandleFirstGroup(groupList[0])
+            })
+    }
+
     render() {
         const { tasks } = this.state;
+        console.log(this.state.tasks)
+
         return (
-            <Page>
-                <Col span={20} offset={2}>
-                    <AddTaskButton type='primary'>Add Task</AddTaskButton>
-                    <Avatar size={64} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    <GroupName>Group name</GroupName>
-                </Col>
-                <Col span={24}>
-                    <Title align="center">Tasks</Title>
-                    <Row>
-                        {tasks &&
-                            tasks.length > 0 &&
-                            tasks.slice(this.state.minValue, this.state.maxValue).map(({ id, title, text, checked, ready }) => this.taskTemplate(id, title, text, checked, ready))}
-                    </Row>
-                </Col>
-                <Pagination
-                    defaultCurrent={1}
-                    defaultPageSize={10}
-                    onChange={this.handleChangePage}
-                    total={13}
-                />
-            </Page>
+            <LayoutStyle>
+                <ListOfGroup />
+                <Page>
+                    <Col span={20} offset={2}>
+                        {this.user.hasOwnProperty('isAdmin') ? <AddTaskButton type='primary'>Add Task</AddTaskButton> : null}
+                        <Avatar size={64} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <GroupName>{this.props.currentGroup.groupName ? this.props.currentGroup.groupName : null}</GroupName>
+                    </Col>
+                    <Col span={24}>
+                        <Title align="center">Tasks</Title>
+                        <Row>
+                            {tasks &&
+                                tasks.length > 0 &&
+                                // tasks.slice(this.state.minValue, this.state.maxValue.map(({ id, taskName, description, amountOfChecked, amoun)tOfReady }) => this.taskTemplate(id, taskName, description, amountOfChecked, amountOfReady))}
+                                tasks.map(({ id, taskName, description, amountOfChecked, amountOfReady }) => this.taskTemplate(id, taskName, description, amountOfChecked, amountOfReady))}
+                        </Row>
+                    </Col>
+                    <Pagination
+                        defaultCurrent={1}
+                        defaultPageSize={10}
+                        onChange={this.handleChangePage}
+                        total={13}
+                    />
+                </Page>
+            </LayoutStyle>
         );
     }
 }
 
-export default TasksList;
+const mapStateToProps = ({ groupList: { currentGroup } }) => ({ currentGroup });
+export default connect(mapStateToProps)(TasksList);
