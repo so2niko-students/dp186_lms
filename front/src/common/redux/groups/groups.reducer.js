@@ -18,7 +18,7 @@ export function groups(state = initialState, action) {
         case types.SET_GROUPS_DATA:
             return { ...state, groupList: action.payload, currentGroup: action.payload[0] };
         case types.SET_CURRENT_GROUP:
-            return { ...state, currentGroup: state.groupList[action.payload] };
+            return { ...state, currentGroup: state.groupList[action.payload], isGroupEdited: false };
         case types.SET_UPDATED_CURRENT_GROUP:
             const group = state.groupList.find((g) => g.id === action.payload.id );
             const groupIndex = state.groupList.indexOf(group);

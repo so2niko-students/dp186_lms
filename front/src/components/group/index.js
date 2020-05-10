@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
-import {Typography, List, Avatar, Layout, notification, Result, Modal, message } from 'antd';
+import { Typography, List, Avatar, Layout, notification, Result, Modal, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {EditOutlined, UserOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
+import { UserOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import Spinner from '../spinner';
-import CustomAvatar from '../avatar';
 import {
     StyledListItem, StyledTitle, StyledP, StyledDivBtn, StyledBtn,
-    StyledRow, GroupTitle, DeleteStudentBtn, StyledListItemMeta, StyledStudentBlock,
-    StyledTeachersBlock, EditGroupBtn, StyledColHeader, StyledList
+    StyledRow, DeleteStudentBtn, StyledListItemMeta, StyledStudentBlock,
+    StyledTeachersBlock, StyledColHeader, StyledList
 } from './style';
-import GroupEditForm from '../groupEditForm';
-import { changeUpdatingStatus, deleteStudentFromGroup } from '../../common/redux/groups/groups.action';
+import { deleteStudentFromGroup } from '../../common/redux/groups/groups.action';
+import GroupHeader from './groupHeader';
 
 const { Title } = Typography;
 const { Content } = Layout;
@@ -65,8 +64,8 @@ class Group extends Component {
 
     render() {
         const { fatalError } = this.state;
-        const { changeUpdatingStatus, isGroupEdited, currentGroup, role } = this.props;
-        const { groupName, avatar, id, teacher, students } = currentGroup;
+        const { currentGroup, role } = this.props;
+        const { teacher, students } = currentGroup;
 
         if(fatalError){
             return (
@@ -86,26 +85,7 @@ class Group extends Component {
                         <Content>
                             <StyledRow justify={'center'}>
                                 <StyledColHeader span={8} align={'center'}>
-                                    {
-                                        !isGroupEdited ?
-                                            <div>
-                                                {
-                                                    avatar?
-                                                    <CustomAvatar avatar={avatar.avatarLink} />
-                                                    :
-                                                    <CustomAvatar avatar={false} />
-                                                }
-                                                <GroupTitle>{currentGroup.groupName}</GroupTitle>
-                                                {
-                                                    role === 'mentor' || role === 'superAdmin' ?
-                                                        <EditGroupBtn type={'primary'} icon={<EditOutlined />} size={12} shape="circle" onClick={changeUpdatingStatus}/>
-                                                        :
-                                                        null
-                                                }
-                                            </div>
-                                            :
-                                            <GroupEditForm groupName={groupName} groupAvatar={avatar ? avatar.avatarLink : false} groupId={id}></GroupEditForm>
-                                    }
+                                    <GroupHeader />
                                 </StyledColHeader>
                             </StyledRow>
                             <StyledRow justify={'space-around'}>
@@ -191,9 +171,9 @@ class Group extends Component {
     }
 }
 
-const mapStateToProps = ({ groups: { currentGroup, isGroupEdited, groupsError, isDeleting }, login: { userId, role } }) =>
-    ({ currentGroup, userId, isGroupEdited, groupsError, isDeleting, role });
+const mapStateToProps = ({ groups: { currentGroup, groupsError, isDeleting }, login: { userId, role } }) =>
+    ({ currentGroup, userId, groupsError, isDeleting, role });
 
-const mapDispatchToProps = { changeUpdatingStatus, deleteStudentFromGroup };
+const mapDispatchToProps = { deleteStudentFromGroup };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Group);

@@ -1,5 +1,19 @@
 import style from 'styled-components';
-import { Form, Input } from 'antd';
+import {Button, Form, Input} from 'antd';
+
+export const GroupTitle = style.p`
+    margin-top: 10px;
+    font-size: 28px;
+    color: #000;
+    font-weight: bold;
+    color: #40a9ff;
+`;
+
+export const EditGroupBtn = style(Button)`
+    position: absolute;
+    top: 0;
+    right: 0;
+`;
 
 export const StyledForm = style(Form.Item)`
     margin-bottom: 12px;
