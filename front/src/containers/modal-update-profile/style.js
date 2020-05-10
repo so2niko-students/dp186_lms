@@ -9,7 +9,7 @@ const StyledInput = style(Input)`
     background-color: #f7f8fa;
     color: black;
     ::placeholder {
-        color: black;
+        color: grey;
       }
 `;
 
@@ -21,10 +21,19 @@ const StyledButton = style(Button)`
     height: 40px;
 `;
 
+const StyledBtnModal = style(Button)`
+    width: 15%;
+    margin-left: 10%;
+    margin-top: 5%;
+    background-color: #0056d9;
+    border-radius: 5px;
+    height: 40px;
+`;
+
 const ErrorText = style.p`
     font-size: 14px;
     text-align: center;
     color: tomato;
 `;
 
-export { StyledInput, StyledButton, ErrorText }
+export { StyledInput, StyledButton, StyledBtnModal, ErrorText }

@@ -11,7 +11,7 @@ class App extends Component {
                 <Switch>
                     <Route path="/student-registration/:token" component={StudentRegistrationPage} />
                     <Route path="/login" component={LoginPage} />
-                    <Route path="/update-profile" component={UpdateProfile} />
+                    <Route path="/dashboard" component={UpdateProfile} />
                 </Switch>
             </BrowserRouter>
         )
