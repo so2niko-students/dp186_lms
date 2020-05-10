@@ -8,4 +8,18 @@ async function loginApi(request) {
     return axios.post(url, data, headers)
         .then(response => response)
 };
-export { loginApi };
+
+async function changePasswordApi(data, url) {
+    const token = localStorage.getItem('token');
+    const headers = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        }
+    };
+
+    return axios.put(url, JSON.stringify(data), headers)
+        .then(response => response)
+};
+
+export { loginApi, changePasswordApi };
