@@ -98,7 +98,8 @@ class TeachersRegistrationForm extends Component {
                 <Form.Item
                   name="password"
                   align="center"
-                  rules={[{ required: true, message: 'Please input your password!' }]}
+                  rules={[
+                    { required: true, message: 'Please input your password!' }]}
                 >
                   <Input.Password minLength={6} placeholder="Password" />
                 </Form.Item>
