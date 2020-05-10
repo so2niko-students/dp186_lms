@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   updateName,
-  cancelNameChanging,
+  cancelNameUpdating,
   updateNameSuccess,
   updateEmail,
-  cancelEmailChanging,
+  cancelEmailUpdating,
   updateEmailSuccess,
   rememberUpdatingId,
 } from '../../../common/redux/teachers/teachers.actions';
@@ -23,11 +23,11 @@ class InputOrData extends Component {
   constructor(props) {
     super(props);
     this.updateName = this.updateName.bind(this);
-    this.cancelNameChanging = this.cancelNameChanging.bind(this);
+    this.cancelNameUpdating = this.cancelNameUpdating.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.rememberId = this.rememberId.bind(this);
     this.updateEmail = this.updateEmail.bind(this);
-    this.cancelEmailChanging = this.cancelEmailChanging.bind(this);
+    this.cancelEmailUpdating = this.cancelEmailUpdating.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
   }
 
@@ -36,9 +36,9 @@ class InputOrData extends Component {
     updateName({ id: +event.target.dataset.id });
   }
 
-  cancelNameChanging(event) {
-    const { cancelNameChanging } = this.props;
-    cancelNameChanging({ id: +event.target.dataset.id });
+  cancelNameUpdating(event) {
+    const { cancelNameUpdating } = this.props;
+    cancelNameUpdating({ id: +event.target.dataset.id });
   }
 
   handleNameChange(data) {
@@ -63,9 +63,9 @@ class InputOrData extends Component {
     updateEmail({ id: +event.target.dataset.id });
   }
 
-  cancelEmailChanging(event) {
-    const { cancelEmailChanging } = this.props;
-    cancelEmailChanging({ id: +event.target.dataset.id });
+  cancelEmailUpdating(event) {
+    const { cancelEmailUpdating } = this.props;
+    cancelEmailUpdating({ id: +event.target.dataset.id });
   }
 
   handleEmailChange(data) {
@@ -113,7 +113,7 @@ class InputOrData extends Component {
             </Form>
             <CancelButton
               data-id={id}
-              onClick={type === 'name' ? this.cancelNameChanging : this.cancelEmailChanging}
+              onClick={type === 'name' ? this.cancelNameUpdating : this.cancelEmailUpdating}
             >
               <RollbackOutlined />
             </CancelButton>
@@ -141,10 +141,10 @@ const mapStateToProps = ({ teachersReducer: { updatingId } }) => ({
 
 const mapDispatchToProps = {
   updateName,
-  cancelNameChanging,
+  cancelNameUpdating,
   updateNameSuccess,
   updateEmail,
-  cancelEmailChanging,
+  cancelEmailUpdating,
   updateEmailSuccess,
   rememberUpdatingId,
 };

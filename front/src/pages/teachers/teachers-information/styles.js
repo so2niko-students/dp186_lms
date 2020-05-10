@@ -1,8 +1,8 @@
 import style from 'styled-components';
-import { Col as MyCol, Button as MyButton } from 'antd';
+import { Col as AntdCol, Button as AntdButton } from 'antd';
 import 'antd/dist/antd.css';
 
-const Col = style(MyCol)`
+const Col = style(AntdCol)`
     margin: 10px;
     padding: 10px;
     border: 2px solid #333;
@@ -21,11 +21,11 @@ const Students = style.span`
     margin-left: 10px; 
 `;
 
-const Button = style(MyButton)`
+const Button = style(AntdButton)`
     float: right;
 `;
 
-const DeleteButton = style(MyButton)`
+const DeleteButton = style(AntdButton)`
     font-size: 20px;
     float: right;
     border: none;

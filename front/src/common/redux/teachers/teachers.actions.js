@@ -4,11 +4,11 @@ import {
   REGISTER_TEACHER,
   SHOW_LOADER,
   UPDATE_NAME,
-  CANCEL_NAME_CHANGING,
+  CANCEL_NAME_UPDATING,
   UPDATE_NAME_SUCCESS,
   LOAD_TEACHERS,
   UPDATE_EMAIL,
-  CANCEL_EMAIL_CHANGING,
+  CANCEL_EMAIL_UPDATING,
   UPDATE_EMAIL_SUCCESS,
   DELETE_TEACHER,
   SHOW_MODAL_DELETE,
@@ -26,7 +26,7 @@ export const showLoader = () => ({ type: SHOW_LOADER });
 
 export const updateName = (data) => ({ type: UPDATE_NAME, payload: data });
 
-export const cancelNameChanging = (data) => ({ type: CANCEL_NAME_CHANGING, payload: data });
+export const cancelNameUpdating = (data) => ({ type: CANCEL_NAME_UPDATING, payload: data });
 
 export const updateNameSuccess = (data) => ({ type: UPDATE_NAME_SUCCESS, payload: data });
 
@@ -34,7 +34,7 @@ export const loadTeachers = (querys) => ({ type: LOAD_TEACHERS, payload: querys 
 
 export const updateEmail = (data) => ({ type: UPDATE_EMAIL, payload: data });
 
-export const cancelEmailChanging = (data) => ({ type: CANCEL_EMAIL_CHANGING, payload: data });
+export const cancelEmailUpdating = (data) => ({ type: CANCEL_EMAIL_UPDATING, payload: data });
 
 export const updateEmailSuccess = (data) => ({ type: UPDATE_EMAIL_SUCCESS, payload: data });
 

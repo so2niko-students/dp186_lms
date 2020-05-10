@@ -1,8 +1,8 @@
 import style from 'styled-components';
-import { Button as MyButton, Form as MyForm } from 'antd';
+import { Button as AntdButton, Form as AntdForm } from 'antd';
 import 'antd/dist/antd.css';
 
-const { Item: MyItem } = MyForm;
+const { Item: AntdItem } = AntdForm;
 
 const NameSurname = style.p`
     font-size: 24px;
@@ -21,30 +21,30 @@ const Email = style.p`
     clear: left;
 `;
 
-const EditButton = style(MyButton)`
+const EditButton = style(AntdButton)`
     font-size: 20px;
     float: left;
     border: none;
 `;
 
-const CancelButton = style(MyButton)`
+const CancelButton = style(AntdButton)`
     font-size: 20px;
     float: left;
     border: none;
 `
 
-const SaveButton = style(MyButton)`
+const SaveButton = style(AntdButton)`
     font-size: 20px;
     float: left;
     border: none;
 `
 
-const Form = style(MyForm)`
+const Form = style(AntdForm)`
     float: left;
     clear: left;
 `
 
-const Item = style(MyItem)`
+const Item = style(AntdItem)`
     float: left;
 `
 

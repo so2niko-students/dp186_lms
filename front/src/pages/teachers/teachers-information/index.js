@@ -54,13 +54,11 @@ class TeachersInformation extends Component {
         <Row>
           <Col span={24}>
             <div>
-              {/* {this.renderChangeNameOrActualName(id, changeNameIds)} */}
               <InputOrData type='name' changedIds={changeNameIds} id={id} renderData={`${firstName} ${lastName}`} />
               <DeleteButton data-id={id} onClick={this.showModalDelete}>
                 <DeleteOutlined />
               </DeleteButton>
             </div>
-            {/* <div>{this.renderChangeEmailOrActualEmail(id, changeEmailIds)}</div> */}
             <div><InputOrData type='email' changedIds={changeEmailIds} id={id} renderData={email} /></div>
             <div>
               <p>

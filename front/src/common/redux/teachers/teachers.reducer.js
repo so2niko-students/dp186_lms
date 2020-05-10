@@ -6,11 +6,11 @@ import {
   HIDE_TEACHER_REGISTER_MODAL,
   SHOW_LOADER,
   UPDATE_NAME,
-  CANCEL_NAME_CHANGING,
+  CANCEL_NAME_UPDATING,
   UPDATE_NAME_COMPLETED,
   LOAD_TEACHERS_COMPLETED,
   UPDATE_EMAIL,
-  CANCEL_EMAIL_CHANGING,
+  CANCEL_EMAIL_UPDATING,
   UPDATE_EMAIL_COMPLETED,
   LOAD_TEACHERS_FAILED,
   SHOW_MODAL_DELETE,
@@ -52,7 +52,7 @@ export function teachersReducer(state = initialState, action) {
       return { ...state, loading: true };
 
     case UPDATE_NAME: {
-      let newChangeNameIds = state.changeNameIds.slice();
+      const newChangeNameIds = state.changeNameIds.slice();
       newChangeNameIds.push(action.payload.id);
       return { ...state, changeNameIds: newChangeNameIds };
     }
@@ -60,7 +60,7 @@ export function teachersReducer(state = initialState, action) {
     case REMEMBER_UPDATING_ID:
       return { ...state, updatingId: action.payload.id };
 
-    case CANCEL_NAME_CHANGING: {
+    case CANCEL_NAME_UPDATING: {
       let newChangeNameIds = state.changeNameIds.slice();
       newChangeNameIds = newChangeNameIds.filter((id) => id !== action.payload.id);
       return { ...state, changeNameIds: newChangeNameIds };
@@ -92,7 +92,7 @@ export function teachersReducer(state = initialState, action) {
       return { ...state, changeEmailIds: newChangeEmailIds };
     }
 
-    case CANCEL_EMAIL_CHANGING: {
+    case CANCEL_EMAIL_UPDATING: {
       let newChangeEmailIds = state.changeEmailIds.slice();
       newChangeEmailIds = newChangeEmailIds.filter((id) => id !== action.payload.id);
       return { ...state, changeEmailIds: newChangeEmailIds };
