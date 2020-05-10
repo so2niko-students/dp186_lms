@@ -130,6 +130,7 @@ class TasksList extends Component {
             changingTitleId: 0,
             isChangingText: false,
             changingTextId: 0,
+            currentGroup: 0,
         };
         this.user = JSON.parse(localStorage.getItem('user'));
         this.cancelChangingTitle = this.cancelChangingTitle.bind(this);
@@ -260,33 +261,43 @@ class TasksList extends Component {
         )
     }
 
-    componentDidMount() {
-        this.getTasks()
+    componentDidUpdate() {
+        if (this.state.currentGroup !== this.props.currentGroup.id) {
+            this.setState({ currentGroup: this.props.currentGroup.id })
+            this.getTasks()
+        }
     }
 
-    getTasks() {
-        const token = localStorage.getItem('token');
-        // const userId = JSON.parse(localStorage.getItem('user')).id;
-        // console.log(this.props.currentGroup)
-        const url = `http://localhost:5000/tasks?page=1&limit=10&groupId=1`;
-        const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, } };
+    getTasks = () => {
+        if (this.props.currentGroup.id) {
 
-        axios.get(url, headers)
-            .then(response => {
-                this.setState({ tasks: response.data })
-            })
+            const token = localStorage.getItem('token');
+            // // const userId = JSON.parse(localStorage.getItem('user')).id;
+            // // console.log(this.props.currentGroup)
+            const url = `http://localhost:5000/tasks?page=1&limit=10&groupId=${this.state.currentGroup}`;
+            const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, } };
+            console.log(this.state.currentGroup)
+            axios.get(url, headers)
+                .then(response => {
+                    this.setState({ tasks: response.data })
+                })
+        }
+
     }
+
+
 
     render() {
         const { tasks } = this.state;
-        console.log(this.state.tasks)
+        // console.log(this.state.tasks)
+        console.log(this.props)
 
         return (
-            <LayoutStyle>
+            < LayoutStyle >
                 <ListOfGroup />
                 <Page>
                     <Col span={20} offset={2}>
-                        {this.user.hasOwnProperty('isAdmin') ? <AddTaskButton type='primary'>Add Task</AddTaskButton> : null}
+                        {/* {this.user.hasOwnProperty('isAdmin') ? <AddTaskButton type='primary'>Add Task</AddTaskButton> : null} */}
                         <Avatar size={64} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                         <GroupName>{this.props.currentGroup.groupName ? this.props.currentGroup.groupName : null}</GroupName>
                     </Col>
@@ -306,7 +317,7 @@ class TasksList extends Component {
                         total={13}
                     />
                 </Page>
-            </LayoutStyle>
+            </ LayoutStyle>
         );
     }
 }
