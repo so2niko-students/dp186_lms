@@ -3,7 +3,7 @@ import { createGroupApi } from './groups.api';
 import * as types from './types';
 
 function* createGroupOneSaga(payload) {
-    try {
+    try {    
         const response = yield call(createGroupApi, payload);
         yield put({ type: types.CREATE_GROUP_SUCCESS, payload: response });
     } catch (error) {

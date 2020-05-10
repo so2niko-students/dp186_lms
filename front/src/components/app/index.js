@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import StudentRegistrationPage from '../../pages/student-registration-page';
 import TeachersPage from '../../pages/teachers/teachers-page';
 import LoginPage from '../../pages/login';
-import GroupCreationWindow from '../../pages/group-creation-window';
+import GroupCreationWindow from '../../containers/modal-group-creation';
 import SetPasswordPage from '../../pages/set-password';
 
 class App extends Component {

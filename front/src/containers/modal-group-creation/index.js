@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyledCol, SaveButton } from './style';
-import { Form, Input, Typography, Row } from 'antd';
+import { StyledCol, SaveButton, ErrorText } from './style';
+import { Modal, Form, Input, Typography, Row } from 'antd';
 import { connect } from 'react-redux';
-import {checkExistGroupAction} from '../../common/redux/groups/group.action';
+import { createGroup } from '../../common/redux/groups/groups.action';
 
 
 const { Title } = Typography;
@@ -17,7 +17,7 @@ const tailLayout = {
 class GroupCreationWindow extends Component {
     constructor(props){
         super(props);
-        this.createNewGroupTemplate = this.createNewGroupTemplate.bind(this)
+        this.handleCreateGroup = this.handleCreateGroup.bind(this)
     }
 
     state = {
@@ -37,18 +37,21 @@ class GroupCreationWindow extends Component {
         });
     };
 
-    handleUpdateProfile (data) {
-        this.props.updateUserProfileAction(data);
+    handleCreateGroup (data) {
+        this.props.createGroup(data);
         this.handleCancel();    
     }
 
-    createNewGroupTemplate(){
+    render () {
+        const { errorMessage } = this.props;
+        const { user } = this.state;
         return (
             <div>
-                <StyledBtnModal type="primary" onClick={this.showModal}>
-                    Update profile
-                </StyledBtnModal>
-
+                {/* {user.isAdmin ? null :
+               } */}
+                <SaveButton type="primary" onClick={this.showModal}>
+                Create group
+                </SaveButton>
                 <Modal
                     centered
                     visible={this.state.visible}
@@ -56,61 +59,39 @@ class GroupCreationWindow extends Component {
                     okButtonProps={{ style: { display: 'none' } }}
                     cancelButtonProps={{ style: { display: 'none' } }}
                 >
-            <Row>
-                <StyledCol span={8} offset={8}>
-                <Title level={2} align="center">New group</Title>
-                    <Form
-                        {...layout}
-                        name="basic"
-                        onFinish={this.props.onHandleGroupCreation}
-                    >
-                        <Form.Item
-                            align="center"
-                            name="name"
-                            rules={[{ required: true, message: 'Please enter name for the group!' }]}
+                    <Row>
+                        <StyledCol span={24} >
+                        <Title level={2} align="center">New group</Title>
+                        <Form
+                            {...layout}
+                            name="basic"
+                            onFinish={this.handleCreateGroup}
                         >
-                            <Input placeholder='Dp-Node-168' />
-                        </Form.Item>
-
-                        <Form.Item 
-                            
-                            {...tailLayout}>
-                            <SaveButton type="primary" size = "large" htmlType="submit">
-                                Save group
-                            </SaveButton>
-                        </Form.Item>
-                    </Form>
-                    </StyledCol>
-            </Row>
-            </Modal>
-        </div>
+                            <Form.Item
+                                align="center"
+                                name="groupName"
+                                rules={[{ required: true, message: 'Please enter name for the group!' }]}
+                            >
+                                <Input placeholder='Dp-Node-168' />
+                            </Form.Item>
+                            {errorMessage ? <ErrorText>{errorMessage}</ErrorText> : null}
+                            <Form.Item 
+                                
+                                {...tailLayout}>
+                                <SaveButton type="primary" size = "large" htmlType="submit">
+                                    Save group
+                                </SaveButton>
+                            </Form.Item>
+                        </Form>
+                        </StyledCol>
+                    </Row>
+                </Modal>
+            </div>
         )
-    }
-    
-    render() {
-        const {isGroupExisted} = this.props;
-        if(!isGroupExisted){
-            return (
-                    <div>                       
-                        {this.createNewGroupTemplate()}
-                    </div>
-                )
-        } else {
-            return (
-                <div>
-                    <h1>Group is existed</h1>
-                </div>
-            )
-        }
     }
 }
 
-const mapStateToProps = ({createGroupReducer: {isGroupExisted}}) => ({isGroupExisted})
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-      onHandleGroupCreation: (data) => dispatch(checkExistGroupAction(data))
-    }
-  };
+const mapStateToProps = ({ createGroupReducer: {isGroupCreated, errorMessage }}) => ({ isGroupCreated, errorMessage })
+const mapDispatchToProps = { createGroup };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupCreationWindow);
