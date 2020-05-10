@@ -1,6 +1,7 @@
 import { put, call, all, takeEvery } from "redux-saga/effects";
 import { loginApi, changePasswordApi } from "./auth.api";
 import * as types from "./types";
+import axios from 'axios';
 
 function* loginSaga(payload) {
     try {
@@ -19,7 +20,23 @@ function* changePasswordSaga(payload) {
         if (payload === 'is success') {
             yield put({ type: types.CHANGE_PASSWORD_STATE, });
         } else {
-            const response = yield call(changePasswordApi, payload);
+            let response;
+            const { oldPassword, newPassword } = payload.user;
+
+            if (payload.user.hasOwnProperty('teacherId') && payload.user.hasOwnProperty('admin')) {
+                const teacherId = +Object.keys(payload.user.teacherId)[0];
+                const url = `${process.env.REACT_APP_CHANGE_TEACHER_PASSWORD_BY_ADMIN}${teacherId}`;
+                response = yield call(changePasswordApi, { newPassword }, url);
+            }
+
+            if (payload.user.hasOwnProperty('teacher')) {
+                const url = process.env.REACT_APP_CHANGE_TEACHER_PASSWORD;
+                response = yield call(changePasswordApi, { oldPassword, newPassword }, url);
+            } else if (payload.user.hasOwnProperty('student')) {
+                const url = process.env.REACT_APP_CHANGE_STUDENT_PASSWORD;
+                response = yield call(changePasswordApi, { oldPassword, newPassword }, url);
+            }
+
             yield put({ type: types.CHANGE_USER_PASSWORD_SUCCESS, response });
         }
     } catch (error) {

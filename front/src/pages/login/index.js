@@ -20,17 +20,15 @@ class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.loginFormTemplate = this.loginFormTemplate.bind(this);
+    this.onHandleLogin = this.onHandleLogin.bind(this);
   }
 
   loginFormTemplate(errorMessage, isLoggedIn) {
     return (
       <Row>
         <StyledCol span={8} offset={8}>
-          <Title level={2} align='center'>
-            Login
-            </Title>
-
-          <Form {...layout} name='basic' onFinish={this.props.onHandleLogin}>
+          <Title level={2} align='center'>Login</Title>
+          <Form {...layout} name='basic' onFinish={this.onHandleLogin}>
             <Form.Item
               align='center'
               name='email'
@@ -75,6 +73,10 @@ class LoginPage extends Component {
     )
   }
 
+  onHandleLogin(data) {
+    this.props.loginUserAction(data)
+  }
+
   render() {
     const { errorMessage, isLoggedIn } = this.props;
     return (
@@ -91,10 +93,8 @@ const mapStateToProps = ({ login: { errorMessage, isLoggedIn } }) => ({
   isLoggedIn
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onHandleLogin: (data) => dispatch(loginUserAction(data))
-  }
+const mapDispatchToProps = {
+  loginUserAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

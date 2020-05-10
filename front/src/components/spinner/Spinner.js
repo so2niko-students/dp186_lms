@@ -1,13 +1,3 @@
-// How to use:
-
-// for loading: <Spinner load={Spinner.loading()} />
-
-// for success, error, warning : 
-//      let happen = true;
-//      if(happen){
-//          Spinner.success('Success');
-//      }
-
 import React, { Component } from 'react';
 import { Spin, message } from 'antd';
 import 'antd/dist/antd.css';
