@@ -12,3 +12,19 @@ export function groupList(state = initialState, action) {
       return { ...state };
   }
 };
+
+const initialStateCreatingGroup = {
+    isGroupCreated: false,
+    errorMessage: ''
+}
+
+export function createGroupReducer(state = initialStateCreatingGroup, action){
+    switch(action.type) {
+        case types.CREATE_GROUP_SUCCESS:
+            return {...state, isGroupCreated: true}
+        case types.CREATE_GROUP_ERROR:
+            return {...state, errorMessage: 'This group is already existed'}
+        default:
+            return state;
+    }
+}
