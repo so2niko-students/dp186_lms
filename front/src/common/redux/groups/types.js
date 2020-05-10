@@ -1,1 +1,2 @@
-export const SET_CURRENT_GROUP = 'SET_CURRENT_GROUP';
+export const CREATE_GROUP = 'CREATE_GROUP';
+export const IS_GROUP_EXIST = 'IS_GROUP_EXIST';

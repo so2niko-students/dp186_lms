@@ -6,6 +6,6 @@ async function loginApi(request) {
     const headers = { headers: { 'Content-Type': 'application/json' } };
 
     return axios.post(url, data, headers)
-        .then(response => response)
+       .then(response => response)
 };
 export { loginApi };
