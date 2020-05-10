@@ -40,7 +40,7 @@ class UpdateProfile extends Component {
         this.props.updateUserProfileAction(data);
         this.handleCancel();
         console.log(data);
-        
+        console.log(this.props);
     
     }
 
