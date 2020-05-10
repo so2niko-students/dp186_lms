@@ -1,30 +1,20 @@
 import React, {Component} from 'react';
-import { Typography, List, Avatar, Layout, notification, Result, Modal, message } from 'antd';
+import { Typography, List, Avatar, Layout, notification, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { UserOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import Spinner from '../spinner';
 import {
     StyledListItem, StyledTitle, StyledP, StyledDivBtn, StyledBtn,
-    StyledRow, DeleteStudentBtn, StyledListItemMeta, StyledStudentBlock,
-    StyledTeachersBlock, StyledColHeader, StyledList
-} from './style';
-import { deleteStudentFromGroup } from '../../common/redux/groups/groups.action';
+    StyledRow, StyledListItemMeta, StyledStudentBlock,
+    StyledTeachersBlock, StyledColHeader } from './style';
 import GroupHeader from './groupHeader';
+import GroupStudentsList from './groupStudentsList';
 
 const { Title } = Typography;
 const { Content } = Layout;
-const { confirm } = Modal;
 
 class Group extends Component {
-    state = {
-        // If component throw error
-        fatalError: false,
-    };
-
-    componentDidCatch(error, errorInfo) {
-        this.setState({fatalError: true});
-    }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const { groupsError, isDeleting } = this.props;
@@ -47,36 +37,9 @@ class Group extends Component {
         });
     }
 
-    handleDeleteStudent = (studentId) => {
-        const { deleteStudentFromGroup, currentGroup: { id: groupId } } = this.props;
-        confirm({
-            title: 'Are you sure delete this student?',
-            icon: <ExclamationCircleOutlined />,
-            content: 'This action cannot be undone!',
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            onOk: () => {
-                deleteStudentFromGroup({studentId, groupId});
-            }
-        });
-    }
-
     render() {
-        const { fatalError } = this.state;
-        const { currentGroup, role } = this.props;
-        const { teacher, students } = currentGroup;
-
-        if(fatalError){
-            return (
-                <Result
-                    style={{width: '100%'}}
-                    status={500}
-                    title={'Something go wrong'}
-                    subTitle={'Sorry, but now this page is broken :('}
-                />
-            )
-        }
+        const { currentGroup } = this.props;
+        const { teacher } = currentGroup;
 
         return (
             <Layout style={{backgroundColor: '#e6f7ff', minHeight: '100vh', height: 'auto'}}>
@@ -91,39 +54,7 @@ class Group extends Component {
                             <StyledRow justify={'space-around'}>
                                 <StyledStudentBlock xl={{span: 12}} span={24} align={'center'}>
                                     <Title level={3} >{'Students'}</Title>
-                                    {
-                                        students ?
-                                            <StyledList
-                                                itemLayout={'horizontal'}
-                                                dataSource={students}
-                                                renderItem={item => (
-                                                    <StyledListItem key={item.id}>
-                                                        <StyledListItemMeta
-                                                            avatar={
-                                                                item.avatar ?
-                                                                    <Avatar size={48} src={item.avatar.avatarLink} />
-                                                                    :
-                                                                    <Avatar size={48} icon={<UserOutlined />} />
-                                                            }
-                                                            title={<StyledTitle>{`${item.firstNameEng} ${item.lastNameEng}`}</StyledTitle>}
-                                                            description={<StyledP align={'left'}>{item.email}</StyledP>}
-                                                        />
-                                                        {
-                                                            role === 'mentor' || role === 'superAdmin' ?
-                                                                <DeleteStudentBtn type={'danger'} key={item.id} onClick={()=>{this.handleDeleteStudent(item.id)}}>Delete</DeleteStudentBtn>
-                                                                :
-                                                                null
-
-                                                        }
-                                                    </StyledListItem>
-                                                )}
-                                            />
-                                            :
-                                            <div>
-                                                <Spinner load={Spinner.loading()}/>
-                                                <h2>Loading...</h2>
-                                            </div>
-                                    }
+                                    <GroupStudentsList />
                                 </StyledStudentBlock>
                                 <StyledTeachersBlock xl={{span: 12}} span={24} align={'center'}>
                                     <Title level={3} >{'Mentor'}</Title>
@@ -171,9 +102,7 @@ class Group extends Component {
     }
 }
 
-const mapStateToProps = ({ groups: { currentGroup, groupsError, isDeleting }, login: { userId, role } }) =>
-    ({ currentGroup, userId, groupsError, isDeleting, role });
+const mapStateToProps = ({ groups: { currentGroup, groupsError, isDeleting }, login: { userId } }) =>
+    ({ currentGroup, userId, groupsError, isDeleting });
 
-const mapDispatchToProps = { deleteStudentFromGroup };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Group);
+export default connect(mapStateToProps, null)(Group);
