@@ -1,5 +1,5 @@
 import style from 'styled-components';
-import {Col as col, Input as input, Button as button} from 'antd';
+import { Col as col, Input as input, Button as button } from 'antd';
 import 'antd/dist/antd.css';
 
 const Col = style(col)`
@@ -37,4 +37,4 @@ const Button = style(button)`
     height: 40px;
 `;
 
-export {Col, Input, Button}
+export { Col, Input, Button }

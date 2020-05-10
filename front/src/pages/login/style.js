@@ -26,4 +26,4 @@ const ErrorText = style.p`
     color: tomato;
 `
 
-export { StyledCol, LoginButton, ForgotPassword, ErrorText } ;
+export { StyledCol, LoginButton, ForgotPassword, ErrorText };
