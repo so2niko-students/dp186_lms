@@ -46,3 +46,22 @@ export function validatePassword(_, value) {
     return Promise.reject('Password must be longer than 6 symbols');
   }
 }
+
+export function validateNameSurname(_, value) {
+  const arr = value.split(' ');
+
+  if(arr.length !== 2) {
+    return Promise.reject('Please input valid name and surname in English, separate them by space');
+  }
+
+  const [firstName, lastName] = arr;
+  const engRegexp = /^[A-Z]{1}([a-z]{1,})?$/;
+  const isfirstNameValid = engRegexp.test(firstName);
+  const isLastNameValid = engRegexp.test(lastName);
+
+  if (isfirstNameValid && isLastNameValid) {
+    return Promise.resolve();
+  } else {
+    return Promise.reject('Not valid name or surname in English');
+  }
+}
