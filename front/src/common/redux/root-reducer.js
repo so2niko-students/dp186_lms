@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import { studentsReducer } from './students/students.reducer'; 
+import { studentsReducer } from './students/students.reducer';
 import { login } from './auth/auth.reducer';
-import { setPassword } from './set-password/set.password.reducer';
+import { groupList } from './groups/groups.reducer';
+import { teachersReducer } from './teachers/teachers.reducer'; 
 
-const rootReducer = combineReducers({ login, studentsReducer, setPassword });
+const rootReducer = combineReducers({ login, studentsReducer, groupList, teachersReducer });
 
 export default rootReducer;
