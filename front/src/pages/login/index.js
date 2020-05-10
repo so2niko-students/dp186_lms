@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { loginUserAction } from '../../common/redux/auth/auth.action';
 import { LoginButton, StyledCol, ForgotPassword, ErrorText } from './style';
-import { Form, Input, Col, Typography, Row } from 'antd';
+import { Form, Input, Col, Typography, Row, Button } from 'antd';
 import 'antd/dist/antd.css';
 import {
   validateEmail,
@@ -21,6 +21,7 @@ class LoginPage extends Component {
     super(props);
     this.onHandleLogin = this.onHandleLogin.bind(this);
     this.loginFormTemplate = this.loginFormTemplate.bind(this);
+    this.onHandleLogin = this.onHandleLogin.bind(this);
   }
 
   onHandleLogin(data) {
@@ -31,10 +32,7 @@ class LoginPage extends Component {
     return (
       <Row>
         <StyledCol span={8} offset={8}>
-          <Title level={2} align='center'>
-            Login
-            </Title>
-
+          <Title level={2} align='center'>Login</Title>
           <Form {...layout} name='basic' onFinish={this.onHandleLogin}>
             <Form.Item
               align='center'
@@ -78,6 +76,10 @@ class LoginPage extends Component {
         </StyledCol>
       </Row>
     )
+  }
+
+  onHandleLogin(data) {
+    this.props.loginUserAction(data)
   }
 
   render() {
