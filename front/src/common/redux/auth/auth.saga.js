@@ -33,7 +33,9 @@ function* changePasswordSaga(payload) {
             if (userType === 'teacher') {
                 const url = process.env.REACT_APP_CHANGE_TEACHER_PASSWORD;
                 response = yield call(changePasswordApi, { oldPassword, newPassword }, url);
-            } else if (userType === 'student') {
+            }
+
+            if (userType === 'student') {
                 const url = process.env.REACT_APP_CHANGE_STUDENT_PASSWORD;
                 response = yield call(changePasswordApi, { oldPassword, newPassword }, url);
             }
