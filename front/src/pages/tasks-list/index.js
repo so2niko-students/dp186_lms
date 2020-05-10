@@ -13,14 +13,14 @@ import {
     CheckedAndReady,
     LayoutStyle
 } from './style';
-import { Avatar, Row, Col, Typography, message, Pagination, Form, Input, Button, Layout } from 'antd';
+import { Avatar, Row, Col, Typography, message, Pagination, Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { DeleteTwoTone, EditFilled } from '@ant-design/icons';
 import ListOfGroup from '../../containers/list-of-group';
-import Spinner from '../../components/spinner'
 import axios from 'axios';
 
 const { Title, Text } = Typography;
+const { TextArea } = Input;
 const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 }
@@ -30,102 +30,7 @@ class TasksList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // tasks: [
-            //     {
-            //         id: 1,
-            //         title: 'Title 1',
-            //         text: 'text 1',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 2,
-            //         title: 'TITLE 2',
-            //         text: 'text 2',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 3,
-            //         title: 'TITLE 3',
-            //         text: 'text 3',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 4,
-            //         title: 'TITLE 4',
-            //         text: 'text 4',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 5,
-            //         title: 'TITLE 5',
-            //         text: 'text 5',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 6,
-            //         title: 'TITLE 6',
-            //         text: 'text 6',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 7,
-            //         title: 'TITLE 7',
-            //         text: 'text 7',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 8,
-            //         title: 'TITLE 8',
-            //         text: 'text 8',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 9,
-            //         title: 'TITLE 9',
-            //         text: 'text 9',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 10,
-            //         title: 'TITLE 10',
-            //         text: 'text 10',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 11,
-            //         title: 'TITLE 11',
-            //         text: 'text 11',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 12,
-            //         title: 'TITLE 12',
-            //         text: 'text 12',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            //     {
-            //         id: 13,
-            //         title: 'TITLE 13',
-            //         text: 'text 13',
-            //         checked: 5,
-            //         ready: 12
-            //     },
-            // ],
             tasks: [],
-            minValue: 0,
-            maxValue: 10,
             page: 1,
             total: 0,
             limit: 0,
@@ -136,62 +41,69 @@ class TasksList extends Component {
         };
         this.token = localStorage.getItem('token');
         this.user = JSON.parse(localStorage.getItem('user'));
-        this.cancelChangingTitle = this.cancelChangingTitle.bind(this);
-        this.cancelChangingText = this.cancelChangingText.bind(this);
-
+        this.cancelChangingTask = this.cancelChangingTask.bind(this);
+        this.handleChangePage = this.handleChangePage.bind(this);
     }
 
     deleteTask(id) {
         message.success('Task has been deleted');
 
-        const url = `http://localhost:5000/tasks/${id}`;
+        const url = `${process.env.REACT_APP_TASKS}/${id}`;
         const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}`, } };
-        // console.log(id)
-        // this.setState((state, props) => ({
-        //     tasks: state.tasks.filter((task) => task.id !== id)
-        // }))
+
+        this.setState((state, props) => ({
+            tasks: state.tasks.filter((task) => task.id !== id)
+        }))
+
         axios.delete(url, headers)
             .then(response => response);
     }
 
-    cancelChangingTitle() {
+    cancelChangingTask() {
         this.setState({
             isChangingTitle: false,
-        })
-        message.error(`Task hasn't been changed`);
-    }
-
-    cancelChangingText() {
-        this.setState({
             isChangingText: false,
         })
         message.error(`Task hasn't been changed`);
     }
 
-    handleChangePage = value => {
+    handleChangePage(value) {
         this.setState({
             page: value,
         });
         this.getTasks(value, this.props.currentGroup.id);
     };
 
-    changeTitleState(id) {
-        console.log(id);
-        this.setState({
-            isChangingTitle: true,
-            changingTitleId: id
-        })
+    changeEditState(id, name) {
+        if (name === 'description') {
+            this.setState({
+                isChangingText: true,
+                changingTextId: id
+            })
+        }
+        if (name === 'taskName') {
+            this.setState({
+                isChangingTitle: true,
+                changingTitleId: id
+            })
+        }
     }
 
-    changeTextState(id) {
-        this.setState({
-            isChangingText: true,
-            changingTextId: id
-        })
-    }
+    onHandleChangeField(id, data) {
+        message.success('Task has been saved');
 
-    onHandleChangeTitle(title) {
-        console.log(title)
+        const url = `${process.env.REACT_APP_TASKS}/${id}`;
+        const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}`, } };
+
+        axios.put(url, JSON.stringify(data), headers)
+            .then(response => response)
+
+        this.setState({
+            isChangingTitle: false,
+            isChangingText: false,
+        })
+
+        this.getTasks(this.state.page, this.props.currentGroup.id);
     }
 
     taskTemplate(task) {
@@ -215,9 +127,9 @@ class TasksList extends Component {
                     </CompletedRow>}
                 <Col span={24}>
                     {isChangingTitle && changingTitleId === id ?
-                        <Form {...layout} name='basic' initialValues={{ title: taskName }} onFinish={this.onHandleChangeTitle}>
+                        <Form {...layout} name='basic' initialValues={{ taskName: taskName }} onFinish={this.onHandleChangeField.bind(this, id)}>
                             <FormItem
-                                name='title'
+                                name='taskName'
                                 rules={[
                                     { required: true, message: 'Please input title!' },
                                 ]}>
@@ -227,34 +139,34 @@ class TasksList extends Component {
                                 <Button type='primary' htmlType='submit'>Save</Button>
                             </FormItem>
                             <FormItem>
-                                <Button type='danger' onClick={this.cancelChangingTitle}>Cancel</Button>
+                                <Button type='danger' onClick={this.cancelChangingTask}>Cancel</Button>
                             </FormItem>
                         </Form>
                         : <Row>
                             <Title level={3}>{taskName}</Title>
-                            {this.user.hasOwnProperty('isAdmin') ? <EditFilled onClick={this.changeTitleState.bind(this, id)} /> : null}
+                            {this.user.hasOwnProperty('isAdmin') ? <EditFilled onClick={this.changeEditState.bind(this, id, 'taskName')} /> : null}
                         </Row>}
                 </Col>
                 <Col span={24}>
                     {isChangingText && changingTextId === id ?
-                        <Form {...layout} name='basic' initialValues={{ text: description }} onFinish={this.onHandleChangeTitle}>
-                            <FormItem
-                                name='text'
+                        <Form {...layout} name='basic' initialValues={{ description: description }} onFinish={this.onHandleChangeField.bind(this, id)}>
+                            <FormItem style={{ width: '100%' }}
+                                name='description'
                                 rules={[
                                     { required: true, message: 'Please input title!' },
                                 ]}>
-                                <Input placeholder='Text' />
+                                <TextArea rows={4} />
                             </FormItem>
                             <FormItem>
                                 <Button type='primary' htmlType='submit'>Save</Button>
                             </FormItem>
                             <FormItem>
-                                <Button type='danger' onClick={this.cancelChangingText}>Cancel</Button>
+                                <Button type='danger' onClick={this.cancelChangingTask}>Cancel</Button>
                             </FormItem>
                         </Form>
                         : <Row>
                             <TextOfTask>{description}</TextOfTask>
-                            {this.user.hasOwnProperty('isAdmin') ? <EditFilled onClick={this.changeTextState.bind(this, id)} /> : null}
+                            {this.user.hasOwnProperty('isAdmin') ? <EditFilled onClick={this.changeEditState.bind(this, id, 'description')} /> : null}
                         </Row>}
                 </Col>
                 <Col span={24}>
@@ -266,11 +178,12 @@ class TasksList extends Component {
     }
 
     getTasks = (page, groupId) => {
-        const url = `http://localhost:5000/tasks?page=${page}&limit=10&groupId=${groupId}`;
+        const url = `${process.env.REACT_APP_TASKS}?page=${page}&limit=10&groupId=${groupId}`;
         const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}`, } };
 
         axios.get(url, headers)
             .then(response => {
+                console.log(response)
                 this.setState({
                     tasks: response.data.data,
                     page: response.data.page,
@@ -283,7 +196,6 @@ class TasksList extends Component {
     componentWillReceiveProps(props) {
         this.getTasks(1, props.currentGroup.id)
     }
-
 
     render() {
         const { tasks, page, total, limit } = this.state;
@@ -311,6 +223,7 @@ class TasksList extends Component {
                             defaultPageSize={limit}
                             onChange={this.handleChangePage}
                             total={total}
+                            style={{ margin: '20px auto' }}
                         /> : null}
                 </Page>
             </ LayoutStyle>
