@@ -3,13 +3,13 @@ import {
   HIDE_TEACHER_REGISTER_MODAL,
   REGISTER_TEACHER,
   SHOW_LOADER,
-  CHANGE_NAME,
-  CANCEL_NAME_CHANGING,
   UPDATE_NAME,
+  CANCEL_NAME_CHANGING,
+  UPDATE_NAME_SUCCESS,
   LOAD_TEACHERS,
-  CHANGE_EMAIL,
-  CANCEL_EMAIL_CHANGING,
   UPDATE_EMAIL,
+  CANCEL_EMAIL_CHANGING,
+  UPDATE_EMAIL_SUCCESS,
   DELETE_TEACHER,
   SHOW_MODAL_DELETE,
   HIDE_MODAL_DELETE,
@@ -24,24 +24,24 @@ export const showTeacherRegisteredModal = () => ({ type: SHOW_TEACHER_REGISTER_M
 
 export const showLoader = () => ({ type: SHOW_LOADER });
 
-export const changeName = (id) => ({ type: CHANGE_NAME, id });
-
-export const cancelNameChanging = (id) => ({ type: CANCEL_NAME_CHANGING, id });
-
 export const updateName = (data) => ({ type: UPDATE_NAME, payload: data });
 
-export const loadTeachers = (querys) => ({ type: LOAD_TEACHERS, querys });
+export const cancelNameChanging = (data) => ({ type: CANCEL_NAME_CHANGING, payload: data });
 
-export const changeEmail = (id) => ({ type: CHANGE_EMAIL, id });
+export const updateNameSuccess = (data) => ({ type: UPDATE_NAME_SUCCESS, payload: data });
 
-export const cancelEmailChanging = (id) => ({ type: CANCEL_EMAIL_CHANGING, id });
+export const loadTeachers = (querys) => ({ type: LOAD_TEACHERS, payload: querys });
 
 export const updateEmail = (data) => ({ type: UPDATE_EMAIL, payload: data });
 
-export const deleteTeacher = (id) => ({ type: DELETE_TEACHER, id });
+export const cancelEmailChanging = (data) => ({ type: CANCEL_EMAIL_CHANGING, payload: data });
 
-export const showModalDelete = (id) => ({ type: SHOW_MODAL_DELETE, id });
+export const updateEmailSuccess = (data) => ({ type: UPDATE_EMAIL_SUCCESS, payload: data });
+
+export const deleteTeacher = (data) => ({ type: DELETE_TEACHER, payload: data });
+
+export const showModalDelete = (data) => ({ type: SHOW_MODAL_DELETE, payload: data });
 
 export const hideModalDelete = () => ({ type: HIDE_MODAL_DELETE });
 
-export const rememberUpdatingId = (id) => ({ type: REMEMBER_UPDATING_ID, id })
+export const rememberUpdatingId = (data) => ({ type: REMEMBER_UPDATING_ID, payload: data })

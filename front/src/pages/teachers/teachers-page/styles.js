@@ -1,22 +1,22 @@
 import style from 'styled-components';
-import {Col as col, Button as button, Typography} from 'antd';
+import { Col as MyCol, Button as MyButton, Typography } from 'antd';
 import 'antd/dist/antd.css';
 
-const { Title:title } = Typography;
+const { Title: MyTitle } = Typography;
 
-const Title = style(title)`
-    float: left
+const Title = style(MyTitle)`
+    float: left;
 `
 
-const Col = style(col)`
+const Col = style(MyCol)`
     margin-top: 70px; 
 `;
 
-const ColPagination = style(col)`
+const ColPagination = style(MyCol)`
     margin: 30px;
 `;
 
-const Button = style(button)`
+const Button = style(MyButton)`
     float: right;
 `;
 

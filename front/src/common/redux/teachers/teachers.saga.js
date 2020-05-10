@@ -12,23 +12,23 @@ import {
   TEACHER_REGISTER_ERROR_HAPPENED,
   REGISTER_TEACHER_FAILED,
   REGISTER_TEACHER,
-  UPDATE_NAME,
+  UPDATE_NAME_SUCCESS,
   UPDATE_NAME_COMPLETED,
   LOAD_TEACHERS,
   LOAD_TEACHERS_COMPLETED,
-  UPDATE_EMAIL,
+  UPDATE_EMAIL_SUCCESS,
   UPDATE_EMAIL_COMPLETED,
   LOAD_TEACHERS_FAILED,
   DELETE_TEACHER,
   DELETE_TEACHER_COMPLETED
 } from './types';
 
-export function* teacherRegisteredSaga(payload) {
+export function* teacherRegisteredSaga(action) {
   try {
-    const response = yield call(registerTeacherApi, payload);
+    const response = yield call(registerTeacherApi, action.payload);
     showNotification(
       'Successfully registered',
-      `User with provided email ${response.data.email} was registered`,
+      `Teacher with provided email ${response.data.email} was registered`,
       'success'
     );
 
@@ -46,12 +46,12 @@ export function* teacherRegisteredSaga(payload) {
   }
 }
 
-export function* teacherUpdateNameSaga(payload) {
+export function* teacherUpdateNameSaga(action) {
   try {
-    const response = yield call(updateTeacherApi, payload);
+    const response = yield call(updateTeacherApi, action.payload);
     showNotification(
       'Successfully updated',
-      `User with provided email ${response.data.email} was updated`,
+      `Teacher with provided email ${response.data.email} was updated`,
       'success'
     );
 
@@ -65,12 +65,12 @@ export function* teacherUpdateNameSaga(payload) {
   }
 }
 
-export function* teacherUpdateEmailSaga(payload) {
+export function* teacherUpdateEmailSaga(action) {
   try {
-    const response = yield call(updateTeacherApi, payload);
+    const response = yield call(updateTeacherApi, action.payload);
     showNotification(
       'Successfully updated',
-      `User with provided email ${response.data.email} was updated`,
+      `Teacher with provided email ${response.data.email} was updated`,
       'success'
     );
 
@@ -84,9 +84,9 @@ export function* teacherUpdateEmailSaga(payload) {
   }
 }
 
-export function* loadTeachersSaga(payload) {
+export function* loadTeachersSaga(action) {
   try {
-    const response = yield call(loadTeachersApi, payload);
+    const response = yield call(loadTeachersApi, action.payload);
 
     yield put({ type: LOAD_TEACHERS_COMPLETED, payload: response.data });
   } catch (error) {
@@ -96,12 +96,12 @@ export function* loadTeachersSaga(payload) {
   }
 }
 
-export function* teacherDeleteSaga(payload) {
+export function* teacherDeleteSaga(action) {
   try {
-    const response = yield call(deleteTeacherApi, payload);
+    const response = yield call(deleteTeacherApi, action.payload);
     showNotification(
       'Successfully deleted',
-      `User with provided id ${response.data} was deleted`,
+      `Teacher with provided id ${response.data} was deleted`,
       'success'
     );
 
@@ -117,32 +117,12 @@ export function* teacherDeleteSaga(payload) {
   }
 }
 
-function* watchTeacherRegistaration() {
-  yield takeEvery(REGISTER_TEACHER, teacherRegisteredSaga);
-}
-
-function* watchTeacherNameUpdating() {
-  yield takeEvery(UPDATE_NAME, teacherUpdateNameSaga);
-}
-
-function* watchTeachersLoad() {
-  yield takeEvery(LOAD_TEACHERS, loadTeachersSaga);
-}
-
-function* watchTeacherEmailUpdating() {
-  yield takeEvery(UPDATE_EMAIL, teacherUpdateEmailSaga);
-}
-
-function* watchTeacherDeleting() {
-  yield takeEvery(DELETE_TEACHER, teacherDeleteSaga);
-}
-
 export function* teachersSaga() {
   yield all([
-    watchTeacherRegistaration(),
-    watchTeacherNameUpdating(),
-    watchTeachersLoad(),
-    watchTeacherEmailUpdating(),
-    watchTeacherDeleting()
+    takeEvery(DELETE_TEACHER, teacherDeleteSaga),
+    takeEvery(UPDATE_EMAIL_SUCCESS, teacherUpdateEmailSaga),
+    takeEvery(LOAD_TEACHERS, loadTeachersSaga),
+    takeEvery(UPDATE_NAME_SUCCESS, teacherUpdateNameSaga),
+    takeEvery(REGISTER_TEACHER, teacherRegisteredSaga),
   ]);
 }

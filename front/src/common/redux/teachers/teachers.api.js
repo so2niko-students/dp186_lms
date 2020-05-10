@@ -1,7 +1,14 @@
 import axios from 'axios';
 
-async function registerTeacherApi(teacher) {
-  const url = process.env.REACT_APP_TEACHERS_REG_ROUT;
+const options = {
+  baseUrl: process.env.REACT_APP_TEACHERS_LOAD_ROUT,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+function registerTeacherApi(teacher) {
+  const url = process.env.REACT_APP_TEACHERS_REG_ROUTE;
   const token = localStorage.getItem('token');
   if (!token) {
     console.log('No token found');
@@ -9,54 +16,46 @@ async function registerTeacherApi(teacher) {
   }
 
   return axios
-    .post(url, JSON.stringify(teacher.payload), {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
+    .post(url, JSON.stringify(teacher), {
+      headers: { ...options.headers, Authorization: `Bearer ${token}` },
     })
     .then((response) => response);
 }
 
-async function updateTeacherApi(teacher) {
-  const url = `${process.env.REACT_APP_TEACHERS_UPDATE_ROUT}${teacher.payload.id}`;
-  delete teacher.payload.id;
+function updateTeacherApi(teacher) {
+  console.log(teacher)
+  const url = `${process.env.REACT_APP_TEACHERS_UPDATE_ROUTE}${teacher.id}`;
+  delete teacher.id;
   const token = localStorage.getItem('token');
   if (!token) {
     console.log('No token found');
     return;
   }
-  console.log(teacher.payload);
+
   return axios
-    .put(url, JSON.stringify(teacher.payload), {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
+    .put(url, JSON.stringify(teacher), {
+      headers: { ...options.headers, Authorization: `Bearer ${token}` },
     })
     .then((response) => response);
 }
 
-async function deleteTeacherApi(teacher) {
-  const url = `${process.env.REACT_APP_TEACHERS_DELETE_ROUT}${teacher.id}`;
+function deleteTeacherApi(teacher) {
+  const url = `${process.env.REACT_APP_TEACHERS_DELETE_ROUTE}${teacher.id}`;
   const token = localStorage.getItem('token');
   if (!token) {
     console.log('No token found');
     return;
   }
-  console.log(token);
+
   return axios
     .delete(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { ...options.headers, Authorization: `Bearer ${token}` },
     })
     .then((response) => response);
 }
 
-async function loadTeachersApi(action) {
-  const url = `${process.env.REACT_APP_TEACHERS_LOAD_ROUT}?page=${action.querys.page}&limit=10`;
+function loadTeachersApi(data) {
+  const url = `${process.env.REACT_APP_TEACHERS_LOAD_ROUTE}?page=${data.page}&limit=10`;
   const token = localStorage.getItem('token');
   if (!token) {
     console.log('No token found');
