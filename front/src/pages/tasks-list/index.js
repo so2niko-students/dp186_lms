@@ -134,18 +134,24 @@ class TasksList extends Component {
             isChangingText: false,
             changingTextId: 0,
         };
+        this.token = localStorage.getItem('token');
         this.user = JSON.parse(localStorage.getItem('user'));
         this.cancelChangingTitle = this.cancelChangingTitle.bind(this);
         this.cancelChangingText = this.cancelChangingText.bind(this);
 
     }
 
-    confirm(id) {
-        console.log(id)
+    deleteTask(id) {
         message.success('Task has been deleted');
-        this.setState((state, props) => ({
-            tasks: state.tasks.filter((task) => task.id !== id)
-        }))
+
+        const url = `http://localhost:5000/tasks/${id}`;
+        const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}`, } };
+        // console.log(id)
+        // this.setState((state, props) => ({
+        //     tasks: state.tasks.filter((task) => task.id !== id)
+        // }))
+        axios.delete(url, headers)
+            .then(response => response);
     }
 
     cancelChangingTitle() {
@@ -163,25 +169,14 @@ class TasksList extends Component {
     }
 
     handleChangePage = value => {
-        console.log(value)
         this.setState({
             page: value,
         });
-        this.getTasks(value)
-        // if (value <= 1) {
-        //     this.setState({
-        //         minValue: 0,
-        //         maxValue: 10
-        //     });
-        // } else {
-        //     this.setState({
-        //         minValue: this.state.maxValue,
-        //         maxValue: value * 10
-        //     });
-        // }
+        this.getTasks(value, this.props.currentGroup.id);
     };
 
     changeTitleState(id) {
+        console.log(id);
         this.setState({
             isChangingTitle: true,
             changingTitleId: id
@@ -199,14 +194,16 @@ class TasksList extends Component {
         console.log(title)
     }
 
-    taskTemplate(id, title, text, checked, ready) {
+    taskTemplate(task) {
+        const { id, taskName, description, amountOfChecked, amountOfReady } = task;
         const { isChangingTitle, changingTitleId, isChangingText, changingTextId } = this.state;
+
         return (
             <TaskTemplate span={20} offset={2} key={id}>
                 {this.user.hasOwnProperty('isAdmin') ?
                     <DeleteButton
                         title="Are you sure delete this task?"
-                        onConfirm={this.confirm.bind(this, id)}
+                        onConfirm={this.deleteTask.bind(this, id)}
                         okText="Yes"
                         cancelText="No"
                     >
@@ -218,7 +215,7 @@ class TasksList extends Component {
                     </CompletedRow>}
                 <Col span={24}>
                     {isChangingTitle && changingTitleId === id ?
-                        <Form {...layout} name='basic' initialValues={{ title: title }} onFinish={this.onHandleChangeTitle}>
+                        <Form {...layout} name='basic' initialValues={{ title: taskName }} onFinish={this.onHandleChangeTitle}>
                             <FormItem
                                 name='title'
                                 rules={[
@@ -234,13 +231,13 @@ class TasksList extends Component {
                             </FormItem>
                         </Form>
                         : <Row>
-                            <Title level={3}>{title}</Title>
+                            <Title level={3}>{taskName}</Title>
                             {this.user.hasOwnProperty('isAdmin') ? <EditFilled onClick={this.changeTitleState.bind(this, id)} /> : null}
                         </Row>}
                 </Col>
                 <Col span={24}>
                     {isChangingText && changingTextId === id ?
-                        <Form {...layout} name='basic' initialValues={{ text: text }} onFinish={this.onHandleChangeTitle}>
+                        <Form {...layout} name='basic' initialValues={{ text: description }} onFinish={this.onHandleChangeTitle}>
                             <FormItem
                                 name='text'
                                 rules={[
@@ -256,32 +253,24 @@ class TasksList extends Component {
                             </FormItem>
                         </Form>
                         : <Row>
-                            <TextOfTask>{text}</TextOfTask>
+                            <TextOfTask>{description}</TextOfTask>
                             {this.user.hasOwnProperty('isAdmin') ? <EditFilled onClick={this.changeTextState.bind(this, id)} /> : null}
                         </Row>}
                 </Col>
                 <Col span={24}>
-                    <CheckedAndReady>{checked} is checked</CheckedAndReady>
-                    <CheckedAndReady>{ready} is ready</CheckedAndReady>
+                    <CheckedAndReady>{amountOfChecked} is checked</CheckedAndReady>
+                    <CheckedAndReady>{amountOfReady} is ready</CheckedAndReady>
                 </Col>
             </TaskTemplate >
         )
     }
 
-    componentDidUpdate() {
-        if (this.state.tasks.length === 0) {
-            this.getTasks(1)
-        }
-    }
+    getTasks = (page, groupId) => {
+        const url = `http://localhost:5000/tasks?page=${page}&limit=10&groupId=${groupId}`;
+        const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}`, } };
 
-    getTasks = (page) => {
-        const token = localStorage.getItem('token');
-        const url = `http://localhost:5000/tasks?page=${page}&limit=10&groupId=${this.props.currentGroup.id}`;
-        const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, } };
-        console.log(url)
         axios.get(url, headers)
             .then(response => {
-                console.log(response.data)
                 this.setState({
                     tasks: response.data.data,
                     page: response.data.page,
@@ -289,15 +278,16 @@ class TasksList extends Component {
                     limit: response.data.limit,
                 })
             })
-
-
     }
 
+    componentWillReceiveProps(props) {
+        this.getTasks(1, props.currentGroup.id)
+    }
 
 
     render() {
         const { tasks, page, total, limit } = this.state;
-        // console.log(total)
+
         return (
             < LayoutStyle >
                 <ListOfGroup />
@@ -312,8 +302,7 @@ class TasksList extends Component {
                         <Row>
                             {tasks &&
                                 tasks.length > 0 &&
-                                // tasks.slice(this.state.minValue, this.state.maxValue.map(({ id, taskName, description, amountOfChecked, amoun)tOfReady }) => this.taskTemplate(id, taskName, description, amountOfChecked, amountOfReady))}
-                                tasks.map(({ id, taskName, description, amountOfChecked, amountOfReady }) => this.taskTemplate(id, taskName, description, amountOfChecked, amountOfReady))}
+                                tasks.map((task) => this.taskTemplate(task))}
                         </Row>
                     </Col>
                     {total > 10 ?
@@ -330,4 +319,5 @@ class TasksList extends Component {
 }
 
 const mapStateToProps = ({ groupList: { currentGroup } }) => ({ currentGroup });
+
 export default connect(mapStateToProps)(TasksList);
