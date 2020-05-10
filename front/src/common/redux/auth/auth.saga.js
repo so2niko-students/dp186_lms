@@ -1,6 +1,6 @@
-import { put, call, all, takeEvery } from "redux-saga/effects";
-import { loginApi } from "./auth.api";
-import * as types from "./types";
+import { put, call, all, takeEvery } from 'redux-saga/effects';
+import { loginApi } from './auth.api';
+import * as types from './types';
 
 function* loginSaga(payload) {
     try {
