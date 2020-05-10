@@ -126,11 +126,13 @@ class TasksList extends Component {
             tasks: [],
             minValue: 0,
             maxValue: 10,
+            page: 1,
+            total: 0,
+            limit: 0,
             isChangingTitle: false,
             changingTitleId: 0,
             isChangingText: false,
             changingTextId: 0,
-            currentGroup: 0,
         };
         this.user = JSON.parse(localStorage.getItem('user'));
         this.cancelChangingTitle = this.cancelChangingTitle.bind(this);
@@ -161,17 +163,22 @@ class TasksList extends Component {
     }
 
     handleChangePage = value => {
-        if (value <= 1) {
-            this.setState({
-                minValue: 0,
-                maxValue: 10
-            });
-        } else {
-            this.setState({
-                minValue: this.state.maxValue,
-                maxValue: value * 10
-            });
-        }
+        console.log(value)
+        this.setState({
+            page: value,
+        });
+        this.getTasks(value)
+        // if (value <= 1) {
+        //     this.setState({
+        //         minValue: 0,
+        //         maxValue: 10
+        //     });
+        // } else {
+        //     this.setState({
+        //         minValue: this.state.maxValue,
+        //         maxValue: value * 10
+        //     });
+        // }
     };
 
     changeTitleState(id) {
@@ -262,42 +269,41 @@ class TasksList extends Component {
     }
 
     componentDidUpdate() {
-        if (this.state.currentGroup !== this.props.currentGroup.id) {
-            this.setState({ currentGroup: this.props.currentGroup.id })
-            this.getTasks()
+        if (this.state.tasks.length === 0) {
+            this.getTasks(1)
         }
     }
 
-    getTasks = () => {
-        if (this.props.currentGroup.id) {
-
-            const token = localStorage.getItem('token');
-            // // const userId = JSON.parse(localStorage.getItem('user')).id;
-            // // console.log(this.props.currentGroup)
-            const url = `http://localhost:5000/tasks?page=1&limit=10&groupId=${this.state.currentGroup}`;
-            const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, } };
-            console.log(this.state.currentGroup)
-            axios.get(url, headers)
-                .then(response => {
-                    this.setState({ tasks: response.data })
+    getTasks = (page) => {
+        const token = localStorage.getItem('token');
+        const url = `http://localhost:5000/tasks?page=${page}&limit=10&groupId=${this.props.currentGroup.id}`;
+        const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, } };
+        console.log(url)
+        axios.get(url, headers)
+            .then(response => {
+                console.log(response.data)
+                this.setState({
+                    tasks: response.data.data,
+                    page: response.data.page,
+                    total: response.data.total,
+                    limit: response.data.limit,
                 })
-        }
+            })
+
 
     }
 
 
 
     render() {
-        const { tasks } = this.state;
-        // console.log(this.state.tasks)
-        console.log(this.props)
-
+        const { tasks, page, total, limit } = this.state;
+        // console.log(total)
         return (
             < LayoutStyle >
                 <ListOfGroup />
                 <Page>
                     <Col span={20} offset={2}>
-                        {/* {this.user.hasOwnProperty('isAdmin') ? <AddTaskButton type='primary'>Add Task</AddTaskButton> : null} */}
+                        {this.user.hasOwnProperty('isAdmin') ? <AddTaskButton type='primary'>Add Task</AddTaskButton> : null}
                         <Avatar size={64} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                         <GroupName>{this.props.currentGroup.groupName ? this.props.currentGroup.groupName : null}</GroupName>
                     </Col>
@@ -310,12 +316,13 @@ class TasksList extends Component {
                                 tasks.map(({ id, taskName, description, amountOfChecked, amountOfReady }) => this.taskTemplate(id, taskName, description, amountOfChecked, amountOfReady))}
                         </Row>
                     </Col>
-                    <Pagination
-                        defaultCurrent={1}
-                        defaultPageSize={10}
-                        onChange={this.handleChangePage}
-                        total={13}
-                    />
+                    {total > 10 ?
+                        <Pagination
+                            defaultCurrent={page}
+                            defaultPageSize={limit}
+                            onChange={this.handleChangePage}
+                            total={total}
+                        /> : null}
                 </Page>
             </ LayoutStyle>
         );
