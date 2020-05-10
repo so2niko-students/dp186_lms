@@ -47,7 +47,6 @@ class UpdateProfile extends Component {
     render() {
         const { errorMessage } = this.props;
         const { user } = this.state;
-console.log(user)
         return (
 
             <div>

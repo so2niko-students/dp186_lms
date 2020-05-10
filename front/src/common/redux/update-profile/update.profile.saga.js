@@ -3,7 +3,6 @@ import { updateProfileApi } from './update.profile.api';
 import * as types from './types';
 
 export function* userUpdateProfileSaga(payload) {
-    console.log(payload, 'qqqq')
     try {
         const response = yield call(updateProfileApi, payload);
         yield put({ type: types.UPDATE_USER_PROFILE_SUCCESS, payload: response });

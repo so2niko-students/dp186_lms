@@ -1,12 +1,9 @@
 import axios from 'axios';
 
 export async function updateProfileApi (data) {
-    console.log(data)
-    
+       
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user)
-
     const studentURL = `${process.env.REACT_APP_UPDATE_STUDENT_PROFILE}${user.id}`;
     const teacherURL = `${process.env.REACT_APP_UPDATE_TEACHER_PROFILE}${user.id}`;
     
