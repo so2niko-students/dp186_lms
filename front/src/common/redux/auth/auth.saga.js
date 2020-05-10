@@ -1,7 +1,6 @@
 import { put, call, all, takeEvery } from "redux-saga/effects";
 import { loginApi, changePasswordApi } from "./auth.api";
 import * as types from "./types";
-import axios from 'axios';
 
 function* loginSaga(payload) {
     try {
