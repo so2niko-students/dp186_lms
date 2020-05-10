@@ -56,7 +56,7 @@ class ChangePassword extends Component {
                 <Row justify="center">
                     <Col span={24}>
                         <Title level={2} align="center"> Change password </Title>
-                        <Form {...layout} onFinish={this.onHandleChangePassword} initialValues={{ teacherId: this.props.teacherId, user: this.props.user }} >
+                        <Form {...layout} onFinish={this.onHandleChangePassword} initialValues={{ teacherId: this.props.teacherId, userType: this.props.user }} >
                             {user === 'admin' ? <MentorName align="center"> {this.props.mentorName} </MentorName> : null}
                             {user === 'admin' ? null : <Form.Item name="oldPassword" align="center" rules={[{ required: true, message: 'Please input your old password!' }, { validator: validatePassword }]} >
                                 <Input.Password placeholder="Old password" />
@@ -78,7 +78,7 @@ class ChangePassword extends Component {
                                     { validator: validatePassword }]} >
                                 <Input.Password placeholder={user === 'admin' ? 'Confirm password' : 'Confirm new password'} />
                             </Form.Item>
-                            <Form.Item name="user" style={{ display: 'none' }}>
+                            <Form.Item name="userType" style={{ display: 'none' }}>
                                 <Input type="text" />
                             </Form.Item>
                             {this.props.teacherId ?

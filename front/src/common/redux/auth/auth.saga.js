@@ -22,18 +22,18 @@ function* changePasswordSaga(payload) {
             yield put({ type: types.CHANGE_PASSWORD_STATE, });
         } else {
             let response;
-            const { oldPassword, newPassword, user } = payload.user;
+            const { oldPassword, newPassword, userType } = payload.user;
 
-            if (user === 'admin') {
+            if (userType === 'admin') {
                 const teacherId = +Object.keys(payload.user.teacherId)[0];
                 const url = `${process.env.REACT_APP_CHANGE_TEACHER_PASSWORD_BY_ADMIN}${teacherId}`;
                 response = yield call(changePasswordApi, { newPassword }, url);
             }
 
-            if (user === 'teacher') {
+            if (userType === 'teacher') {
                 const url = process.env.REACT_APP_CHANGE_TEACHER_PASSWORD;
                 response = yield call(changePasswordApi, { oldPassword, newPassword }, url);
-            } else if (user === 'student') {
+            } else if (userType === 'student') {
                 const url = process.env.REACT_APP_CHANGE_STUDENT_PASSWORD;
                 response = yield call(changePasswordApi, { oldPassword, newPassword }, url);
             }
