@@ -15,11 +15,11 @@ export async function updateProfileApi (data) {
 
     if (user.hasOwnProperty('isAdmin')) {
         return axios
-        .put(teacherURL, JSON.stringify(data), headers)
+        .put(teacherURL, data, headers)
         .then(response => response);
     } else {
         return axios
-        .put(studentURL, JSON.stringify(data), headers)
+        .put(studentURL, data, headers)
         .then(response => response);
     }
 }

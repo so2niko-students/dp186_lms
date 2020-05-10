@@ -5,7 +5,3 @@ export const updateUserProfileAction = (user) => ({
     user
     
 });
-// export const changeSuccessPasswordAction = (isSuccess) => ({
-//     type: CHANGE_PASSWORD_STATE,
-//     isSuccess
-// });
