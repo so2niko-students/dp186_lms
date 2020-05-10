@@ -19,8 +19,13 @@ const layout = {
 class LoginPage extends Component {
   constructor(props) {
     super(props);
+    this.onHandleLogin = this.onHandleLogin.bind(this);
     this.loginFormTemplate = this.loginFormTemplate.bind(this);
     this.onHandleLogin = this.onHandleLogin.bind(this);
+  }
+
+  onHandleLogin(data) {
+    this.props.loginUserAction(data);
   }
 
   loginFormTemplate(errorMessage, isLoggedIn) {
@@ -94,7 +99,7 @@ const mapStateToProps = ({ login: { errorMessage, isLoggedIn } }) => ({
 });
 
 const mapDispatchToProps = {
-  loginUserAction
+  loginUserAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
