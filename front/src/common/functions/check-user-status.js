@@ -4,7 +4,7 @@ export const MENTOR = 'mentor';
 
 const checkUserStatus = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if(user.isAdmin){
+    if(user.isAdmin !== undefined){
         return user.isAdmin ? SUPERADMIN : MENTOR;
     }
     return STUDENT;
