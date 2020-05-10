@@ -36,7 +36,7 @@ class TeachersRegistrationForm extends Component {
         <SpinnerContainer>
           <Spinner load={Spinner.loading()} />;
         </SpinnerContainer>
-      ) 
+      );
     } else {
       return (
         <Form.Item align="center">
