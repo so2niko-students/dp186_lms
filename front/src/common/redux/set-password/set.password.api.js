@@ -7,5 +7,5 @@ export async function setPassswordApi (request) {
    
     return axios
         .put(url, request.data, headers)
-        .then(response => response)
+        .then(response => response.data)
 }
