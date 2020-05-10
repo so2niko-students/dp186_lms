@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Button, Col } from 'antd';
 import style from 'styled-components';
 import 'antd/dist/antd.css';
@@ -9,15 +8,10 @@ const StyledCol = style(Col)`
     padding: 30px;
 `;
 
-const LoginButton = style(Button)`
+const SetButton = style(Button)`
     width: 60%;
     border-radius: 5px;
-    margin-left: 20%;
-`;
-
-const ForgotPassword = style(Link)`
-    text-align: center;
-    color: #333;
+    
 `;
 
 const ErrorText = style.p`
@@ -25,5 +19,10 @@ const ErrorText = style.p`
     text-align: center;
     color: tomato;
 `
+export const SuccessText = style.p`
+    font-size: 14px;
+    text-align: center;
+    color: green;
+`
 
-export { StyledCol, LoginButton, ForgotPassword, ErrorText };
+export { StyledCol, SetButton, ErrorText };
