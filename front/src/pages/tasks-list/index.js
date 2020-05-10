@@ -273,10 +273,7 @@ class TasksList extends Component {
 
         axios.get(url, headers)
             .then(response => {
-                console.log(response)
                 this.setState({ tasks: response.data })
-                // groupList = response.data; // for dispatch 
-                // this.onHandleFirstGroup(groupList[0])
             })
     }
 
