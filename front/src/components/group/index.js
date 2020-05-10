@@ -7,25 +7,21 @@ import Spinner from '../spinner';
 import CustomAvatar from '../avatar';
 import {
     StyledListItem, StyledTitle, StyledP, StyledDivBtn, StyledBtn,
-    StyledRow, GroupTitleP, DeleteStudentBtn, StyledListItemMeta, StyledStudentBlock,
+    StyledRow, GroupTitle, DeleteStudentBtn, StyledListItemMeta, StyledStudentBlock,
     StyledTeachersBlock, EditGroupBtn, StyledColHeader, StyledList
 } from './style';
 import GroupEditForm from '../groupEditForm';
 import { changeUpdatingStatus, deleteStudentFromGroup } from '../../common/redux/groups/groups.action';
-import { checkUserStatus } from '../../common/functions';
 
 const { Title } = Typography;
 const { Content } = Layout;
 const { confirm } = Modal;
 
 class Group extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            role: checkUserStatus(),
-            fatalError: false,
-        };
-    }
+    state = {
+        // If component throw error
+        fatalError: false,
+    };
 
     componentDidCatch(error, errorInfo) {
         this.setState({fatalError: true});
@@ -37,7 +33,7 @@ class Group extends Component {
             this.handleErrorNotification(groupsError)
         }
         if(isDeleting && prevProps.isDeleting !== isDeleting) {
-            message.loading({ content: 'Loading...', key: 'delNotify' })
+            message.loading({ content: 'Deleting ...', key: 'delNotify' })
         }
         if(!isDeleting && prevProps.isDeleting) {
             message.success({ content: 'Deleted!', key: 'delNotify', duration: 2});
@@ -45,15 +41,15 @@ class Group extends Component {
     }
 
     handleErrorNotification = (error) => {
-        notification['error']({
+        notification.error({
             message: 'Something went wrong',
-            description: `${error}`,
+            description: error.toString(),
             getContainer: () => document.body,
         });
     }
 
     handleDeleteStudent = (studentId) => {
-        const { onHandleDeleteStudent, currentGroup: { id: groupId } } = this.props;
+        const { deleteStudentFromGroup, currentGroup: { id: groupId } } = this.props;
         confirm({
             title: 'Are you sure delete this student?',
             icon: <ExclamationCircleOutlined />,
@@ -62,14 +58,14 @@ class Group extends Component {
             okType: 'danger',
             cancelText: 'No',
             onOk: () => {
-                onHandleDeleteStudent({studentId, groupId});
+                deleteStudentFromGroup({studentId, groupId});
             }
         });
     }
 
     render() {
-        const { role, fatalError } = this.state;
-        const { onHandleSwitchEditStatus, isGroupEdited, currentGroup } = this.props;
+        const { fatalError } = this.state;
+        const { changeUpdatingStatus, isGroupEdited, currentGroup, role } = this.props;
         const { groupName, avatar, id, teacher, students } = currentGroup;
 
         if(fatalError){
@@ -99,10 +95,10 @@ class Group extends Component {
                                                     :
                                                     <CustomAvatar avatar={false} />
                                                 }
-                                                <GroupTitleP>{currentGroup.groupName}</GroupTitleP>
+                                                <GroupTitle>{currentGroup.groupName}</GroupTitle>
                                                 {
                                                     role === 'mentor' || role === 'superAdmin' ?
-                                                        <EditGroupBtn type={'primary'} icon={<EditOutlined />} size={12} shape="circle" onClick={onHandleSwitchEditStatus}/>
+                                                        <EditGroupBtn type={'primary'} icon={<EditOutlined />} size={12} shape="circle" onClick={changeUpdatingStatus}/>
                                                         :
                                                         null
                                                 }
@@ -195,17 +191,9 @@ class Group extends Component {
     }
 }
 
-const mapStateToProps = ({ groups: { currentGroup, isGroupEdited, groupsError, isDeleting }, login: { userId } }) =>
-    ({ currentGroup, userId, isGroupEdited, groupsError, isDeleting });
-const mapDispatchToProps = (dispatch) => {
-    return{
-        onHandleSwitchEditStatus: (data) => {
-            return dispatch(changeUpdatingStatus(data));
-        },
-        onHandleDeleteStudent: (data) => {
-            return dispatch(deleteStudentFromGroup(data));
-        },
-    }
-}
+const mapStateToProps = ({ groups: { currentGroup, isGroupEdited, groupsError, isDeleting }, login: { userId, role } }) =>
+    ({ currentGroup, userId, isGroupEdited, groupsError, isDeleting, role });
+
+const mapDispatchToProps = { changeUpdatingStatus, deleteStudentFromGroup };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Group);

@@ -15,16 +15,16 @@ class GroupEditForm extends Component {
     }
 
     handleUpdateGroup = (data) => {
-        const { onHandleSwitchEditStatus, onHandleUpdateGroup, onHandleStartUploadNewData,
+        const { changeUpdatingStatus, updateCurrentGroup, startUpdatingGroupData,
             groupName: groupNameFromProps, groupAvatar: groupAvatarFromProps } = this.props;
         const { groupId, avatar, groupName } = this.state;
         if(groupNameFromProps === groupName && groupAvatarFromProps === avatar) {
-            onHandleSwitchEditStatus();
+            changeUpdatingStatus();
             return false;
         }
-        onHandleStartUploadNewData();
+        startUpdatingGroupData();
         const reqBody = {id: groupId, groupName, avatar};
-        onHandleUpdateGroup(reqBody);
+        updateCurrentGroup(reqBody);
     }
 
     handleChangeGroupName = (event) => {
@@ -47,7 +47,7 @@ class GroupEditForm extends Component {
     render() {
         const { groupName, avatar } = this.state;
 
-        const { onHandleSwitchEditStatus, isUpdating: loading } = this.props;
+        const { changeUpdatingStatus, isUpdating: loading } = this.props;
 
         const uploadButton = (
             <div>
@@ -101,7 +101,7 @@ class GroupEditForm extends Component {
                                 <Button type={'primary'} htmlType={'submit'} style={{margin: '0 5px'}}>
                                     Save
                                 </Button>
-                                <Button type={'danger'} style={{margin: '0 5px'}} onClick={onHandleSwitchEditStatus}>Cancel</Button>
+                                <Button type={'danger'} style={{margin: '0 5px'}} onClick={changeUpdatingStatus}>Cancel</Button>
                             </Form.Item>
                         </Form>
                 }
@@ -110,18 +110,11 @@ class GroupEditForm extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onHandleUpdateGroup: (data) => {
-            return dispatch(updateCurrentGroup(data))
-        },
-        onHandleSwitchEditStatus: (data) => {
-            return dispatch(changeUpdatingStatus(data))
-        },
-        onHandleStartUploadNewData: (data) => {
-            return dispatch(startUpdatingGroupData(data))
-        },
-    }
+
+const mapDispatchToProps = {
+    updateCurrentGroup,
+    changeUpdatingStatus,
+    startUpdatingGroupData,
 }
 
 const mapStateToProps = ({ groups: { isUpdating } }) => ({ isUpdating });

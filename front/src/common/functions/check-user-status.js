@@ -1,9 +1,13 @@
+export const STUDENT = 'student';
+export const SUPERADMIN = 'superAdmin';
+export const MENTOR = 'mentor';
+
 const checkUserStatus = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if(user.hasOwnProperty('isAdmin')){
-        return user.isAdmin ? 'superAdmin' : 'mentor';
+    if(user.isAdmin){
+        return user.isAdmin ? SUPERADMIN : MENTOR;
     }
-    return 'student';
+    return STUDENT;
 };
 
 export default checkUserStatus;

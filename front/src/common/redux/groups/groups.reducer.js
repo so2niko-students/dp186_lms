@@ -1,5 +1,4 @@
 import * as types from './types';
-import { updateGroupInGroupList } from './groups.selectors';
 
 const initialState = {
     groupList: null,
@@ -17,23 +16,26 @@ export function groups(state = initialState, action) {
         case types.START_LOAD_CURRENT_GROUP_DATA:
             return { ...state, groupsLoadingError: false, isUpdating: true };
         case types.SET_GROUPS_DATA:
-            return { ...state, groupList: action.data, currentGroup: action.data[0] };
+            return { ...state, groupList: action.payload, currentGroup: action.payload[0] };
         case types.SET_CURRENT_GROUP:
-            return { ...state, currentGroup: state.groupList[action.data] };
+            return { ...state, currentGroup: state.groupList[action.payload] };
         case types.SET_UPDATED_CURRENT_GROUP:
-            const updatedGroupList = updateGroupInGroupList(state.groupList, action.data);
-            return { ...state, groupList: [...updatedGroupList], currentGroup: action.data, isUpdating: false, isGroupEdited: false};
+            const group = state.groupList.find((g) => g.id === action.payload.id );
+            const groupIndex = state.groupList.indexOf(group);
+            const updatedGroupList = [...state.groupList];
+            updatedGroupList[groupIndex] = action.payload;
+            return { ...state, groupList: updatedGroupList, currentGroup: action.payload, isUpdating: false, isGroupEdited: false};
         case types.DELETE_STUDENT_FROM_GROUP:
             return { ...state, isDeleting: true };
         case types.COMPLETE_DELETE_STUDENT:
-            return { ...state, currentGroup: { ...action.data }, isDeleting: false };
+            return { ...state, currentGroup: { ...action.payload }, isDeleting: false };
         case types.ERROR_UPDATE_CURRENT_GROUP:
-            return { ...state, groupsError: action.data, isUpdating: false, isGroupEdited: false };
+            return { ...state, groupsError: action.payload, isUpdating: false, isGroupEdited: false };
         case types.ERROR_DELETE_STUDENT:
-            return { ...state, groupsError: action.data };
+            return { ...state, groupsError: action.payload };
         case types.ERROR_LOADING_GROUPS_DATA:
-            return { ...state, groupsError: action.data };
+            return { ...state, groupsError: action.payload };
         default:
-            return { ...state };
+            return state;
     }
 };

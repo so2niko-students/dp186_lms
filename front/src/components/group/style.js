@@ -5,7 +5,7 @@ export const StyledRow = style(Row)`
     padding: 20px 30px;
 `;
 
-export const GroupTitleP = style.p`
+export const GroupTitle = style.p`
     margin-top: 10px;
     font-size: 28px;
     color: #000;
