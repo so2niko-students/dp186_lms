@@ -17,3 +17,21 @@ export function login(state = initialState, action) {
             return { ...state };
     }
 };
+
+const changePasswordState = {
+    isChangedPassword: false,
+    errorMessage: '',
+}
+
+export function changePassword(state = changePasswordState, action) {
+    switch (action.type) {
+        case types.CHANGE_USER_PASSWORD_SUCCESS:
+            return { ...state, isChangedPassword: true, errorMessage: '' };
+        case types.CHANGE_PASSWORD_STATE:
+            return { ...state, isChangedPassword: false, errorMessage: '' };
+        case types.CHANGE_USER_PASSWORD_ERROR:
+            return { ...state, isChangedPassword: false, errorMessage: 'Password has not been changed' };
+        default:
+            return { ...state };
+    }
+};
