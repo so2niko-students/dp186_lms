@@ -1,10 +1,12 @@
-import { Button, Layout } from 'antd';
-import style from "styled-components";
+import { Button, Layout, Menu } from 'antd';
+import style from 'styled-components';
 import 'antd/dist/antd.css';
 const { Sider } = Layout;
 
 const AddGroupButton = style(Button)`
     margin: 20px 0;
+    left: 50%;
+    transform: translate(-50%);
 `;
 
 const SiderStyle = style(Sider)`
@@ -15,7 +17,14 @@ const SiderStyle = style(Sider)`
     &>div.ant-layout-sider-children {
         height: auto;
         position: fixed;
+        width: 200px;
     }
 `;
 
-export { AddGroupButton, SiderStyle };
+const StyledMenuItem = style(Menu.Item)`
+    display: flex;
+    justify-content: center;
+    width: 100%;
+`;
+
+export { AddGroupButton, SiderStyle, StyledMenuItem };

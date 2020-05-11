@@ -220,7 +220,7 @@ class TasksList extends Component {
     }
 }
 
-const mapStateToProps = ({ groupList: { currentGroup }, tasks: { tasks, page, total, limit, errorMessage } }) => ({ currentGroup, tasks, page, total, limit, errorMessage });
+const mapStateToProps = ({ groups: { currentGroup }, tasks: { tasks, page, total, limit, errorMessage } }) => ({ currentGroup, tasks, page, total, limit, errorMessage });
 
 const mapDispatchToProps = {
     getAllTasksAction,
