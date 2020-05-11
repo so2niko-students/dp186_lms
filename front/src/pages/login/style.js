@@ -24,6 +24,6 @@ const ErrorText = style.p`
     font-size: 14px;
     text-align: center;
     color: tomato;
-`
+`;
 
 export { StyledCol, LoginButton, ForgotPassword, ErrorText };
