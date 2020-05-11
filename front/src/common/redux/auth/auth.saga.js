@@ -5,8 +5,8 @@ import * as types from "./types";
 function* loginSaga(payload) {
     try {
         const response = yield call(loginApi, payload);
-
-        localStorage.setItem('token', response.data.token);
+        
+        localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
 
         yield put({ type: types.LOGIN_USER_SUCCESS, response });

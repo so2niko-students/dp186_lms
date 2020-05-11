@@ -1,8 +1,10 @@
 import * as types from './types';
+import { getUserType } from '../../functions';
 
 const initialState = {
     isLoggedIn: false,
     errorMessage: '',
+    role: getUserType(),
 };
 
 export function login(state = initialState, action) {
