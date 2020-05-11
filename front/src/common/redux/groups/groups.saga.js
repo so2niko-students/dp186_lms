@@ -2,7 +2,7 @@ import { put, call, all, takeEvery } from 'redux-saga/effects';
 import { updateGroup, loadGroupsData, deleteStudent, getOneGroup } from './groups.api';
 import * as types from './types';
 
-export function* updateSaga(action) {
+function* updateSaga(action) {
     try {
         const data = yield call(updateGroup, action.payload);
         yield put({type: types.SET_UPDATED_CURRENT_GROUP, payload: data});
@@ -11,7 +11,7 @@ export function* updateSaga(action) {
     }
 }
 
-export function* loadDataSaga() {
+function* loadDataSaga() {
     try {
         const data = yield call(loadGroupsData);
         yield put({type: types.SET_GROUPS_DATA, payload: data});
@@ -20,7 +20,7 @@ export function* loadDataSaga() {
     }
 }
 
-export function* deleteStudentSaga(action) {
+function* deleteStudentSaga(action) {
     try {
         yield call(deleteStudent, action.payload);
         try {
