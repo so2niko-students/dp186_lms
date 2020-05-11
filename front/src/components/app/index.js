@@ -4,7 +4,10 @@ import StudentRegistrationPage from '../../pages/student-registration-page';
 import TeachersPage from '../../pages/teachers/teachers-page';
 import LoginPage from '../../pages/login';
 import UpdateProfile from '../../containers/modal-update-profile/index';
+import GroupsPage from '../../pages/groups';
 import SetPasswordPage from '../../pages/set-password';
+import ForgotPasswordPage from '../../pages/forgot-password';
+
 
 class App extends Component {
     render() {
@@ -16,6 +19,8 @@ class App extends Component {
                     <Route path="/login" component={LoginPage} />
                     <Route path="/dashboard" component={UpdateProfile} />
                     <Route path="/resetPassword/:token" component={SetPasswordPage} />
+                    <Route path="/forgotPassword/" component={ForgotPasswordPage} />
+                    <Route path="/groups" component={GroupsPage} />
                 </Switch>
             </BrowserRouter>
         )
