@@ -38,7 +38,7 @@ class ListOfGroup extends Component {
 const mapStateToProps = ({ groups: { groupList }, login: { userId } }) => ({ groupList, userId });
 
 const mapDispatchToProps = (dispatch) => {
-    return{
+    return {
         onHandleGroup: (data) => {
             return dispatch(setCurrentGroup(+data.key));
         },
