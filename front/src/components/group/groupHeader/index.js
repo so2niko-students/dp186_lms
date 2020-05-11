@@ -7,7 +7,7 @@ import { Spinner } from '../../spinner/Spinner';
 import { GroupTitle, EditGroupBtn, StyledForm, StyledInput } from './style';
 import { changeUpdatingStatus, startUpdatingGroupData, updateCurrentGroup } from '../../../common/redux/groups/groups.action';
 import { validateGroup } from '../../../common/validators/group.validator';
-import { MENTOR, SUPERADMIN } from '../../../common/functions/check-user-status';
+import { MENTOR, SUPERADMIN } from '../../../common/functions/get-user-type';
 
 class GroupHeader extends Component {
 

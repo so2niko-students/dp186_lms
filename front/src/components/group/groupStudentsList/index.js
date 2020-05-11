@@ -5,7 +5,7 @@ import { ExclamationCircleOutlined, UserOutlined} from '@ant-design/icons';
 import { Spinner } from '../../spinner/Spinner';
 import { DeleteStudentBtn, StyledList, StyledListItem, StyledListItemMeta, StyledP, StyledTitle } from './style';
 import { deleteStudentFromGroup } from '../../../common/redux/groups/groups.action';
-import { MENTOR, SUPERADMIN } from '../../../common/functions/check-user-status';
+import { MENTOR, SUPERADMIN } from '../../../common/functions/get-user-type';
 
 const { confirm } = Modal;
 

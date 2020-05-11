@@ -1,10 +1,10 @@
 import * as types from './types';
-import { checkUserStatus } from '../../functions';
+import { getUserType } from '../../functions';
 
 const initialState = {
     isLoggedIn: false,
     errorMessage: '',
-    role: checkUserStatus()
+    role: getUserType(),
 };
 
 export function login(state = initialState, action) {

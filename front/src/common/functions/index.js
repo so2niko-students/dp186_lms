@@ -1,3 +1,3 @@
-import checkUserStatus from './check-user-status';
+import getUserType from './get-user-type';
 
-export { checkUserStatus };
+export { getUserType };
