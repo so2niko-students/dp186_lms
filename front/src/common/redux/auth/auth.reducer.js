@@ -4,7 +4,7 @@ import { getUserType } from '../../functions';
 const initialState = {
     isLoggedIn: false,
     errorMessage: '',
-    role: getUserType(),
+    //role: getUserType(),
 };
 
 export function login(state = initialState, action) {

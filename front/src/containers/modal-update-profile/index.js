@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Modal, Col, Row, Form, Typography, Button } from 'antd';
 import { validateEng, validateUkr, validatePhoneNumber, } from '../../common/validators/form.validator';
 import { StyledInput, StyledButton, StyledBtnModal, ErrorText } from './style';
-import { updateUserProfileAction } from '../../common/redux/update-profile/update.profile.action';
+import { updateUserProfileAction,  showModalUpdateProfile, hideModalUpdateProfile } from '../../common/redux/update-profile/update.profile.action';
 
 const { Title } = Typography;
 
@@ -19,21 +19,14 @@ class UpdateProfile extends Component {
         this.handleUpdateProfile = this.handleUpdateProfile.bind(this);
     }
 
-    state = {
-        visible: false,
-        user: JSON.parse(localStorage.getItem('user'))
-    };
-
     showModal = () => {
-        this.setState({
-            visible: true,
-        });
+        const { showModalUpdateProfile } = this.props;
+        showModalUpdateProfile();
     };
 
     handleCancel = e => {
-        this.setState({
-            visible: false,
-        });
+        const { hideModalUpdateProfile } = this.props;
+        hideModalUpdateProfile();
     };
 
     handleUpdateProfile (data) {
@@ -42,8 +35,8 @@ class UpdateProfile extends Component {
     }
 
     render() {
-        const { errorMessage } = this.props;
-        const { user } = this.state;
+        const { isUpdateProfileModalVisible, user, } = this.props;
+        console.log(this.props);
         return (
 
             <div>
@@ -53,7 +46,7 @@ class UpdateProfile extends Component {
 
                 <Modal
                     centered
-                    visible={this.state.visible}
+                    visible={isUpdateProfileModalVisible}
                     onCancel={this.handleCancel}
                     okButtonProps={{ style: { display: 'none' } }}
                     cancelButtonProps={{ style: { display: 'none' } }}
@@ -64,7 +57,7 @@ class UpdateProfile extends Component {
                         <Col span={24}>
                             <Title level={2} align="center"> Edit profile </Title>
                             <Form {...layout} onFinish={this.handleUpdateProfile}>
-                                {user.hasOwnProperty('isAdmin')? 
+                                {user.isAdmin ? 
                                     <Form.Item
                                         name="firstName"
                                         align="center"
@@ -83,11 +76,11 @@ class UpdateProfile extends Component {
                                         { required: true, message: 'Please input your name in English!' },
                                         { validator: validateEng },
                                     ]}
-                                >
-                                    <StyledInput placeholder="Name in English" />
-                                </Form.Item>}
+                                    >
+                                        <StyledInput placeholder="Name in English" />
+                                    </Form.Item>}
 
-                                {user.hasOwnProperty('isAdmin')? 
+                                {user.isAdmin ? 
                                     <Form.Item
                                     name="lastName"
                                     align="center"
@@ -95,21 +88,21 @@ class UpdateProfile extends Component {
                                         { required: true, message: 'Please input your surname in English!' },
                                         { validator: validateEng },
                                     ]}
-                                >
-                                    <StyledInput placeholder="Surname" />
-                                </Form.Item>:
-                                <Form.Item
-                                    name="lastNameEng"
-                                    align="center"
-                                    rules={[
-                                        { required: true, message: 'Please input your surname in English!' },
-                                        { validator: validateEng },
-                                    ]}
-                                >
-                                    <StyledInput placeholder="Surname in English" />
-                                </Form.Item>}
+                                    >
+                                        <StyledInput placeholder="Surname" />
+                                    </Form.Item>:
+                                    <Form.Item
+                                        name="lastNameEng"
+                                        align="center"
+                                        rules={[
+                                            { required: true, message: 'Please input your surname in English!' },
+                                            { validator: validateEng },
+                                        ]}
+                                    >
+                                        <StyledInput placeholder="Surname in English" />
+                                    </Form.Item>}
 
-                                {user.hasOwnProperty('isAdmin') ? null :
+                                {user.isAdmin ? null :
                                     <Form.Item
                                         name="firstNameUkr"
                                         align="center"
@@ -122,7 +115,7 @@ class UpdateProfile extends Component {
                                     </Form.Item>
                                 }
 
-                                {user.hasOwnProperty('isAdmin') ? null :
+                                {user.isAdmin ? null :
                                     <Form.Item
                                         name="lastNameUkr"
                                         align="center"
@@ -146,7 +139,7 @@ class UpdateProfile extends Component {
                                     <StyledInput placeholder="Email" />
                                 </Form.Item>
 
-                                {user.hasOwnProperty('isAdmin') ? null :
+                                {user.isAdmin ? null :
                                     <Form.Item
                                         name="phoneNumber"
                                         align="center"
@@ -158,8 +151,6 @@ class UpdateProfile extends Component {
                                         <StyledInput placeholder="Phone number" />
                                     </Form.Item>
                                 }
-
-                                {errorMessage ? <ErrorText>{errorMessage}</ErrorText> : null}
 
                                 <Form.Item align="center">
                                     <StyledButton type="primary" htmlType="submit">
@@ -175,8 +166,9 @@ class UpdateProfile extends Component {
     }
 }
 
-const mapStateToProps = ({ updateUserProfile: { isUpdatedProfile, errorMessage } }) => ({ isUpdatedProfile, errorMessage });
+const mapStateToProps = ({ updateUserProfile: { isUpdateProfileModalVisible, user } }) => ({ 
+    isUpdateProfileModalVisible, user});
 
-const mapDispatchToProps = { updateUserProfileAction };
+const mapDispatchToProps = { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);

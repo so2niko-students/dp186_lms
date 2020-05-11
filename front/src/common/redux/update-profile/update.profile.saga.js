@@ -1,13 +1,18 @@
 import { takeEvery, call, put, all } from 'redux-saga/effects';
 import { updateProfileApi } from './update.profile.api';
 import * as types from './types';
+import { showNotification } from '../../notifications/notifications';
 
 export function* updateSaga(payload) {
     try {
         const response = yield call(updateProfileApi, payload);
-        yield put({ type: types.UPDATE_USER_PROFILE_SUCCESS, payload: response });
+        showNotification(
+            'Successfully updated',
+            'Your profile has been successfully updated',
+            'success'
+          );
     } catch (error) {
-        yield put({ type: types.UPDATE_USER_PROFILE_ERROR, payload: error })
+        showNotification('Update profile error', error.response.data.error, 'error');
     }
 }
 
