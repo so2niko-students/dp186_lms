@@ -8,7 +8,6 @@ const tasksState = {
 }
 
 export function tasks(state = tasksState, action) {
-    console.log(action)
     const { payload } = action;
     switch (action.type) {
         case types.GET_ALL_TASKS_SUCCESS:
