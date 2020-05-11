@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Modal, Col, Row, Form, Typography, Button } from 'antd';
+import { Redirect } from 'react-router-dom';
+import { Modal, Col, Row, Form, Typography } from 'antd';
 import { validateEng, validateUkr, validatePhoneNumber, } from '../../common/validators/form.validator';
 import { StyledInput, StyledButton, StyledBtnModal } from './style';
-import { updateUserProfileAction,  showModalUpdateProfile, hideModalUpdateProfile } from '../../common/redux/update-profile/update.profile.action';
+import { updateUserProfileAction,  showModalUpdateProfile, hideModalUpdateProfile, redirectAfterUpdate } from '../../common/redux/update-profile/update.profile.action';
 
 const { Title } = Typography;
 
@@ -24,7 +25,7 @@ class UpdateProfile extends Component {
         showModalUpdateProfile();
     };
 
-    handleCancel = e => {
+    handleCancel = () => {
         const { hideModalUpdateProfile } = this.props;
         hideModalUpdateProfile();
     };
@@ -35,8 +36,12 @@ class UpdateProfile extends Component {
     }
 
     render() {
-        const { isUpdateProfileModalVisible, user, } = this.props;
-        console.log(this.props);
+        const { isUpdateProfileModalVisible, user, redirectTo } = this.props;
+
+        if (redirectTo) {
+            return <Redirect to={redirectTo} />;
+            }
+
         return (
 
             <div>
@@ -166,9 +171,9 @@ class UpdateProfile extends Component {
     }
 }
 
-const mapStateToProps = ({ updateUserProfile: { isUpdateProfileModalVisible, user } }) => ({ 
-    isUpdateProfileModalVisible, user});
+const mapStateToProps = ({ updateUserProfile: { isUpdateProfileModalVisible, user, redirectTo } }) => ({ 
+    isUpdateProfileModalVisible, user, redirectTo});
 
-const mapDispatchToProps = { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile };
+const mapDispatchToProps = { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile, redirectAfterUpdate };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);

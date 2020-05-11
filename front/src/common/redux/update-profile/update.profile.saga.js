@@ -6,6 +6,7 @@ import { showNotification } from '../../notifications/notifications';
 export function* updateSaga(payload) {
     try {
         const response = yield call(updateProfileApi, payload);
+        yield put({ type: types.REDIRECT_AFTER_UPDATE, payload: '/login' });
         showNotification(
             'Successfully updated',
             'Your profile has been successfully updated',
