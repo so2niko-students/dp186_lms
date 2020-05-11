@@ -14,7 +14,7 @@ class App extends Component {
                     <Route path="/student-registration/:token" component={StudentRegistrationPage} />
                     <Route path="/teachers" exact component={TeachersPage} />
                     <Route path="/login" component={LoginPage} />
-                    <Route path='/groups/create' component={GroupCreationWindow} />
+                    <Route path='/groups' component={GroupCreationWindow} />
                     <Route path="/resetPassword/:token" component={SetPasswordPage} />
                 </Switch>
             </BrowserRouter>

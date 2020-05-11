@@ -18,7 +18,7 @@ const initialStateCreatingGroup = {
     errorMessage: ''
 }
 
-export function createGroupReducer(state = initialStateCreatingGroup, action){
+export function createGroup(state = initialStateCreatingGroup, action){
     switch(action.type) {
         case types.CREATE_GROUP_SUCCESS:
             return {...state, isGroupCreated: true}
