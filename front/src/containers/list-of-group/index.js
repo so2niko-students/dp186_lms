@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { AddGroupButton, SiderStyle, StyledMenuItem } from './style';
 import { setCurrentGroup, loadGroupsData } from '../../common/redux/groups/groups.action';
 import { connect } from 'react-redux';
-import {Spinner} from '../../components/spinner/Spinner';
+import { Spinner } from '../../components/spinner/Spinner';
 
 class ListOfGroup extends Component {
 
@@ -36,7 +36,7 @@ class ListOfGroup extends Component {
 const mapStateToProps = ({ groups: { groupList }, login: { userId } }) => ({ groupList, userId });
 
 const mapDispatchToProps = (dispatch) => {
-    return{
+    return {
         onHandleGroup: (data) => {
             return dispatch(setCurrentGroup(+data.key));
         },

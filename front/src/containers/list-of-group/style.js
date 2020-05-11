@@ -27,4 +27,4 @@ const StyledMenuItem = style(Menu.Item)`
     width: 100%;
 `;
 
-export { AddGroupButton, SiderStyle, StyledMenuItem } ;
+export { AddGroupButton, SiderStyle, StyledMenuItem };
