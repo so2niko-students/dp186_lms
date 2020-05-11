@@ -30,10 +30,4 @@ const StyledBtnModal = style(Button)`
     height: 40px;
 `;
 
-const ErrorText = style.p`
-    font-size: 14px;
-    text-align: center;
-    color: tomato;
-`;
-
-export { StyledInput, StyledButton, StyledBtnModal, ErrorText }
+export { StyledInput, StyledButton, StyledBtnModal }

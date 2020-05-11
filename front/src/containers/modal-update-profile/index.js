@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Modal, Col, Row, Form, Typography, Button } from 'antd';
 import { validateEng, validateUkr, validatePhoneNumber, } from '../../common/validators/form.validator';
-import { StyledInput, StyledButton, StyledBtnModal, ErrorText } from './style';
+import { StyledInput, StyledButton, StyledBtnModal } from './style';
 import { updateUserProfileAction,  showModalUpdateProfile, hideModalUpdateProfile } from '../../common/redux/update-profile/update.profile.action';
 
 const { Title } = Typography;
