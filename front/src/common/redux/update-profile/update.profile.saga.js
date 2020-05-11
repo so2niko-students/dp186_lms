@@ -2,7 +2,7 @@ import { takeEvery, call, put, all } from 'redux-saga/effects';
 import { updateProfileApi } from './update.profile.api';
 import * as types from './types';
 
-export function* userUpdateProfileSaga(payload) {
+export function* updateSaga(payload) {
     try {
         const response = yield call(updateProfileApi, payload);
         yield put({ type: types.UPDATE_USER_PROFILE_SUCCESS, payload: response });
@@ -11,8 +11,8 @@ export function* userUpdateProfileSaga(payload) {
     }
 }
 
-export function* updateSaga() {
+export function* userUpdateProfileSaga() {
     yield all([
-        takeEvery(types.UPDATE_USER_PROFILE, userUpdateProfileSaga)
+        takeEvery(types.UPDATE_USER_PROFILE, updateSaga)
     ])
 }

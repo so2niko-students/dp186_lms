@@ -10,7 +10,7 @@ export function updateUserProfile (state = initialState, action) {
         case types.UPDATE_USER_PROFILE_SUCCESS:
             return {...state, isUpdatedProfile: true};
         case types.UPDATE_USER_PROFILE_ERROR:
-            return {...state, errorMessage: 'Profile update is failed'};
+            return {...state, isUpdatedProfile: false, errorMessage: 'Profile update is failed'};
         default:
             return state;
     }

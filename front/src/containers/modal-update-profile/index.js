@@ -39,9 +39,6 @@ class UpdateProfile extends Component {
     handleUpdateProfile (data) {
         this.props.updateUserProfileAction(data);
         this.handleCancel();
-        console.log(data);
-        console.log(this.props);
-    
     }
 
     render() {
@@ -67,7 +64,19 @@ class UpdateProfile extends Component {
                         <Col span={24}>
                             <Title level={2} align="center"> Edit profile </Title>
                             <Form {...layout} onFinish={this.handleUpdateProfile}>
-                                <Form.Item
+                                {user.hasOwnProperty('isAdmin')? 
+                                    <Form.Item
+                                        name="firstName"
+                                        align="center"
+                                        rules={[
+                                            { required: true, message: 'Please input your name in English!' },
+                                            { validator: validateEng },
+                                        ]}
+                                    >
+                                        <StyledInput placeholder="Name" />
+                                    </Form.Item>
+                                    :
+                                    <Form.Item
                                     name="firstNameEng"
                                     align="center"
                                     rules={[
@@ -76,8 +85,19 @@ class UpdateProfile extends Component {
                                     ]}
                                 >
                                     <StyledInput placeholder="Name in English" />
-                                </Form.Item>
+                                </Form.Item>}
 
+                                {user.hasOwnProperty('isAdmin')? 
+                                    <Form.Item
+                                    name="lastName"
+                                    align="center"
+                                    rules={[
+                                        { required: true, message: 'Please input your surname in English!' },
+                                        { validator: validateEng },
+                                    ]}
+                                >
+                                    <StyledInput placeholder="Surname" />
+                                </Form.Item>:
                                 <Form.Item
                                     name="lastNameEng"
                                     align="center"
@@ -87,7 +107,7 @@ class UpdateProfile extends Component {
                                     ]}
                                 >
                                     <StyledInput placeholder="Surname in English" />
-                                </Form.Item>
+                                </Form.Item>}
 
                                 {user.hasOwnProperty('isAdmin') ? null :
                                     <Form.Item
