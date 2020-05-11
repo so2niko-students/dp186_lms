@@ -41,16 +41,16 @@ export function groups(state = initialState, action) {
 };
 
 const initialStateCreatingGroup = {
-    isGroupCreated: false,
-    errorMessage: ''
+    isCreateGroupModalVisible: false,
+    user: JSON.parse(localStorage.getItem('user'))
 }
 
 export function createGroup(state = initialStateCreatingGroup, action){
     switch(action.type) {
-        case types.CREATE_GROUP_SUCCESS:
-            return {...state, isGroupCreated: true}
-        case types.CREATE_GROUP_ERROR:
-            return {...state, errorMessage: 'This group is already existed'}
+        case types.CREATE_GROUP_SHOW_MODAL:
+            return {...state, isCreateGroupModalVisible: true}
+        case types.CREATE_GROUP_HIDE_MODAL:
+            return {...state, isCreateGroupModalVisible: false}
         default:
             return state;
     }

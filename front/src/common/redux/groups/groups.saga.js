@@ -1,13 +1,18 @@
 import { put, call, all, takeEvery } from 'redux-saga/effects';
 import { updateGroup, loadGroupsData, deleteStudent, getOneGroup, createGroupApi } from './groups.api';
 import * as types from './types';
+import { showNotification } from '../../notifications/notifications';
 
 function* createGroupOneSaga(payload) {
     try {    
-        const response = yield call(createGroupApi, payload);
-        yield put({ type: types.CREATE_GROUP_SUCCESS, payload: response });
+        const response = yield call(createGroupApi, payload);        
+        showNotification(
+            'Successful creation',
+            'Group is created',
+            'success'
+        );
     } catch (error) {
-        yield put({ type: types.CREATE_GROUP_ERROR, payload: error });
+        showNotification('Group creation error', error.message, 'error');
     }
 }
 

@@ -3,10 +3,11 @@ import axios from 'axios';
 async function createGroupApi(request){
   const token = localStorage.getItem('token');
   const url = process.env.REACT_APP_GROUPS_LOAD_AND_UPDATE;
-  const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } };
-
+  const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } };  
+  const data = { groupName: request.data.groupName }
+  
   return axios
-    .post(url, request.data.groupName, headers)
+    .post(url, data, headers)
     .then(response => response.data)
 }
 

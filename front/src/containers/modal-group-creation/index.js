@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyledCol, SaveButton, ErrorText } from './style';
+import { StyledCol, SaveButton } from './style';
 import { Modal, Form, Input, Typography, Row } from 'antd';
 import { connect } from 'react-redux';
-import { createGroup } from '../../common/redux/groups/groups.action';
-
+import { createGroup, hideModalCreateGroup } from '../../common/redux/groups/groups.action';
+import { validateGroup } from '../../common/validators/group.validator';
 
 const { Title } = Typography;
 const layout = {
@@ -20,21 +20,9 @@ class GroupCreationWindow extends Component {
         this.handleCreateGroup = this.handleCreateGroup.bind(this)
     }
 
-    state = {
-        visible: false,
-        user: JSON.parse(localStorage.getItem('user'))
-    };
-
-    showModal = () => {
-        this.setState({
-            visible: true,
-        });
-    };
-
-    handleCancel = e => {
-        this.setState({
-            visible: false,
-        });
+    handleCancel = () => {
+        const { hideModalCreateGroup } = this.props;
+        hideModalCreateGroup();
     };
 
     handleCreateGroup (data) {
@@ -43,18 +31,12 @@ class GroupCreationWindow extends Component {
     }
 
     render () {
-        const { errorMessage } = this.props;
-        const { user } = this.state;
+        const { isCreateGroupModalVisible } = this.props;
         return (
             <div>
-                {/* {user.isAdmin ? null :
-               } */}
-                <SaveButton type="primary" onClick={this.showModal}>
-                Create group
-                </SaveButton>
                 <Modal
                     centered
-                    visible={this.state.visible}
+                    visible={isCreateGroupModalVisible}
                     onCancel={this.handleCancel}
                     okButtonProps={{ style: { display: 'none' } }}
                     cancelButtonProps={{ style: { display: 'none' } }}
@@ -70,11 +52,13 @@ class GroupCreationWindow extends Component {
                             <Form.Item
                                 align="center"
                                 name="groupName"
-                                rules={[{ required: true, message: 'Please enter name for the group!' }]}
+                                rules={[
+                                    { required: true, message: 'Please enter name for the group!'},
+                                    { validator: validateGroup }
+                                ]}
                             >
                                 <Input placeholder='Dp-Node-168' />
                             </Form.Item>
-                            {errorMessage ? <ErrorText>{errorMessage}</ErrorText> : null}
                             <Form.Item 
                                 
                                 {...tailLayout}>
@@ -91,7 +75,7 @@ class GroupCreationWindow extends Component {
     }
 }
 
-const mapStateToProps = ({ createGroupReducer: {isGroupCreated, errorMessage }}) => ({ isGroupCreated, errorMessage })
-const mapDispatchToProps = { createGroup };
+const mapStateToProps = ({ createGroup: { isCreateGroupModalVisible, user }}) => ({ isCreateGroupModalVisible, user })
+const mapDispatchToProps = { createGroup, hideModalCreateGroup };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupCreationWindow);
