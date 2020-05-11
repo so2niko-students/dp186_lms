@@ -28,9 +28,7 @@ class ListOfGroup extends Component {
 
     componentDidMount() {
         const token = localStorage.getItem('token');
-        // const userId = JSON.parse(localStorage.getItem('user')).id;
         const url = `${process.env.REACT_APP_GROUPS_BY_MENTOR}`;
-        console.log(url)
         const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, } };
 
         axios.get(url, headers)

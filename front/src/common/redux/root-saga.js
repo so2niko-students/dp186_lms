@@ -4,6 +4,8 @@ import { authSaga } from './auth/auth.saga';
 import { teachersSaga } from './teachers/teachers.saga';
 import { passwordSaga } from './set-password/set.password.saga';
 import { forgotPassSaga } from './forgot-password/forgot.password.saga';
+import { tasksSaga } from './tasks/task.saga';
+
 
 export default function* startForman() {
   yield fork(studentsSaga);
@@ -11,4 +13,5 @@ export default function* startForman() {
   yield fork(forgotPassSaga);
   yield fork(passwordSaga);
   yield fork(teachersSaga);
+  yield fork(tasksSaga);
 }
