@@ -82,7 +82,7 @@ export function teachersReducer(state = initialState, action) {
         ...state,
         teachers: action.payload.data,
         total: action.payload.total,
-        currentPage: action.payload.actualPage,
+        currentPage: action.payload.page,
         loading: false,
       };
 
