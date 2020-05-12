@@ -8,6 +8,7 @@ import {
   validatePhoneNumber,
 } from '../../common/validators/form.validator';
 import { Col, Input, Button } from './styles';
+import { Redirect } from 'react-router-dom';
 
 const { Title } = Typography;
 
@@ -148,13 +149,7 @@ class StudentRegistrationPage extends Component {
     if (!isRegistered) {
       return <>{this.renderStudentRegistrationForm()}</>;
     } else if (isRegistered) {
-      return (
-        <Row justify="center">
-          <Col align="center">
-            <h1>Successfully registered. Later here will be redirect functionality</h1>
-          </Col>
-        </Row>
-      );
+      return <Redirect to='/login' />
     }
   }
 }
