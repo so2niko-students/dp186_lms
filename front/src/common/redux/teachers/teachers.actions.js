@@ -13,7 +13,9 @@ import {
   DELETE_TEACHER,
   SHOW_MODAL_DELETE,
   HIDE_MODAL_DELETE,
-  REMEMBER_UPDATING_ID
+  REMEMBER_UPDATING_ID,
+  SHOW_MODAL_CHANGE_PASSWORD,
+  HIDE_MODAL_CHANGE_PASSWORD
 } from './types';
 
 export const registerTeacher = (teacher) => ({ type: REGISTER_TEACHER, payload: teacher });
@@ -44,4 +46,8 @@ export const showModalDelete = (data) => ({ type: SHOW_MODAL_DELETE, payload: da
 
 export const hideModalDelete = () => ({ type: HIDE_MODAL_DELETE });
 
-export const rememberUpdatingId = (data) => ({ type: REMEMBER_UPDATING_ID, payload: data })
+export const rememberUpdatingId = (data) => ({ type: REMEMBER_UPDATING_ID, payload: data });
+
+export const showModalChangePassword = (data) => ({ type: SHOW_MODAL_CHANGE_PASSWORD, payload: data })
+
+export const hideModalChangePassword = () => ({ type: HIDE_MODAL_CHANGE_PASSWORD })

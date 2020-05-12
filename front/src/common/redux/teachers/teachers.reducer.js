@@ -17,6 +17,8 @@ import {
   HIDE_MODAL_DELETE,
   DELETE_TEACHER_COMPLETED,
   REMEMBER_UPDATING_ID,
+  SHOW_MODAL_CHANGE_PASSWORD,
+  HIDE_MODAL_CHANGE_PASSWORD,
 } from './types';
 
 const initialState = {
@@ -28,15 +30,15 @@ const initialState = {
   total: 1,
   currentPage: 1,
   isDeleteModalVisible: false,
+  isChangePasswordModalVisible: false,
 };
 
 export function teachersReducer(state = initialState, action) {
-
   switch (action.type) {
-    case TEACHER_COMPLETED_REGISTER: 
+    case TEACHER_COMPLETED_REGISTER:
       return { ...state, isRegistrationModalVisible: false, loading: false };
 
-    case TEACHER_REGISTER_ERROR_HAPPENED: 
+    case TEACHER_REGISTER_ERROR_HAPPENED:
       return { ...state, loading: false };
 
     case SHOW_TEACHER_REGISTER_MODAL:
@@ -123,6 +125,12 @@ export function teachersReducer(state = initialState, action) {
       newTeachers = newTeachers.filter(({ id }) => id !== action.payload);
       return { ...state, teachers: newTeachers, isDeleteModalVisible: false };
     }
+
+    case SHOW_MODAL_CHANGE_PASSWORD:
+      return { ...state, isChangePasswordModalVisible: true, changePasswordTeacherId: action.payload.id };
+
+    case HIDE_MODAL_CHANGE_PASSWORD:
+      return { ...state, isChangePasswordModalVisible: false };
 
     default:
       return state;
