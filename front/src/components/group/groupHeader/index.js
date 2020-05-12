@@ -19,7 +19,7 @@ class GroupHeader extends Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.currentGroup.id !== this.props.currentGroup.id) {
+        if((this.props.currentGroup && !prevProps.currentGroup) || ( prevProps.currentGroup && this.props.currentGroup && prevProps.currentGroup.id !== this.props.currentGroup.id)) {
             this.setState({
                 groupId: this.props.currentGroup.id,
                 groupName: this.props.currentGroup.groupName,
