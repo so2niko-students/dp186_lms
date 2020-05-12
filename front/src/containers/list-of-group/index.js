@@ -10,21 +10,21 @@ import GroupCreationWindow from '../../containers/modal-group-creation';
 class ListOfGroup extends Component {
 
     componentDidMount() {
-        const { onHandleLoadGroupData } = this.props;
-        onHandleLoadGroupData();
+        const { loadGroupsData } = this.props;
+        loadGroupsData();
     }
 
     render() {
-        const { onHandleGroup, groupList, onShowModalCreateGroup } = this.props;
+        const { setCurrentGroup, groupList, showModalCreateGroup } = this.props;
         return (
             <SiderStyle width={200} className="site-layout-background" >
-                <AddGroupButton type="primary" onClick={onShowModalCreateGroup}> Add group </AddGroupButton>
+                <AddGroupButton type="primary" onClick={showModalCreateGroup}> Add group </AddGroupButton>
                 <Menu style={
                     { overflow: 'hidden', position: 'fixed', left: 0, height: '100%', borderRight: 0, width: 200, display: 'flex', alignItems: 'center', flexFlow: 'column' }
                 } mode="vertical" defaultSelectedKeys={['0']} >
                     {
                         groupList ?
-                            groupList.map((group, index) => <StyledMenuItem key={index} onClick={onHandleGroup}>{group.groupName}</StyledMenuItem>)
+                            groupList.map((group, index) => <StyledMenuItem key={index} onClick={setCurrentGroup}>{group.groupName}</StyledMenuItem>)
                             :
                             <Spinner load={Spinner.loading()} />
                     }
@@ -37,18 +37,6 @@ class ListOfGroup extends Component {
 
 const mapStateToProps = ({ groups: { groupList }, login: { userId } }) => ({ groupList, userId });
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onHandleGroup: (data) => {
-            return dispatch(setCurrentGroup(+data.key));
-        },
-        onHandleLoadGroupData: (data) => {
-            return dispatch(loadGroupsData(data))
-        },
-        onShowModalCreateGroup: () => {
-            return dispatch(showModalCreateGroup())
-        }
-    }
-}
+const mapDispatchToProps = { setCurrentGroup, loadGroupsData, showModalCreateGroup };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListOfGroup);

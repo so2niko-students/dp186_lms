@@ -10,7 +10,7 @@ const initialState = {
 export function login(state = initialState, action) {
     switch (action.type) {
         case types.LOGIN_USER_SUCCESS:
-            return { ...state, isLoggedIn: true, errorMessage: '' };
+            return { ...state, isLoggedIn: true, errorMessage: '', role: getUserType() };
         case types.LOGIN_SERVER_ERROR:
             return { ...state, isLoggedIn: false, errorMessage: 'Wrong email or password' };
         default:
