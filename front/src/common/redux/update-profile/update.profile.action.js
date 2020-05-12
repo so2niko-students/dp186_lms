@@ -2,7 +2,7 @@ import {
     UPDATE_USER_PROFILE, 
     SHOW_MODAL_UPDATE_PROFILE, 
     HIDE_MODAL_UPDATE_PROFILE, 
-    REDIRECT_AFTER_UPDATE
+    CHANGE_REDIRECT_STATE,
 } from './types';
 
 export const updateUserProfileAction = (user) => ({
@@ -18,7 +18,7 @@ export const showModalUpdateProfile = () => ({
     type: SHOW_MODAL_UPDATE_PROFILE 
 });
 
-export const redirectAfterUpdate = (link) => ({ 
-    type: REDIRECT_AFTER_UPDATE,
-    payload: link
+export const changeRedirectState = () => ({ 
+    type: CHANGE_REDIRECT_STATE
+
 });
