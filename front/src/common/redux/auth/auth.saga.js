@@ -6,8 +6,8 @@ function* loginSaga(payload) {
     try {
         const response = yield call(loginApi, payload);
         
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("user", JSON.stringify(response.user));
 
         yield put({ type: types.LOGIN_USER_SUCCESS, response });
     } catch (error) {

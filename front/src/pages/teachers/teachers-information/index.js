@@ -99,7 +99,7 @@ class TeachersInformation extends Component {
           user='admin'
           handleCancel={this.hideModalChangePassword}
           mentorName="Alan Cooper"
-          id={changePasswordTeacherId}
+          teacherId={changePasswordTeacherId}
            />
       </>
     );
