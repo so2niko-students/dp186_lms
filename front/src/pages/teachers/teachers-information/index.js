@@ -4,6 +4,8 @@ import {
   deleteTeacher,
   showModalDelete,
   hideModalDelete,
+  showModalChangePassword,
+  hideModalChangePassword
 } from '../../../common/redux/teachers/teachers.actions';
 import {
   Col,
@@ -15,6 +17,7 @@ import {
 import { Row, Modal } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import InputOrData from '../teachers-input-or-data';
+import ChangePassword from '../../../containers/modal-change-password'
 
 class TeachersInformation extends Component {
   constructor(props) {
@@ -22,6 +25,8 @@ class TeachersInformation extends Component {
     this.showModalDelete = this.showModalDelete.bind(this);
     this.hideModalDelete = this.hideModalDelete.bind(this);
     this.handleDeleteTeacher = this.handleDeleteTeacher.bind(this);
+    this.showModalChangePassword = this.showModalChangePassword.bind(this);
+    this.hideModalChangePassword = this.hideModalChangePassword.bind(this);
   }
 
   handleDeleteTeacher() {
@@ -37,6 +42,14 @@ class TeachersInformation extends Component {
     this.props.hideModalDelete();
   }
 
+  showModalChangePassword(event) {
+    this.props.showModalChangePassword({ id: +event.target.dataset.id });
+  }
+
+  hideModalChangePassword() {
+    this.props.hideModalChangePassword();
+  }
+
   render() {
     const {
       id,
@@ -47,7 +60,9 @@ class TeachersInformation extends Component {
       isDeleteModalVisible,
       firstName,
       lastName,
-      email
+      email,
+      isChangePasswordModalVisible,
+      changePasswordTeacherId
     } = this.props;
     return (
       <>
@@ -65,7 +80,7 @@ class TeachersInformation extends Component {
                 <Groups>{`${groupsAmount} groups`}</Groups>
                 <Students>{`${studentsAmount} students`}</Students>
               </p>
-              <Button type="primary">Change password</Button>
+              <Button data-id={id} onClick={this.showModalChangePassword} type="primary">Change password</Button>
             </div>
           </Col>
         </Row>
@@ -79,24 +94,35 @@ class TeachersInformation extends Component {
         >
           <p>Are you sure, you want to delete this teacher?</p>
         </Modal>
+        <ChangePassword
+          visible={isChangePasswordModalVisible}
+          user='admin'
+          handleCancel={this.hideModalChangePassword}
+          mentorName="Alan Cooper"
+          id={changePasswordTeacherId}
+           />
       </>
     );
   }
 }
 
 const mapStateToProps = ({
-  teachersReducer: { changeNameIds, changeEmailIds, isDeleteModalVisible, deleteTeacherId },
+  teachersReducer: { changeNameIds, changeEmailIds, isDeleteModalVisible, deleteTeacherId, isChangePasswordModalVisible, changePasswordTeacherId },
 }) => ({
   changeNameIds,
   changeEmailIds,
   isDeleteModalVisible,
   deleteTeacherId,
+  isChangePasswordModalVisible,
+  changePasswordTeacherId
 });
 
 const mapDispatchToProps = {
   deleteTeacher,
   showModalDelete,
   hideModalDelete,
+  showModalChangePassword,
+  hideModalChangePassword
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeachersInformation);

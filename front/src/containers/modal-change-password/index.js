@@ -45,7 +45,7 @@ class ChangePassword extends Component {
 
     render() {
         const { errorMessage, visible, handleCancel, user } = this.props;
-
+        console.log(this.props);
         return (
             <Modal
                 visible={visible}
