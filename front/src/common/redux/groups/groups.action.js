@@ -5,7 +5,7 @@ import {
 
 export const createGroup = (data) => ({
     type: CREATE_GROUP,
-    data
+    payload: data
 });
 
 export const showModalCreateGroup = () => ({
