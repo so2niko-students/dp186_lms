@@ -17,6 +17,17 @@ class GroupHeader extends Component {
         avatar: this.props.currentGroup.avatar,
     }
 
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(JSON.stringify(prevProps.currentGroup) !== JSON.stringify(this.props.currentGroup)) {
+            this.setState({
+                groupId: this.props.currentGroup.id,
+                groupName: this.props.currentGroup.groupName,
+                avatar: this.props.currentGroup.avatar,
+            })
+        }
+    }
+
     handleSelectImg = (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
