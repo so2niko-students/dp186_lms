@@ -80,7 +80,7 @@ class TeachersInformation extends Component {
                 <Groups>{`${groupsAmount} groups`}</Groups>
                 <Students>{`${studentsAmount} students`}</Students>
               </p>
-              <Button data-id={id} onClick={() => this.showModalChangePassword(id)} type="primary">Change password</Button>
+              <Button onClick={() => this.showModalChangePassword(id)} type="primary">Change password</Button>
             </div>
           </Col>
         </Row>
