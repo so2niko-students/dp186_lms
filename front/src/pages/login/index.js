@@ -21,7 +21,6 @@ class LoginPage extends Component {
     super(props);
     this.onHandleLogin = this.onHandleLogin.bind(this);
     this.loginFormTemplate = this.loginFormTemplate.bind(this);
-    this.onHandleLogin = this.onHandleLogin.bind(this);
   }
 
   onHandleLogin(data) {
