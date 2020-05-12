@@ -179,6 +179,6 @@ const mapStateToProps = ({
     isUpdateProfileModalVisible, redirectTo, role
 });
 
-const mapDispatchToProps = { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile, redirectAfterUpdate };
+const mapDispatchToProps = { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);
