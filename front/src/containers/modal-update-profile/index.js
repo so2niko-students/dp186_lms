@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { Modal, Col, Row, Form, Typography } from 'antd';
 import { validateEng, validateUkr, validatePhoneNumber, } from '../../common/validators/form.validator';
 import { StyledInput, StyledButton, StyledBtnModal } from './style';
-import { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile, redirectAfterUpdate } from '../../common/redux/update-profile/update.profile.action';
+import { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile, changeRedirectState } from '../../common/redux/update-profile/update.profile.action';
 import { STUDENT } from '../../common/functions/get-user-type';
 
 const { Title } = Typography;
@@ -18,34 +18,32 @@ class UpdateProfile extends Component {
 
     constructor(props) {
         super(props);
-        this.handleUpdateProfile = this.handleUpdateProfile.bind(this);
+    }
+
+    componentWillUnmount() {
+        this.props.changeRedirectState(false);
     }
 
     showModal = () => {
-        const { showModalUpdateProfile } = this.props;
-        showModalUpdateProfile();
+        this.props.showModalUpdateProfile();
     };
 
     handleCancel = () => {
-        const { hideModalUpdateProfile } = this.props;
-        hideModalUpdateProfile();
+        this.props.hideModalUpdateProfile();
     };
 
-    handleUpdateProfile(data) {
+    handleUpdateProfile = (data) => {
         this.props.updateUserProfileAction(data);
         this.handleCancel();
     }
 
     render() {
-        const { isUpdateProfileModalVisible, redirectTo, role } = this.props;
-
-        if (redirectTo) {
-            return <Redirect to={redirectTo} />;
-        }
+        const { isUpdateProfileModalVisible, role, isRedirected } = this.props;
 
         return (
 
             <div>
+                {isRedirected ? <Redirect to='/groups' /> : null}
                 <StyledBtnModal type="primary" onClick={this.showModal}>
                     Update profile
                 </StyledBtnModal>
@@ -173,12 +171,10 @@ class UpdateProfile extends Component {
 }
 
 const mapStateToProps = ({
-    updateUserProfile: { isUpdateProfileModalVisible, redirectTo },
+    updateUserProfile: { isUpdateProfileModalVisible, isRedirected },
     login: { role }
-}) => ({
-    isUpdateProfileModalVisible, redirectTo, role
-});
+}) => ({ isUpdateProfileModalVisible, isRedirected, role });
 
-const mapDispatchToProps = { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile, redirectAfterUpdate };
+const mapDispatchToProps = { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile, changeRedirectState };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);

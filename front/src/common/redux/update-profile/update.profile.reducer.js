@@ -2,7 +2,7 @@ import * as types from './types';
 
 const initialState = {
     isUpdateProfileModalVisible: false,
-    redirectTo: ''
+    isRedirected: false
 }
 
 export function updateUserProfile(state = initialState, action) {
@@ -10,9 +10,9 @@ export function updateUserProfile(state = initialState, action) {
         case types.SHOW_MODAL_UPDATE_PROFILE:
             return { ...state, isUpdateProfileModalVisible: true };
         case types.HIDE_MODAL_UPDATE_PROFILE:
-            return { ...state, isUpdateProfileModalVisible: false };
-        case types.REDIRECT_AFTER_UPDATE:
-            return { ...state, redirectTo: action.payload }
+            return { ...state, isUpdateProfileModalVisible: false};
+        case types.CHANGE_REDIRECT_STATE:
+            return { ...state, isRedirected: action.payload};
         default:
             return state;
     }
