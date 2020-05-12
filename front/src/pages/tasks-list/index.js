@@ -17,7 +17,8 @@ import { Avatar, Row, Col, Typography, message, Pagination, Form, Input, Button 
 import 'antd/dist/antd.css';
 import { DeleteTwoTone, EditFilled } from '@ant-design/icons';
 import ListOfGroup from '../../containers/list-of-group';
-import { getAllTasksAction, deleteTaskAction, changingFieldAction } from '../../common/redux/tasks/task.action'
+import { getAllTasksAction, deleteTaskAction, changingFieldAction } from '../../common/redux/tasks/task.action';
+import { loadGroupsData } from '../../common/redux/groups/groups.action';
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -186,12 +187,18 @@ class TasksList extends Component {
         }
     }
 
+    componentDidMount() {
+        if (!this.user.hasOwnProperty('isAdmin')) {
+            this.props.loadGroupsData()
+        }
+    }
+
     render() {
         const { tasks, page, total, limit } = this.props;
 
         return (
             < LayoutStyle >
-                <ListOfGroup />
+                {this.user.hasOwnProperty('isAdmin') ? <ListOfGroup /> : null}
                 <Page>
                     <Col span={20} offset={2}>
                         {this.user.hasOwnProperty('isAdmin') ? <AddTaskButton type='primary'>Add Task</AddTaskButton> : null}
@@ -226,6 +233,7 @@ const mapDispatchToProps = {
     getAllTasksAction,
     deleteTaskAction,
     changingFieldAction,
+    loadGroupsData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksList);

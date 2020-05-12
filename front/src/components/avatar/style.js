@@ -3,9 +3,6 @@ import { Avatar } from 'antd';
 
 export const StyledAvatar = style(Avatar)`
     margin-bottom: 10px;
-    &:hover {
-        cursor: pointer;
-        }
 `;
 
 export const StyledDiv = style.div`

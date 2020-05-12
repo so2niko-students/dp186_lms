@@ -1,22 +1,24 @@
-import { SET_CURRENT_GROUP, CHANGE_UPDATING_STATUS_CURRENT_GROUP, UPDATE_CURRENT_GROUP, LOAD_GROUPS_DATA,
-  START_LOAD_CURRENT_GROUP_DATA, DELETE_STUDENT_FROM_GROUP, CREATE_GROUP, CREATE_GROUP_SHOW_MODAL, CREATE_GROUP_HIDE_MODAL } from './types';
+import {
+    SET_CURRENT_GROUP, CHANGE_UPDATING_STATUS_CURRENT_GROUP, UPDATE_CURRENT_GROUP, LOAD_GROUPS_DATA,
+    START_LOAD_CURRENT_GROUP_DATA, DELETE_STUDENT_FROM_GROUP, CREATE_GROUP, CREATE_GROUP_SHOW_MODAL, CREATE_GROUP_HIDE_MODAL
+} from './types';
 
-export const createGroup = (data) => ({ 
+export const createGroup = (data) => ({
     type: CREATE_GROUP,
-    data 
+    payload: data
 });
 
-export const showModalCreateGroup = () => ({ 
+export const showModalCreateGroup = () => ({
     type: CREATE_GROUP_SHOW_MODAL
 });
 
-export const hideModalCreateGroup = () => ({ 
+export const hideModalCreateGroup = () => ({
     type: CREATE_GROUP_HIDE_MODAL
-  });
+});
 
 export const setCurrentGroup = (data) => ({
     type: SET_CURRENT_GROUP,
-    payload: data,
+    payload: data.key,
 });
 
 export const updateCurrentGroup = (data) => ({

@@ -17,6 +17,17 @@ class GroupHeader extends Component {
         avatar: this.props.currentGroup.avatar,
     }
 
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if((this.props.currentGroup && !prevProps.currentGroup) || ( prevProps.currentGroup && this.props.currentGroup && prevProps.currentGroup.id !== this.props.currentGroup.id)) {
+            this.setState({
+                groupId: this.props.currentGroup.id,
+                groupName: this.props.currentGroup.groupName,
+                avatar: this.props.currentGroup.avatar,
+            })
+        }
+    }
+
     handleSelectImg = (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -48,7 +59,7 @@ class GroupHeader extends Component {
     }
 
     render() {
-        const { currentGroup: { avatar: avatarWithLink }, isGroupEdited, isUpdating: loading,  role, changeUpdatingStatus } = this.props;
+        const { currentGroup: { avatar: avatarWithLink, groupName: groupNameFromProps }, isGroupEdited, isUpdating: loading,  role, changeUpdatingStatus } = this.props;
         const { groupName, avatar } = this.state;
 
         const uploadButton = (
@@ -115,7 +126,7 @@ class GroupHeader extends Component {
         return (
             <div>
                 <CustomAvatar avatar={avatarWithLink ? avatarWithLink.avatarLink : null} />
-                <GroupTitle>{groupName}</GroupTitle>
+                <GroupTitle>{groupNameFromProps}</GroupTitle>
                 {
                     role === MENTOR || role === SUPERADMIN ?
                         <EditGroupBtn type={'primary'} icon={<EditOutlined/>} size={12} shape={'circle'} onClick={changeUpdatingStatus}/>
