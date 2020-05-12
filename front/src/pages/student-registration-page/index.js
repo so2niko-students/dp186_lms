@@ -149,9 +149,11 @@ class StudentRegistrationPage extends Component {
     if (!isRegistered) {
       return <>{this.renderStudentRegistrationForm()}</>;
     } else if (isRegistered) {
-      return (
-        <Redirect to='login' />
-      );
+      return  this.props.history.push('/login');
+      //  (
+
+      //   <Redirect to='login' />
+      // );
     }
   }
 }
