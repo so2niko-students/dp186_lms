@@ -32,8 +32,13 @@ export const StyledForm = style(Form.Item)`
         padding: 2px;
         overflow: hidden;
         border-radius: 50%;
-        justify-content: center;
-        align-items: center;
+        position: relative;
+    }
+    & div.ant-upload.ant-upload-select-picture-card>span>div {
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
     }
     & div.ant-upload.ant-upload-select-picture-card>span>img {
         border-radius: 50%;
