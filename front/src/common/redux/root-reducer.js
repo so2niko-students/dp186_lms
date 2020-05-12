@@ -6,7 +6,7 @@ import { updateUserProfile } from './update-profile/update.profile.reducer';
 import { teachersReducer } from './teachers/teachers.reducer';
 import { forgotPassword } from './forgot-password/forgot.password.reducer';
 import { tasks } from './tasks/task.reducer';
-import { groups } from './groups/groups.reducer';
+import { setPassword } from './set-password/set.password.reducer';
 
 const rootReducer = combineReducers({ login, studentsReducer, groups, teachersReducer, setPassword, changePassword, forgotPassword,  updateUserProfile, tasks });
 
