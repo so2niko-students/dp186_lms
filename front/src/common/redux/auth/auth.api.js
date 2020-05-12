@@ -6,7 +6,7 @@ async function loginApi(request) {
     const headers = { headers: { 'Content-Type': 'application/json' } };
 
     return axios.post(url, data, headers)
-        .then(response => response)
+        .then(response => response.data)
 };
 
 async function changePasswordApi(data, url) {
@@ -19,7 +19,7 @@ async function changePasswordApi(data, url) {
     };
 
     return axios.put(url, JSON.stringify(data), headers)
-        .then(response => response)
+        .then(response => response.data)
 };
 
 export { loginApi, changePasswordApi };

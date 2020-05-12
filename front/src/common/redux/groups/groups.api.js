@@ -1,5 +1,16 @@
 import axios from 'axios';
 
+async function createGroupApi(request){
+  const token = localStorage.getItem('token');
+  const url = process.env.REACT_APP_GROUPS_LOAD_AND_UPDATE;
+  const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } };  
+  const data = { groupName: request.data.groupName }
+  
+  return axios
+    .post(url, data, headers)
+    .then(response => response.data)
+}
+
 function updateGroup(requestData){
     const { groupName, id } = requestData;
     const token = localStorage.getItem('token');
@@ -43,4 +54,4 @@ function deleteStudent(requestData) {
         .then(response => response.data);
 }
 
-export { updateGroup, loadGroupsData, deleteStudent, getOneGroup };
+export { updateGroup, loadGroupsData, deleteStudent, getOneGroup, createGroupApi };

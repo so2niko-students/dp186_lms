@@ -39,3 +39,19 @@ export function groups(state = initialState, action) {
             return state;
     }
 };
+
+const initialStateCreatingGroup = {
+    isCreateGroupModalVisible: false,
+    user: JSON.parse(localStorage.getItem('user'))
+}
+
+export function createGroup(state = initialStateCreatingGroup, action){
+    switch(action.type) {
+        case types.CREATE_GROUP_SHOW_MODAL:
+            return {...state, isCreateGroupModalVisible: true}
+        case types.CREATE_GROUP_HIDE_MODAL:
+            return {...state, isCreateGroupModalVisible: false}
+        default:
+            return state;
+    }
+}

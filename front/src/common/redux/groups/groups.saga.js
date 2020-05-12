@@ -1,6 +1,20 @@
 import { put, call, all, takeEvery } from 'redux-saga/effects';
-import { updateGroup, loadGroupsData, deleteStudent, getOneGroup } from './groups.api';
+import { updateGroup, loadGroupsData, deleteStudent, getOneGroup, createGroupApi } from './groups.api';
 import * as types from './types';
+import { showNotification } from '../../notifications/notifications';
+
+function* createGroupOneSaga(payload) {
+    try {    
+        const response = yield call(createGroupApi, payload);        
+        showNotification(
+            'Successful creation',
+            'Group is created',
+            'success'
+        );
+    } catch (error) {
+        showNotification('Group creation error', error.message, 'error');
+    }
+}
 
 function* updateSaga(action) {
     try {
@@ -35,11 +49,11 @@ function* deleteStudentSaga(action) {
 
 }
 
-
 export function* groupSaga() {
     yield all([
         takeEvery(types.UPDATE_CURRENT_GROUP, updateSaga),
         takeEvery(types.LOAD_GROUPS_DATA, loadDataSaga),
-        takeEvery(types.DELETE_STUDENT_FROM_GROUP, deleteStudentSaga)
+        takeEvery(types.DELETE_STUDENT_FROM_GROUP, deleteStudentSaga),
+        takeEvery(types.CREATE_GROUP, createGroupOneSaga) 
     ])
 }
