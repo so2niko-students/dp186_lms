@@ -42,8 +42,8 @@ class TeachersInformation extends Component {
     this.props.hideModalDelete();
   }
 
-  showModalChangePassword(event) {
-    this.props.showModalChangePassword({ id: +event.target.dataset.id });
+  showModalChangePassword(id) {
+    this.props.showModalChangePassword({ id });
   }
 
   hideModalChangePassword() {
@@ -80,7 +80,7 @@ class TeachersInformation extends Component {
                 <Groups>{`${groupsAmount} groups`}</Groups>
                 <Students>{`${studentsAmount} students`}</Students>
               </p>
-              <Button data-id={id} onClick={this.showModalChangePassword} type="primary">Change password</Button>
+              <Button data-id={id} onClick={() => this.showModalChangePassword(id)} type="primary">Change password</Button>
             </div>
           </Col>
         </Row>
