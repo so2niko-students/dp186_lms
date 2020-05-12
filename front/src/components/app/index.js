@@ -8,6 +8,7 @@ import GroupsPage from '../../pages/groups';
 import SetPasswordPage from '../../pages/set-password';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import TasksList from '../../pages/tasks-list';
+import ChangePasswordButtons from '../change-password';
 
 class App extends Component {
     render() {
@@ -22,6 +23,7 @@ class App extends Component {
                     <Route path="/forgotPassword/" component={ForgotPasswordPage} />
                     <Route path="/groups" component={GroupsPage} />
                     <Route path="/tasks" component={TasksList} />
+                    <Route path="/changePassword" component={ChangePasswordButtons} />
                 </Switch>
             </BrowserRouter>
         )
