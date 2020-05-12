@@ -4,17 +4,17 @@ import 'antd/dist/antd.css';
 import { AddGroupButton, SiderStyle, StyledMenuItem } from './style';
 import { setCurrentGroup, loadGroupsData } from '../../common/redux/groups/groups.action';
 import { connect } from 'react-redux';
-import {Spinner} from '../../components/spinner/Spinner';
+import { Spinner } from '../../components/spinner/Spinner';
 
 class ListOfGroup extends Component {
 
     componentDidMount() {
-        const { onHandleLoadGroupData } = this.props;
-        onHandleLoadGroupData();
+        const { loadGroupsData } = this.props;
+        loadGroupsData();
     }
 
     render() {
-        const { onHandleGroup, groupList } = this.props;
+        const { setCurrentGroup, groupList } = this.props;
         return (
             <SiderStyle width={200} className="site-layout-background" >
                 <AddGroupButton type="primary"> Add group </AddGroupButton>
@@ -23,7 +23,7 @@ class ListOfGroup extends Component {
                 } mode="vertical" defaultSelectedKeys={['0']} >
                     {
                         groupList ?
-                            groupList.map((group, index) => <StyledMenuItem key={index} onClick={onHandleGroup}>{group.groupName}</StyledMenuItem>)
+                            groupList.map((group, index) => <StyledMenuItem key={index} onClick={setCurrentGroup}>{group.groupName}</StyledMenuItem>)
                             :
                             <Spinner load={Spinner.loading()} />
                     }
@@ -35,15 +35,6 @@ class ListOfGroup extends Component {
 
 const mapStateToProps = ({ groups: { groupList }, login: { userId } }) => ({ groupList, userId });
 
-const mapDispatchToProps = (dispatch) => {
-    return{
-        onHandleGroup: (data) => {
-            return dispatch(setCurrentGroup(+data.key));
-        },
-        onHandleLoadGroupData: (data) => {
-            return dispatch(loadGroupsData(data))
-        },
-    }
-}
+const mapDispatchToProps = { setCurrentGroup, loadGroupsData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListOfGroup);
