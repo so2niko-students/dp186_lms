@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { Modal, Col, Row, Form, Typography } from 'antd';
 import { validateEng, validateUkr, validatePhoneNumber, } from '../../common/validators/form.validator';
 import { StyledInput, StyledButton, StyledBtnModal } from './style';
-import { updateUserProfileAction,  showModalUpdateProfile, hideModalUpdateProfile, redirectAfterUpdate } from '../../common/redux/update-profile/update.profile.action';
+import { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile, redirectAfterUpdate } from '../../common/redux/update-profile/update.profile.action';
+import { STUDENT } from '../../common/functions/get-user-type';
 
 const { Title } = Typography;
 
@@ -30,17 +31,17 @@ class UpdateProfile extends Component {
         hideModalUpdateProfile();
     };
 
-    handleUpdateProfile (data) {
+    handleUpdateProfile(data) {
         this.props.updateUserProfileAction(data);
         this.handleCancel();
     }
 
     render() {
-        const { isUpdateProfileModalVisible, user, redirectTo } = this.props;
+        const { isUpdateProfileModalVisible, redirectTo, role } = this.props;
 
         if (redirectTo) {
             return <Redirect to={redirectTo} />;
-            }
+        }
 
         return (
 
@@ -62,7 +63,7 @@ class UpdateProfile extends Component {
                         <Col span={24}>
                             <Title level={2} align="center"> Edit profile </Title>
                             <Form {...layout} onFinish={this.handleUpdateProfile}>
-                                {user.isAdmin ? 
+                                {role !== STUDENT ?
                                     <Form.Item
                                         name="firstName"
                                         align="center"
@@ -75,27 +76,27 @@ class UpdateProfile extends Component {
                                     </Form.Item>
                                     :
                                     <Form.Item
-                                    name="firstNameEng"
-                                    align="center"
-                                    rules={[
-                                        { required: true, message: 'Please input your name in English!' },
-                                        { validator: validateEng },
-                                    ]}
+                                        name="firstNameEng"
+                                        align="center"
+                                        rules={[
+                                            { required: true, message: 'Please input your name in English!' },
+                                            { validator: validateEng },
+                                        ]}
                                     >
                                         <StyledInput placeholder="Name in English" />
                                     </Form.Item>}
 
-                                {user.isAdmin ? 
+                                {role !== STUDENT ?
                                     <Form.Item
-                                    name="lastName"
-                                    align="center"
-                                    rules={[
-                                        { required: true, message: 'Please input your surname in English!' },
-                                        { validator: validateEng },
-                                    ]}
+                                        name="lastName"
+                                        align="center"
+                                        rules={[
+                                            { required: true, message: 'Please input your surname in English!' },
+                                            { validator: validateEng },
+                                        ]}
                                     >
                                         <StyledInput placeholder="Surname" />
-                                    </Form.Item>:
+                                    </Form.Item> :
                                     <Form.Item
                                         name="lastNameEng"
                                         align="center"
@@ -107,7 +108,7 @@ class UpdateProfile extends Component {
                                         <StyledInput placeholder="Surname in English" />
                                     </Form.Item>}
 
-                                {user.isAdmin ? null :
+                                {role !== STUDENT ? null :
                                     <Form.Item
                                         name="firstNameUkr"
                                         align="center"
@@ -120,7 +121,7 @@ class UpdateProfile extends Component {
                                     </Form.Item>
                                 }
 
-                                {user.isAdmin ? null :
+                                {role !== STUDENT ? null :
                                     <Form.Item
                                         name="lastNameUkr"
                                         align="center"
@@ -144,7 +145,7 @@ class UpdateProfile extends Component {
                                     <StyledInput placeholder="Email" />
                                 </Form.Item>
 
-                                {user.isAdmin ? null :
+                                {role !== STUDENT ? null :
                                     <Form.Item
                                         name="phoneNumber"
                                         align="center"
@@ -171,8 +172,12 @@ class UpdateProfile extends Component {
     }
 }
 
-const mapStateToProps = ({ updateUserProfile: { isUpdateProfileModalVisible, user, redirectTo } }) => ({ 
-    isUpdateProfileModalVisible, user, redirectTo});
+const mapStateToProps = ({
+    updateUserProfile: { isUpdateProfileModalVisible, redirectTo },
+    login: { role }
+}) => ({
+    isUpdateProfileModalVisible, redirectTo, role
+});
 
 const mapDispatchToProps = { updateUserProfileAction, showModalUpdateProfile, hideModalUpdateProfile, redirectAfterUpdate };
 
