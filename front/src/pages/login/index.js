@@ -78,10 +78,6 @@ class LoginPage extends Component {
     )
   }
 
-  onHandleLogin(data) {
-    this.props.loginUserAction(data)
-  }
-
   render() {
     const { errorMessage, isLoggedIn } = this.props;
     return (
