@@ -2,7 +2,6 @@ import * as types from './types';
 
 const initialState = {
     isUpdateProfileModalVisible: false,
-    user: JSON.parse(localStorage.getItem('user')),
     redirectTo: ''
 }
 
