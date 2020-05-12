@@ -12,7 +12,7 @@ export function updateUserProfile (state = initialState, action) {
         case types.HIDE_MODAL_UPDATE_PROFILE:
             return { ...state, isUpdateProfileModalVisible: false};
         case types.CHANGE_REDIRECT_STATE:
-            return { ...state, isRedirected: true};
+            return { ...state, isRedirected: action.payload};
         default:
             return state;
     }

@@ -18,7 +18,7 @@ export const showModalUpdateProfile = () => ({
     type: SHOW_MODAL_UPDATE_PROFILE 
 });
 
-export const changeRedirectState = () => ({ 
-    type: CHANGE_REDIRECT_STATE
-
+export const changeRedirectState = (isRedirected) => ({ 
+    type: CHANGE_REDIRECT_STATE,
+    payload: isRedirected
 });

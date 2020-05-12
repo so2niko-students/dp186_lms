@@ -21,7 +21,7 @@ class UpdateProfile extends Component {
     }
 
     componentWillUnmount() {
-        this.props.changeRedirectState({isRedirected: false});
+        this.props.changeRedirectState(false);
     }
 
     showModal = () => {
