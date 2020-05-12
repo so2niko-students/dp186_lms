@@ -87,6 +87,7 @@ class TeachersPage extends Component {
       total,
       currentPage
     } = this.props;
+    console.log(this.props);
     return (
       <>
         <Row justify="center">
