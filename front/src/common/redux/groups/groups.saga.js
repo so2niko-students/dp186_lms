@@ -5,14 +5,14 @@ import { showNotification } from '../../notifications/notifications';
 
 function* createGroupOneSaga(payload) {
     try {    
-        const response = yield call(createGroupApi, payload);        
+        yield call(createGroupApi, payload); 
         showNotification(
             'Successful creation',
             'Group is created',
             'success'
         );
     } catch (error) {
-        showNotification('Group creation error', error.message, 'error');
+        showNotification('Group creation error', error.response.data.error, 'error');
     }
 }
 

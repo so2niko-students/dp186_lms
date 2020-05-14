@@ -41,8 +41,7 @@ export function groups(state = initialState, action) {
 };
 
 const initialStateCreatingGroup = {
-    isCreateGroupModalVisible: false,
-    user: JSON.parse(localStorage.getItem('user'))
+    isCreateGroupModalVisible: false
 }
 
 export function createGroup(state = initialStateCreatingGroup, action){

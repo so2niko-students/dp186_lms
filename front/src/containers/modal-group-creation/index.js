@@ -27,7 +27,7 @@ class GroupCreationWindow extends Component {
 
     handleCreateGroup (data) {
         this.props.createGroup(data);
-        this.handleCancel();    
+        this.handleCancel();
     }
 
     render () {
@@ -75,7 +75,7 @@ class GroupCreationWindow extends Component {
     }
 }
 
-const mapStateToProps = ({ createGroup: { isCreateGroupModalVisible, user }}) => ({ isCreateGroupModalVisible, user })
+const mapStateToProps = ({ createGroup: { isCreateGroupModalVisible }}) => ({ isCreateGroupModalVisible })
 const mapDispatchToProps = { createGroup, hideModalCreateGroup };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupCreationWindow);
